@@ -19,26 +19,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let tabBarController = UITabBarController()
         
+        //VievControllers:
         
+        let feedVC = FeedViewController()
+        feedVC.view.backgroundColor = .systemGray
+        let feedNC = UINavigationController(rootViewController: feedVC)
         
+        let profileVC = ProfileViewController()
+        profileVC.view.backgroundColor = .brown
+        let profileNC = UINavigationController(rootViewController: profileVC)
+     
+        tabBarController.viewControllers = [feedNC, profileNC]
         
+        feedNC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "list.bullet.circle"), selectedImage: UIImage(named: "list.bullet.circle.fill"))
+        feedNC.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
+        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "person.circle"), selectedImage: UIImage(named: "person.circle.fill"))
+        profileNC.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
         
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-
-    }
-
-
 }
-
