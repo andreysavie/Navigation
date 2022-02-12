@@ -14,6 +14,8 @@
 		D5ED096C27B5A428007F70C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5ED096A27B5A428007F70C6 /* LaunchScreen.storyboard */; };
 		D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */; };
 		D5ED097627B5A5D0007F70C6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */; };
+		D5ED097827B66965007F70C6 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED097727B66965007F70C6 /* PostViewController.swift */; };
+		D5ED097A27B68627007F70C6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ED097927B68627007F70C6 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		D5ED096D27B5A428007F70C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D5ED097727B66965007F70C6 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		D5ED097927B68627007F70C6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
+				D5ED097927B68627007F70C6 /* InfoViewController.swift */,
+				D5ED097727B66965007F70C6 /* PostViewController.swift */,
 				D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */,
 				D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */,
 				D5ED096127B5A423007F70C6 /* SceneDelegate.swift */,
@@ -140,8 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5ED097827B66965007F70C6 /* PostViewController.swift in Sources */,
 				D5ED096427B5A423007F70C6 /* ViewController.swift in Sources */,
 				D5ED096027B5A423007F70C6 /* AppDelegate.swift in Sources */,
+				D5ED097A27B68627007F70C6 /* InfoViewController.swift in Sources */,
 				D5ED097627B5A5D0007F70C6 /* ProfileViewController.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
 				D5ED096227B5A423007F70C6 /* SceneDelegate.swift in Sources */,
