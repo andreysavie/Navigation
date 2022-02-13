@@ -33,24 +33,19 @@ class PostViewController: UIViewController {
             style: .plain,
             target: self,
             action: #selector(showInfo)
-            
-
         )
         
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
-        
         view.backgroundColor = UIColor.lightGray
         
         if let thisPost = post {
             title = thisPost.title
         }
-        
     }
     
     @objc func showInfo() {
         infoViewController.title = title
         present(infoViewController, animated: true, completion: nil)
     }
-    
 }
 

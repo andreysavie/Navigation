@@ -38,17 +38,15 @@ class FeedViewController: UIViewController {
         button.setTitle("New post", for: .normal)
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
         self.view.addSubview(button)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
     }
     
-    
     @objc func showNewPostVC(sender: UIButton!) {
         
-        let post = Post(title: "My first post")
+        let post = Post(title: "NEW POST")
         
         postVC.post = post
         postVC.view.backgroundColor = UIColor(displayP3Red: 0.582, green: 0.886, blue: 0.878, alpha: 1.0)

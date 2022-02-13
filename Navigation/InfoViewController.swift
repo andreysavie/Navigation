@@ -16,7 +16,6 @@ class InfoViewController: UIViewController {
         view.backgroundColor = .systemGroupedBackground
         
         let button = UIButton(
-            
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,
                 y: UIScreen.main.bounds.maxY - 150,
@@ -31,7 +30,6 @@ class InfoViewController: UIViewController {
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.autoresizingMask = .init(arrayLiteral: [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleRightMargin])
         self.view.addSubview(button)
-        
     }
     
     @objc func buttonAction(sender: UIButton!) {
