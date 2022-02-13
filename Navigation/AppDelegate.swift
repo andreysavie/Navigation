@@ -12,17 +12,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let tabBarController = UITabBarController()
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 16)]
+        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 16)]
         
-        let postTitleView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 64.0))
-        let postTitleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 64.0))
+        let postTitleView = UIView(
+            frame: CGRect(
+                    x: 0.0,
+                    y: 0.0,
+                    width: 40.0,
+                    height: 64.0)
+        )
+        
+        let postTitleLabel = UILabel(
+            frame: CGRect(
+                    x: 0.0,
+                    y: 0.0,
+                    width: 40.0,
+                    height: 64.0)
+        )
+        
         postTitleLabel.text = "NEW POST"
 
         postTitleView.addSubview(postTitleLabel)
@@ -32,11 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //VievControllers:
         
         let feedVC = FeedViewController()
-        feedVC.view.backgroundColor = .systemGray
+        feedVC.view.backgroundColor = .secondarySystemGroupedBackground
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = .brown
+        profileVC.view.backgroundColor = UIColor(displayP3Red: 0.734, green: 0.780, blue: 0.480, alpha: 1.0)
         let profileNC = UINavigationController(rootViewController: profileVC)
         
         tabBarController.viewControllers = [feedNC, profileNC]

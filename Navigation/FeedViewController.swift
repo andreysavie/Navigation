@@ -8,52 +8,56 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     var postVC = PostViewController()
-
+    
     init() {
         postVC = PostViewController()
         super.init(nibName: nil, bundle: nil)
     }
-    
-    
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "American Typewriter", size: 20) as Any] as [NSAttributedString.Key : Any]
-
+    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.midX - 50, y: UIScreen.main.bounds.midY - 25, width: 100, height: 50))
-          button.backgroundColor = .systemGreen
+        let button = UIButton(
+            frame: CGRect(
+                x: UIScreen.main.bounds.midX - 75,
+                y: UIScreen.main.bounds.maxY - 150,
+                width: 150,
+                height: 50)
+        )
+        
+        button.layer.cornerRadius = button.frame.size.height / 4
+        button.backgroundColor = .systemTeal
         button.setTitle("New post", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-          self.view.addSubview(button)
-        }
+        button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
+        self.view.addSubview(button)
+        
+    }
     
-
-    @objc func buttonAction(sender: UIButton!) {
-          
-        let post = Post(title: "My first post!")
-        
-        postVC.view.backgroundColor = .red
-        let postNC = UINavigationController(rootViewController: postVC)
-        
-        postNC.navigationBar.titleTextAttributes = titleAttributes
-        postNC.navigationBar.topItem?.title = post.title
-
-        self.navigationController?.pushViewController(postVC, animated: true)
-        
-        print("Button tapped")
-        
-        
-        
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
     }
     
     
+    @objc func showNewPostVC(sender: UIButton!) {
+        
+        let post = Post(title: "My first post")
+        
+        postVC.post = post
+        postVC.view.backgroundColor = UIColor(displayP3Red: 0.582, green: 0.886, blue: 0.878, alpha: 1.0)
+        
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+        tabBarController?.tabBar.isHidden = true
+    }
+}
+
+
 
