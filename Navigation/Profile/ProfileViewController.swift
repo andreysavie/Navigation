@@ -8,13 +8,17 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    
 
     let header = ProfileHeaderView ()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(header)
+        header.addProfileViews()
+
         self.title = "Profile"
         view.backgroundColor = UIColor.lightGray
         
@@ -22,7 +26,12 @@ class ProfileViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         
-        header.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
-        
+        header.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            header.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            header.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            header.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            header.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 }

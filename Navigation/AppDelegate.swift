@@ -52,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let profileVC = ProfileViewController()
         let profileNC = UINavigationController(rootViewController: profileVC)
+
+        
         
         tabBarController.viewControllers = [feedNC, profileNC]
         
@@ -61,9 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: UIImage(systemName: "list.bullet.circle.fill")
         )
         
-//        feedNC.navigationBar.titleTextAttributes = titleAttributes
-//        feedNC.navigationBar.topItem?.title = "FEED"
-
         profileNC.tabBarItem = UITabBarItem(
             
             title: "Profile",
@@ -90,6 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.tabBar.layer.borderWidth = 1
         tabBarController.tabBar.layer.borderColor = UIColor.darkGray.cgColor
         
+        profileNC.navigationBar.backgroundColor = UIColor.systemGray5
+        profileNC.navigationBar.layer.borderWidth = 1
+        profileNC.navigationBar.layer.borderColor = UIColor.darkGray.cgColor
+                
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
