@@ -7,8 +7,24 @@
 
 import UIKit
 
-class InfoViewController: UIViewController {
+
+// ПРИМЕР СОЗДАНИЯ VIEW
+
+let testView: UIView = {
     
+    let view = testView
+    view.frame = CGRect(
+    x: UIScreen.main.bounds.midX - 25,
+    y: UIScreen.main.bounds.maxY - 50,
+    width: 50,
+    height: 50
+)
+    return view
+}()
+
+
+class InfoViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,6 +39,7 @@ class InfoViewController: UIViewController {
                 height: 50
             )
         )
+        
         
         button.layer.cornerRadius = button.frame.size.height / 4
         button.backgroundColor = .systemIndigo

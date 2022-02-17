@@ -25,6 +25,8 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Feed"
+        
         let button = UIButton(
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,

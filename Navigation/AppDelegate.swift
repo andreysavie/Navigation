@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Label styles:
         
         let tabBarController = UITabBarController()
-        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 16)]
+//        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
         
         let postTitleView = UIView(
             frame: CGRect(
@@ -55,26 +55,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         tabBarController.viewControllers = [feedNC, profileNC]
         
-        feedNC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "list.bullet.circle"), selectedImage: UIImage(systemName: "list.bullet.circle.fill"))
-        feedNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
-        feedNC.navigationBar.titleTextAttributes = titleAttributes
-        feedNC.navigationBar.topItem?.title = "FEED"
+        feedNC.tabBarItem = UITabBarItem(
+            title: "Feed",
+            image: UIImage(systemName: "list.bullet.circle"),
+            selectedImage: UIImage(systemName: "list.bullet.circle.fill")
+        )
+        
+//        feedNC.navigationBar.titleTextAttributes = titleAttributes
+//        feedNC.navigationBar.topItem?.title = "FEED"
 
-        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), selectedImage: UIImage(systemName: "person.circle.fill"))
-        profileNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
-        profileNC.navigationBar.titleTextAttributes = titleAttributes
-        profileNC.navigationBar.topItem?.title = "PROFILE"
+        profileNC.tabBarItem = UITabBarItem(
+            
+            title: "Profile",
+            image: UIImage(systemName: "person.circle"),
+            selectedImage: UIImage(systemName: "person.circle.fill")
+        )
+        
+        feedNC.tabBarItem.setTitleTextAttributes(
+            attributes as [NSAttributedString.Key : Any],
+            for: .normal
+        )
+        
+        profileNC.tabBarItem.setTitleTextAttributes(
+            attributes as [NSAttributedString.Key : Any],
+            for: .normal
+        )
+
+        
+//        profileNC.navigationBar.titleTextAttributes = titleAttributes
+//        profileNC.navigationBar.topItem?.title = "PROFILE"
 
         tabBarController.tabBar.isHidden = false
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
         tabBarController.tabBar.layer.borderWidth = 1
-        tabBarController.tabBar.layer.borderColor = UIColor.systemGray.cgColor
+        tabBarController.tabBar.layer.borderColor = UIColor.darkGray.cgColor
         
-//        tabBarController.tabBar.layer.shadowOffset = CGSize(width: 0.0, height: -3.0)
-//        tabBarController.tabBar.layer.shadowRadius = 5.0
-//        let shadowColor = UIColor.gray
-//        tabBarController.tabBar.layer.shadowColor = shadowColor.cgColor
-//        tabBarController.tabBar.layer.shadowOpacity = 0.5
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
