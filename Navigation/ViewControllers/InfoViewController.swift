@@ -18,7 +18,7 @@ class InfoViewController: UIViewController {
         let button = UIButton(
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,
-                y: UIScreen.main.bounds.maxY - 150,
+                y: UIScreen.main.bounds.midY - 25,
                 width: 150,
                 height: 50
             )

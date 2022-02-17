@@ -51,7 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = UIColor(displayP3Red: 0.734, green: 0.780, blue: 0.480, alpha: 1.0)
         let profileNC = UINavigationController(rootViewController: profileVC)
         
         tabBarController.viewControllers = [feedNC, profileNC]
@@ -67,7 +66,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.topItem?.title = "PROFILE"
 
         tabBarController.tabBar.isHidden = false
-
+        tabBarController.tabBar.backgroundColor = UIColor.systemGray5
+        tabBarController.tabBar.layer.borderWidth = 1
+        tabBarController.tabBar.layer.borderColor = UIColor.systemGray.cgColor
+        
+//        tabBarController.tabBar.layer.shadowOffset = CGSize(width: 0.0, height: -3.0)
+//        tabBarController.tabBar.layer.shadowRadius = 5.0
+//        let shadowColor = UIColor.gray
+//        tabBarController.tabBar.layer.shadowColor = shadowColor.cgColor
+//        tabBarController.tabBar.layer.shadowOpacity = 0.5
+        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
