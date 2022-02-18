@@ -85,6 +85,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         statusTextField.isEnabled = true
         statusTextField.isUserInteractionEnabled = true
         statusTextField.delegate = self
+//        statusTextField.delegate = ProfileViewController() as? UITextFieldDelegate
         
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         

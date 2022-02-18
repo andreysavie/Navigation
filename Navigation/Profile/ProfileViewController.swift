@@ -29,9 +29,15 @@ class ProfileViewController: UIViewController {
             header.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             header.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             header.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+//            header.heightAnchor.constraint(equalToConstant: 500)
             
         ])
     }
+   
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+
 }
 
 extension UIViewController {
