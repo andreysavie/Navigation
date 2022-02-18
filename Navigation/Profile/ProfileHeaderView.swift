@@ -116,6 +116,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         return button
         
     }()
+        
     
     @objc func buttonPressed(sender: UIButton!) {
         
@@ -145,6 +146,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.addSubview(showStatusButton)
         self.addSubview(statusLabel)
         self.addSubview(statusTextField)
+
         
         setupConstraints()
         
@@ -177,10 +179,9 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             
             statusLabel.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
-            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16)
+            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             
         ])
     }
-    
 }
 

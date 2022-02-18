@@ -9,7 +9,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-//    let header = ProfileHeaderView ()
     
     private lazy var headerView: ProfileHeaderView = {
         
@@ -17,51 +16,57 @@ class ProfileViewController: UIViewController {
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
-        
         return headerView
+        
     }()
     
+    private lazy var setTitleButton: UIButton = {
+        
+        let button = UIButton()
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.setTitle("Set new title", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        button.titleLabel?.textColor = UIColor.white
+        button.backgroundColor = .systemTeal
+        
+        button.layer.cornerRadius = 4
+                
+        return button
+        
+    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(headerView)
-        
+        self.view.addSubview(setTitleButton)
+
         headerView.addProfileViews()
-        setupHeaderConstraints()
+        setupProfileConstraints()
+        
 //        hideKeyboardWhenTappedAround()
         
     }
 
-    
-    
-    override func viewWillLayoutSubviews() {
-        
-//        header.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//
-//            header.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-//            header.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-//            header.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-//            header.heightAnchor.constraint(equalToConstant: 220)
-//            header.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
-//
-//        ])
-    }
-    
-    private func setupHeaderConstraints() {
+    private func setupProfileConstraints() {
         
         NSLayoutConstraint.activate([
            
             headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 220)
+            headerView.heightAnchor.constraint(equalToConstant: 220),
+
+            setTitleButton.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            setTitleButton.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            setTitleButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            setTitleButton.heightAnchor.constraint(equalToConstant: 50)
 
         ])
     }
-
 }
 
 extension UIViewController {
