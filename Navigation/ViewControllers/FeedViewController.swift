@@ -10,14 +10,10 @@ import UIKit
 class FeedViewController: UIViewController {
     
     var postVC = PostViewController()
-    
-//    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.title = "Feed"
-        
+                
         let button = UIButton(
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,

@@ -19,30 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Label styles:
         
         let tabBarController = UITabBarController()
-//        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
+        
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
-        
-//        let postTitleView = UIView(
-//            frame: CGRect(
-//                    x: 0.0,
-//                    y: 0.0,
-//                    width: 40.0,
-//                    height: 64.0)
-//        )
-//
-//        let postTitleLabel = UILabel(
-//            frame: CGRect(
-//                    x: 0.0,
-//                    y: 0.0,
-//                    width: 40.0,
-//                    height: 64.0)
-//        )
-//
-//        postTitleLabel.text = "New post"
-//
-//        postTitleView.addSubview(postTitleLabel)
-//
-        
+                
          
         //VievControllers:
         
@@ -74,17 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.standardAppearance = appearance
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
 
-        
         tabBarController.viewControllers = [feedNC, profileNC]
         tabBarController.tabBar.isHidden = false
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
         tabBarController.tabBar.layer.borderWidth = 1
         tabBarController.tabBar.layer.borderColor = UIColor.gray.cgColor
-        
-//        profileNC.navigationBar.backgroundColor = UIColor.systemGray5
-//        profileNC.navigationBar.layer.borderWidth = 1
-//        profileNC.navigationBar.layer.borderColor = UIColor.darkGray.cgColor
-                
+                        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

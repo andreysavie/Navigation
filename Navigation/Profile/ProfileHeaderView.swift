@@ -9,8 +9,6 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    
-    
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
@@ -42,12 +40,12 @@ class ProfileHeaderView: UIView {
     }()
     
     
-    
     private lazy var statusLabel: UILabel = {
         
         let statusLabel = UILabel()
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         statusLabel.text = "Waiting for something..."
         statusLabel.numberOfLines = 2
         statusLabel.textColor = .gray
@@ -83,17 +81,7 @@ class ProfileHeaderView: UIView {
     
     @objc func buttonPressed(sender: UIButton!) {
         
-        sender.transform = CGAffineTransform(scaleX: 0.98, y: 1)
-
-        UIView.animate(withDuration: 0.5, animations: { () -> Void in
-
-        sender.transform = CGAffineTransform(scaleX: 1, y: 1)
-
-        })
-
         print(statusLabel.text ?? "")
-        
-        
     }
     
     func addProfileViews () {
@@ -121,7 +109,6 @@ class ProfileHeaderView: UIView {
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
             nameLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
 
-
             showStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             showStatusButton.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             showStatusButton.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 16),
@@ -130,6 +117,7 @@ class ProfileHeaderView: UIView {
             statusLabel.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -34),
             statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16)
+            
         ])
     }
 }
