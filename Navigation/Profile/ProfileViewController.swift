@@ -9,29 +9,59 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let header = ProfileHeaderView ()
+//    let header = ProfileHeaderView ()
+    
+    private lazy var headerView: ProfileHeaderView = {
+        
+        let headerView = ProfileHeaderView()
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        return headerView
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(header)
-        header.addProfileViews()
+        self.view.addSubview(headerView)
         
-        self.hideKeyboardWhenTappedAround()
+        headerView.addProfileViews()
+        setupHeaderConstraints()
+//        hideKeyboardWhenTappedAround()
         
     }
+
+    
     
     override func viewWillLayoutSubviews() {
         
-        header.translatesAutoresizingMaskIntoConstraints = false
+//        header.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//
+//            header.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+//            header.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+//            header.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+//            header.heightAnchor.constraint(equalToConstant: 220)
+//            header.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+//
+//        ])
+    }
+    
+    private func setupHeaderConstraints() {
+        
         NSLayoutConstraint.activate([
-            header.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            header.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            header.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            header.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
-            
+           
+            headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 220)
+
         ])
     }
+
 }
 
 extension UIViewController {
