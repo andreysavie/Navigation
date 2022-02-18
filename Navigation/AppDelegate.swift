@@ -22,26 +22,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
         
-        let postTitleView = UIView(
-            frame: CGRect(
-                    x: 0.0,
-                    y: 0.0,
-                    width: 40.0,
-                    height: 64.0)
-        )
-        
-        let postTitleLabel = UILabel(
-            frame: CGRect(
-                    x: 0.0,
-                    y: 0.0,
-                    width: 40.0,
-                    height: 64.0)
-        )
-        
-        postTitleLabel.text = "NEW POST"
-
-        postTitleView.addSubview(postTitleLabel)
-        
+//        let postTitleView = UIView(
+//            frame: CGRect(
+//                    x: 0.0,
+//                    y: 0.0,
+//                    width: 40.0,
+//                    height: 64.0)
+//        )
+//
+//        let postTitleLabel = UILabel(
+//            frame: CGRect(
+//                    x: 0.0,
+//                    y: 0.0,
+//                    width: 40.0,
+//                    height: 64.0)
+//        )
+//
+//        postTitleLabel.text = "New post"
+//
+//        postTitleView.addSubview(postTitleLabel)
+//
         
          
         //VievControllers:
@@ -51,49 +51,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
+        profileVC.view.backgroundColor = .lightGray
         let profileNC = UINavigationController(rootViewController: profileVC)
 
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemGray5
+                
+        feedNC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "list.bullet.circle"), selectedImage: UIImage(systemName: "list.bullet.circle.fill"))
+        feedNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any],for: .normal)
+        feedNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+        feedNC.navigationBar.topItem?.title = "Feed"
+        feedNC.navigationBar.barTintColor = UIColor.systemGray5
+        feedNC.navigationBar.standardAppearance = appearance
+        feedNC.navigationBar.scrollEdgeAppearance = feedNC.navigationBar.standardAppearance
         
+        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), selectedImage: UIImage(systemName:"person.circle.fill"))
+        profileNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
+        profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+        profileNC.navigationBar.topItem?.title = "Profile"
+        profileNC.navigationBar.barTintColor = UIColor.systemGray5
+        profileNC.navigationBar.standardAppearance = appearance
+        profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
+
         
         tabBarController.viewControllers = [feedNC, profileNC]
-        
-        feedNC.tabBarItem = UITabBarItem(
-            title: "Feed",
-            image: UIImage(systemName: "list.bullet.circle"),
-            selectedImage: UIImage(systemName: "list.bullet.circle.fill")
-        )
-        
-        profileNC.tabBarItem = UITabBarItem(
-            
-            title: "Profile",
-            image: UIImage(systemName: "person.circle"),
-            selectedImage: UIImage(systemName: "person.circle.fill")
-        )
-        
-        feedNC.tabBarItem.setTitleTextAttributes(
-            attributes as [NSAttributedString.Key : Any],
-            for: .normal
-        )
-        
-        profileNC.tabBarItem.setTitleTextAttributes(
-            attributes as [NSAttributedString.Key : Any],
-            for: .normal
-        )
-
-        
-//        profileNC.navigationBar.titleTextAttributes = titleAttributes
-//        profileNC.navigationBar.topItem?.title = "PROFILE"
-
         tabBarController.tabBar.isHidden = false
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
         tabBarController.tabBar.layer.borderWidth = 1
-        tabBarController.tabBar.layer.borderColor = UIColor.darkGray.cgColor
+        tabBarController.tabBar.layer.borderColor = UIColor.gray.cgColor
         
-        profileNC.navigationBar.backgroundColor = UIColor.systemGray5
-        profileNC.navigationBar.layer.borderWidth = 1
-        profileNC.navigationBar.layer.borderColor = UIColor.darkGray.cgColor
+//        profileNC.navigationBar.backgroundColor = UIColor.systemGray5
+//        profileNC.navigationBar.layer.borderWidth = 1
+//        profileNC.navigationBar.layer.borderColor = UIColor.darkGray.cgColor
                 
-        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

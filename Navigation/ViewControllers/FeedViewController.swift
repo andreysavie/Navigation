@@ -11,21 +11,12 @@ class FeedViewController: UIViewController {
     
     var postVC = PostViewController()
     
-    init() {
-        postVC = PostViewController()
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
+//    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Feed"
+//        self.title = "Feed"
         
         let button = UIButton(
             frame: CGRect(
@@ -53,7 +44,7 @@ class FeedViewController: UIViewController {
     
     @objc func showNewPostVC(sender: UIButton!) {
         
-        let post = Post(title: "NEW POST")
+        let post = Post(title: "New post")
         
         postVC.post = post
         postVC.view.backgroundColor = UIColor(displayP3Red: 0.582, green: 0.886, blue: 0.878, alpha: 1.0)

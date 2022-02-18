@@ -83,6 +83,14 @@ class ProfileHeaderView: UIView {
     
     @objc func buttonPressed(sender: UIButton!) {
         
+        sender.transform = CGAffineTransform(scaleX: 0.98, y: 1)
+
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
+
+        sender.transform = CGAffineTransform(scaleX: 1, y: 1)
+
+        })
+
         print(statusLabel.text ?? "")
         
         
