@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private lazy var avatar: UIImageView = {
         
@@ -53,6 +53,38 @@ class ProfileHeaderView: UIView {
         return statusLabel
     }()
     
+    private lazy var statusTextField: UITextField = {
+        
+        let statusTextField = UITextField()
+        
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        statusTextField.layer.cornerRadius = 12
+        
+        statusTextField.clipsToBounds = true
+        statusTextField.layer.borderWidth = 1
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.backgroundColor = .white
+        
+        statusTextField.placeholder = "Enter your status..."
+        
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.textColor = .black
+        statusTextField.textAlignment = .center
+        
+        statusTextField.autocorrectionType = UITextAutocorrectionType.no
+        statusTextField.keyboardType = UIKeyboardType.default
+        statusTextField.returnKeyType = UIReturnKeyType.done
+        statusTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        statusTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        
+        statusTextField.isEnabled = true
+        statusTextField.isUserInteractionEnabled = true
+        statusTextField.delegate = self
+        
+        return statusTextField
+    }()
+    
     
     private lazy var showStatusButton: UIButton = {
         
@@ -90,7 +122,8 @@ class ProfileHeaderView: UIView {
         self.addSubview(nameLabel)
         self.addSubview(showStatusButton)
         self.addSubview(statusLabel)
-        
+        self.addSubview(statusTextField)
+
         setupConstraints()
     }
     
@@ -113,10 +146,15 @@ class ProfileHeaderView: UIView {
             showStatusButton.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             showStatusButton.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 16),
             showStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            statusTextField.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
+            statusTextField.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
+            statusTextField.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -12),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
 
             statusLabel.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
-            statusLabel.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -34),
-            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16)
+            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
+            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             
         ])
     }

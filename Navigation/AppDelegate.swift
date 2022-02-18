@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = .lightGray
+        profileVC.view.backgroundColor = .systemGray4
         let profileNC = UINavigationController(rootViewController: profileVC)
 
         let appearance = UINavigationBarAppearance()
