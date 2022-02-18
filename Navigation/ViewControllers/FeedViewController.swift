@@ -22,14 +22,16 @@ class FeedViewController: UIViewController {
                 height: 50)
         )
         
+        button.setTitle("New post", for: .normal)
+        button.backgroundColor = .systemTeal
         button.layer.cornerRadius = button.frame.size.height / 4
+        
         button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         button.layer.shadowRadius = 5.0
         let shadowColor = UIColor.black
         button.layer.shadowColor = shadowColor.cgColor
         button.layer.shadowOpacity = 0.8
-        button.backgroundColor = .systemTeal
-        button.setTitle("New post", for: .normal)
+        
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
         self.view.addSubview(button)
     }

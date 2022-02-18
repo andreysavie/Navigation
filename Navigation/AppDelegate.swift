@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
-        profileVC.view.backgroundColor = .systemGray4
+        profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
 
         let appearance = UINavigationBarAppearance()
@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
 
         tabBarController.viewControllers = [feedNC, profileNC]
-//        tabBarController.tabBar.isHidden = false
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
         tabBarController.tabBar.layer.borderWidth = 1
         tabBarController.tabBar.layer.borderColor = UIColor.gray.cgColor

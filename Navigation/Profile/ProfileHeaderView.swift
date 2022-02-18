@@ -22,6 +22,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         avatar.layer.cornerRadius = 50
         avatar.layer.borderWidth = 3
         avatar.layer.borderColor = UIColor.white.cgColor
+        
         return avatar
         
     }()
@@ -50,9 +51,11 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         statusLabel.text = "Waiting for something..."
         statusLabel.numberOfLines = 2
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .darkGray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        
         return statusLabel
+        
     }()
     
     private lazy var statusTextField: UITextField = {
@@ -62,7 +65,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         
         statusTextField.layer.cornerRadius = 12
-        
         statusTextField.clipsToBounds = true
         statusTextField.layer.borderWidth = 1
         statusTextField.layer.borderColor = UIColor.black.cgColor
@@ -86,8 +88,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
-        
         return statusTextField
+        
     }()
     
     
@@ -100,6 +102,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.setTitle("Show status", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
+        button.backgroundColor = .systemTeal
         
         button.layer.cornerRadius = 4
         
@@ -107,8 +110,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.layer.shadowRadius = 4.0
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
-        
-        button.backgroundColor = .systemTeal
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
@@ -122,6 +123,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         statusLabel.text = statusTextChanged(statusTextField)
         self.statusTextField.text = ""
+        
     }
     
     
@@ -130,7 +132,9 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         if let newStatus = textField.text {
             status = newStatus
         }
+        
         return status
+        
     }
     
     
@@ -143,6 +147,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.addSubview(statusTextField)
         
         setupConstraints()
+        
     }
     
     //     MARK: Constraints
@@ -176,5 +181,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             
         ])
     }
+    
 }
 

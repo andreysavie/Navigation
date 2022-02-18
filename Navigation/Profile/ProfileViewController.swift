@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     let header = ProfileHeaderView ()
     
     override func viewDidLoad() {
@@ -18,11 +18,7 @@ class ProfileViewController: UIViewController {
         header.addProfileViews()
         
         self.hideKeyboardWhenTappedAround()
-
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProfileViewController.dissmissKeyboard))
-//
-//        self.view.addGestureRecognizer(tap)
-//
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -36,25 +32,16 @@ class ProfileViewController: UIViewController {
             
         ])
     }
-    
-    
-    
-
-
-//     @objc func dissmissKeyboard() {
-//        view.endEditing(true)
-//
-//    }
 }
 
 extension UIViewController {
-func hideKeyboardWhenTappedAround() {
-    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-    view.addGestureRecognizer(tap)
-}
-
-@objc func dismissKeyboard() {
-    view.endEditing(true)
-}
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
