@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileHeaderView: UIView, UITextFieldDelegate {
     
+    private var status: String = ""
+    
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
@@ -82,6 +84,9 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         statusTextField.isUserInteractionEnabled = true
         statusTextField.delegate = self
         
+        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        
+        
         return statusTextField
     }()
     
@@ -97,7 +102,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.titleLabel?.textColor = UIColor.white
         
         button.layer.cornerRadius = 4
-                
+        
         button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
         button.layer.shadowRadius = 4.0
         button.layer.shadowColor = UIColor.black.cgColor
@@ -113,8 +118,21 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     @objc func buttonPressed(sender: UIButton!) {
         
-        print(statusLabel.text ?? "")
+        guard statusTextField.text?.isEmpty == false else {return}
+        
+        statusLabel.text = statusTextChanged(statusTextField)
+        self.statusTextField.text = ""
     }
+    
+    
+    @objc func statusTextChanged(_ textField: UITextField) -> String {
+        
+        if let newStatus = textField.text {
+            status = newStatus
+        }
+        return status
+    }
+    
     
     func addProfileViews () {
         
@@ -123,7 +141,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.addSubview(showStatusButton)
         self.addSubview(statusLabel)
         self.addSubview(statusTextField)
-
+        
         setupConstraints()
     }
     
@@ -141,7 +159,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             nameLabel.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
             nameLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
-
+            
             showStatusButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
             showStatusButton.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             showStatusButton.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 16),
@@ -151,10 +169,10 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             statusTextField.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
             statusTextField.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -12),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-
+            
             statusLabel.leftAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
-            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16),
+            statusLabel.rightAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: -16)
             
         ])
     }
