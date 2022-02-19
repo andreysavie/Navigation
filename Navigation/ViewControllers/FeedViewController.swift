@@ -10,32 +10,99 @@ import UIKit
 class FeedViewController: UIViewController {
     
     var postVC = PostViewController()
+     
+    private lazy var firstPostButton: UIButton = {
         
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        let button = UIButton()
                 
-        let button = UIButton(
-            frame: CGRect(
-                x: UIScreen.main.bounds.midX - 75,
-                y: UIScreen.main.bounds.midY - 25,
-                width: 150,
-                height: 50)
-        )
-        
-        button.setTitle("New post", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.setImage(UIImage(named: "post1"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+
         button.backgroundColor = .systemTeal
-        button.layer.cornerRadius = button.frame.size.height / 4
         
-        button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        button.layer.shadowRadius = 5.0
-        let shadowColor = UIColor.black
-        button.layer.shadowColor = shadowColor.cgColor
-        button.layer.shadowOpacity = 0.8
+        button.layer.cornerRadius = 4
+        
+        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        button.layer.shadowRadius = 4.0
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        
+        
         
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
-        self.view.addSubview(button)
+        
+        return button
+        
+    }()
+
+    private lazy var secondPostButton: UIButton = {
+        
+        let button = UIButton()
+                
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+//        button.setTitle("Second post", for: .normal)
+        button.setImage(UIImage(named: "post2"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+
+        button.backgroundColor = .systemTeal
+        
+        button.layer.cornerRadius = 4
+        
+        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        button.layer.shadowRadius = 4.0
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        
+        button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
+        
+        return button
+        
+    }()
+    
+    
+    private lazy var stackView: UIStackView = {
+        
+         let stackView = UIStackView(arrangedSubviews: [firstPostButton, secondPostButton])
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        stackView.alignment = .fill
+        stackView.backgroundColor = .clear
+        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(showNewPostVC))
+//        stackView.addGestureRecognizer(tap)
+//        stackView.isUserInteractionEnabled = true
+        
+        return stackView
+        
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+         
+        view.addSubview(stackView)
+        setupStackViewConstraints()
+        
     }
     
+    private func setupStackViewConstraints() {
+        
+        NSLayoutConstraint.activate([
+           
+            stackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -16),
+            stackView.heightAnchor.constraint(equalToConstant: view.bounds.height / 1.5)
+
+        ])
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
     }
@@ -51,6 +118,7 @@ class FeedViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = true
     }
+    
 }
 
 

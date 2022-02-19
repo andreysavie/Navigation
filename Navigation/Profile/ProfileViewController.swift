@@ -47,7 +47,7 @@ class ProfileViewController: UIViewController {
         headerView.addProfileViews()
         setupProfileConstraints()
         
-//        hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTappedAround()
         
     }
 
@@ -69,7 +69,7 @@ class ProfileViewController: UIViewController {
     }
 }
 
-extension UIViewController {
+extension ProfileViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
