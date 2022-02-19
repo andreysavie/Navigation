@@ -9,7 +9,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    
+    // MARK: Header
+
     private lazy var headerView: ProfileHeaderView = {
         
         let headerView = ProfileHeaderView()
@@ -20,6 +21,8 @@ class ProfileViewController: UIViewController {
         
     }()
     
+    // MARK: Button "Set title"
+
     private lazy var setTitleButton: UIButton = {
         
         let button = UIButton()
@@ -46,10 +49,11 @@ class ProfileViewController: UIViewController {
 
         headerView.addProfileViews()
         setupProfileConstraints()
-        
         hideKeyboardWhenTappedAround()
         
     }
+
+    // MARK: Constraints
 
     private func setupProfileConstraints() {
         
@@ -68,6 +72,8 @@ class ProfileViewController: UIViewController {
         ])
     }
 }
+
+// MARK: Keyboard hedding method
 
 extension ProfileViewController {
     func hideKeyboardWhenTappedAround() {

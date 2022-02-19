@@ -12,6 +12,8 @@ class FeedViewController: UIViewController {
     // i will need this labels just later...
     var postLabels = ["Would you like some coffee?", "Last christmas i gave you my heart..."]
     
+    // MARK: Button of first post
+    
     private lazy var firstPostButton: UIButton = {
         
         let button = UIButton()
@@ -38,6 +40,8 @@ class FeedViewController: UIViewController {
         return button
         
     }()
+    
+    // MARK: Button of second post
 
     private lazy var secondPostButton: UIButton = {
         
@@ -66,7 +70,8 @@ class FeedViewController: UIViewController {
         
     }()
     
-    
+    // MARK: StackView for posts
+
     private lazy var stackView: UIStackView = {
         
          let stackView = UIStackView(arrangedSubviews: [firstPostButton, secondPostButton])
@@ -78,11 +83,7 @@ class FeedViewController: UIViewController {
         stackView.spacing = 10
         stackView.alignment = .fill
         stackView.backgroundColor = .clear
-        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(showNewPostVC))
-//        stackView.addGestureRecognizer(tap)
-//        stackView.isUserInteractionEnabled = true
-        
+                
         return stackView
         
     }()
@@ -94,6 +95,8 @@ class FeedViewController: UIViewController {
         setupStackViewConstraints()
         
     }
+    
+    // MARK: Constraints
     
     private func setupStackViewConstraints() {
         
@@ -111,8 +114,9 @@ class FeedViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    @objc func showNewPostVC(sender: UIButton!) {
+    // MARK: Button for new post controller opening
 
+    @objc func showNewPostVC(sender: UIButton!) {
        
         let postVC = PostViewController(post: Post(title: sender.title(for: .normal)!,
                                                               image: sender.image(for: .normal)!,
@@ -120,11 +124,6 @@ class FeedViewController: UIViewController {
         
         self.navigationController?.pushViewController(postVC, animated: true)
 
-        
-//        postVC.view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1.0)
-//
-//        self.navigationController?.pushViewController(postVC, animated: true)
-        
         tabBarController?.tabBar.isHidden = true
     }
 }

@@ -52,18 +52,15 @@ class PostViewController: UIViewController {
         image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         image.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         image.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-
-//        setupImageViewConstraints()
-        
         
         self.navigationItem.rightBarButtonItem  = infoBarButtonItem
         
         view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1.0)
         
-            title = post.title
+        title = post.title
     }
     
-    
+
     @objc func showInfo() {
         infoViewController.title = title
         present(infoViewController, animated: true, completion: nil)

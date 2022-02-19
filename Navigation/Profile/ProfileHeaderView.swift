@@ -11,6 +11,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private var status: String = ""
     
+    // MARK: Avatar
+    
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
@@ -27,7 +29,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     }()
     
-    
+    // MARK: Name
+
     private lazy var nameLabel: UILabel = {
         
         let nameLabel = UILabel()
@@ -42,6 +45,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     }()
     
+    // MARK: Status
     
     private lazy var statusLabel: UILabel = {
         
@@ -58,6 +62,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     }()
     
+    // MARK: Status textField
+
     private lazy var statusTextField: UITextField = {
         
         let statusTextField = UITextField()
@@ -92,7 +98,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
     }()
     
-    
+    // MARK: Button "Show status"
+
     private lazy var showStatusButton: UIButton = {
         
         let button = UIButton()
@@ -116,8 +123,10 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         return button
         
     }()
-        
+       
     
+    // MARK: METHODS
+
     @objc func buttonPressed(sender: UIButton!) {
         
         guard statusTextField.text?.isEmpty == false else {return}
@@ -147,7 +156,6 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         self.addSubview(statusLabel)
         self.addSubview(statusTextField)
 
-        
         setupConstraints()
         
     }
