@@ -6,22 +6,19 @@
 //
 
 import UIKit
-
+    
 class FeedViewController: UIViewController {
-    
-//    var postVC = PostViewController()
-    
+        
+    // i will need this labels just later...
     var postLabels = ["Would you like some coffee?", "Last christmas i gave you my heart..."]
     
     private lazy var firstPostButton: UIButton = {
         
         let button = UIButton()
-        
-        let title = "Do you like some coffee?"
-        
+                
         button.translatesAutoresizingMaskIntoConstraints = false
 
-        button.setTitle("First post", for: .normal)
+        button.setTitle("Coffee", for: .normal)
         button.setImage(UIImage(named: "post1"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         
@@ -48,7 +45,7 @@ class FeedViewController: UIViewController {
                 
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.setTitle("Second post", for: .normal)
+        button.setTitle("Last christmas", for: .normal)
         button.setImage(UIImage(named: "post2"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
 
