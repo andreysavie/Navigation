@@ -9,17 +9,22 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var postVC = PostViewController()
-     
+//    var postVC = PostViewController()
+    
+    var postLabels = ["Would you like some coffee?", "Last christmas i gave you my heart..."]
+    
     private lazy var firstPostButton: UIButton = {
         
         let button = UIButton()
-                
+        
+        let title = "Do you like some coffee?"
+        
         button.translatesAutoresizingMaskIntoConstraints = false
 
+        button.setTitle("First post", for: .normal)
         button.setImage(UIImage(named: "post1"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-
+        
         button.backgroundColor = .systemTeal
         
         button.layer.cornerRadius = 4
@@ -29,8 +34,8 @@ class FeedViewController: UIViewController {
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
         
-        
-        
+        button.tag = 0
+
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
         
         return button
@@ -43,7 +48,7 @@ class FeedViewController: UIViewController {
                 
         button.translatesAutoresizingMaskIntoConstraints = false
         
-//        button.setTitle("Second post", for: .normal)
+        button.setTitle("Second post", for: .normal)
         button.setImage(UIImage(named: "post2"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
 
@@ -55,6 +60,8 @@ class FeedViewController: UIViewController {
         button.layer.shadowRadius = 4.0
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
+        
+        button.tag = 1
         
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
         
@@ -108,18 +115,24 @@ class FeedViewController: UIViewController {
     }
     
     @objc func showNewPostVC(sender: UIButton!) {
-        
-        let post = Post(title: "New post")
-        
-        postVC.post = post
-        postVC.view.backgroundColor = UIColor(displayP3Red: 0.582, green: 0.886, blue: 0.878, alpha: 1.0)
+
+       
+        let postVC = PostViewController(post: Post(title: sender.title(for: .normal)!,
+                                                              image: sender.image(for: .normal)!,
+                                                              label: postLabels[sender.tag]))
         
         self.navigationController?.pushViewController(postVC, animated: true)
+
+        
+//        postVC.view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1.0)
+//
+//        self.navigationController?.pushViewController(postVC, animated: true)
         
         tabBarController?.tabBar.isHidden = true
     }
-    
 }
+    
+
 
 
 

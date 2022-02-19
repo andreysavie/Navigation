@@ -29,7 +29,7 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
         
         title = "information"
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1)
         
         let button = UIButton(
             frame: CGRect(
