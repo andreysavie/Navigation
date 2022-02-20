@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private var status: String = ""
@@ -17,7 +18,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         let avatar = UIImageView()
         
-        avatar.translatesAutoresizingMaskIntoConstraints = false
+        avatar.toAutoLayout()
         
         avatar.clipsToBounds = true
         avatar.image = UIImage(named: "avatar")
@@ -35,7 +36,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         let nameLabel = UILabel()
         
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.toAutoLayout()
         
         nameLabel.text = "Andrey Rybalkin"
         nameLabel.textColor = .black
@@ -51,7 +52,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         let statusLabel = UILabel()
         
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.toAutoLayout()
         
         statusLabel.text = "Waiting for something..."
         statusLabel.numberOfLines = 2
@@ -68,7 +69,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         let statusTextField = UITextField()
         
-        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.toAutoLayout()
         
         statusTextField.layer.cornerRadius = 12
         statusTextField.clipsToBounds = true
@@ -104,13 +105,13 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         let button = UIButton()
         
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.toAutoLayout()
         
         button.setTitle("Show status", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
         button.backgroundColor = .systemTeal
-        
+
         button.layer.cornerRadius = 4
         
         button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
@@ -150,13 +151,12 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     func addProfileViews () {
         
-        self.addSubview(avatar)
-        self.addSubview(nameLabel)
-        self.addSubview(showStatusButton)
-        self.addSubview(statusLabel)
-        self.addSubview(statusTextField)
-
-        setupConstraints()
+        addSubviews(avatar,
+                    nameLabel,
+                    statusLabel,
+                    statusTextField,
+                    showStatusButton)
+        self.setupConstraints()
         
     }
     
@@ -191,5 +191,17 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
             
         ])
     }
+}
+
+public extension UIView {
+
+    func toAutoLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func addSubviews(_ subviews: UIView...) {
+        subviews.forEach { addSubview($0) }
+    }
+
 }
 

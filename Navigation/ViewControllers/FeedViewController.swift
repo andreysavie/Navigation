@@ -12,63 +12,10 @@ class FeedViewController: UIViewController {
     // i will need this labels just later...
     var postLabels = ["Would you like some coffee?", "Last christmas i gave you my heart..."]
     
-    // MARK: Button of first post
+    // MARK: Buttons of the posts
     
-    private lazy var firstPostButton: UIButton = {
-        
-        let button = UIButton()
-                
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        button.setTitle("Coffee", for: .normal)
-        button.setImage(UIImage(named: "post1"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        
-        button.backgroundColor = .systemTeal
-        
-        button.layer.cornerRadius = 4
-        
-        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
-        
-        button.tag = 0
-
-        button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
-        
-        return button
-        
-    }()
-    
-    // MARK: Button of second post
-
-    private lazy var secondPostButton: UIButton = {
-        
-        let button = UIButton()
-                
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.setTitle("Last christmas", for: .normal)
-        button.setImage(UIImage(named: "post2"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-
-        button.backgroundColor = .systemTeal
-        
-        button.layer.cornerRadius = 4
-        
-        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
-        
-        button.tag = 1
-        
-        button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
-        
-        return button
-        
-    }()
+    private lazy var firstPostButton = postButton(title: "Coffee", imgName: "post1")
+    private lazy var secondPostButton = postButton(title: "Marry christmas!", imgName: "post2")
     
     // MARK: StackView for posts
 
@@ -126,7 +73,35 @@ class FeedViewController: UIViewController {
 
         tabBarController?.tabBar.isHidden = true
     }
+    
+    private func postButton(title: String, imgName: String) -> UIButton {
+        
+        let button = UIButton()
+                
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.setTitle(title, for: .normal)
+        button.setImage(UIImage(named: imgName), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+                
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        
+//        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+//        button.layer.shadowRadius = 4.0
+//        button.layer.shadowColor = UIColor.black.cgColor
+//        button.layer.shadowOpacity = 0.7
+        
+        button.tag = 0
+
+        button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
+        
+        return button
+        
+    }
+
 }
+
     
 
 
