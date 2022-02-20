@@ -21,6 +21,9 @@ class ProfileViewController: UIViewController {
         
     }()
     
+    private lazy var loginViewController = LogInViewController()
+    
+    
     // MARK: Button "Set title"
 
     private lazy var setTitleButton: UIButton = {
@@ -51,6 +54,11 @@ class ProfileViewController: UIViewController {
         setupProfileConstraints()
         hideKeyboardWhenTappedAround()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.pushViewController(loginViewController, animated: true)
+
     }
 
     // MARK: Constraints

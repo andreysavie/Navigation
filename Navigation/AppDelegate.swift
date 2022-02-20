@@ -33,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
 
+        let loginVC = LogInViewController()
+        let loginNC = UINavigationController(rootViewController: loginVC)
+
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.systemGray5
