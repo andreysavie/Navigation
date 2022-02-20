@@ -86,12 +86,7 @@ class FeedViewController: UIViewController {
                 
         button.layer.cornerRadius = 12
         button.clipsToBounds = true
-        
-//        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-//        button.layer.shadowRadius = 4.0
-//        button.layer.shadowColor = UIColor.black.cgColor
-//        button.layer.shadowOpacity = 0.7
-        
+                
         button.tag = 0
 
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)

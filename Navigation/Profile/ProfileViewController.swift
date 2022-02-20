@@ -53,12 +53,14 @@ class ProfileViewController: UIViewController {
         headerView.addProfileViews()
         setupProfileConstraints()
         hideKeyboardWhenTappedAround()
-        
+                
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         self.navigationController?.pushViewController(loginViewController, animated: true)
 
+//        loginViewController.navigationController?.navigationBar.isHidden = true
     }
 
     // MARK: Constraints
