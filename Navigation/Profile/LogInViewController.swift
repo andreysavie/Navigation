@@ -12,11 +12,17 @@ struct ColorSet {
     static let mainColor = UIColor(named: "main_color")
 }
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, UITextFieldDelegate {  // понять UITextFieldDelegate
     
     var isLogin = false
     
+    private var bottomConstraint: NSLayoutConstraint?
+    
     override func viewDidLoad() {
+        
+        self.loginTextField.delegate = self     // понять
+        self.passwordTextField.delegate = self  // понять
+
         super.viewDidLoad()
         setupContentViews()
         hideKeyboardWhenTappedAround()
@@ -28,8 +34,8 @@ class LogInViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         isLogin = false
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -108,6 +114,9 @@ class LogInViewController: UIViewController {
     
     private func setupConstraints() {
         
+        self.bottomConstraint = logInScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        self.bottomConstraint?.isActive = true
+
         NSLayoutConstraint.activate([
             
             logInScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -135,8 +144,8 @@ class LogInViewController: UIViewController {
             logInButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             logInButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
             logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
-            
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+                        
         ])
     }
     
@@ -172,33 +181,47 @@ class LogInViewController: UIViewController {
         
         return logPassTextField
     }
+
+    
+    //MARK: Понять
+    
+    @objc func keyboardShow(_ notification: Notification){
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            
+            self.bottomConstraint?.constant = keyboardRectangle.height + 20
+            self.view.layoutIfNeeded()
+
+
+            print("Keyboard show! \(keyboardRectangle.height)")
+        }
+    }
+    
+    
+    @objc func keyboardHide(_ notification: Notification){
+        
+        print("Keyboard Hide!")
+
+        self.bottomConstraint?.constant = 0
+        self.view.layoutIfNeeded()
+
+        }
+    
+//        @objc func keyboardWillShow(notification:NSNotification){
 //
-//    @objc func keyboardShow(_ notification: Notification){
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardRectangle = keyboardFrame.cgRectValue
-//            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.minY) + 20
+//            let userInfo = notification.userInfo!
+//            var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//            keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+//
+//            var contentInset:UIEdgeInsets = logInScrollView.contentInset
+//            contentInset.bottom = keyboardFrame.size.height + 20
+//            logInScrollView.contentInset = contentInset
 //        }
-//    }
 //
-//    @objc func keyboardHide(_ notification: Notification){
-//        logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
-//    }
-    
-        @objc func keyboardWillShow(notification:NSNotification){
-            //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
-            let userInfo = notification.userInfo!
-            var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-            keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-    
-            var contentInset:UIEdgeInsets = logInScrollView.contentInset
-            contentInset.bottom = keyboardFrame.size.height + 20
-            logInScrollView.contentInset = contentInset
-        }
-    
-        @objc func keyboardWillHide(notification:NSNotification){
-            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-            logInScrollView.contentInset = contentInset
-        }
+//        @objc func keyboardWillHide(notification:NSNotification){
+//            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+//            logInScrollView.contentInset = contentInset
+//        }
 }
 
 // MARK: Alpha UIImage
