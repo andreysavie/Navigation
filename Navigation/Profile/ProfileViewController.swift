@@ -24,8 +24,12 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        headerTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        headerTableView.dataSource = self
+        headerTableView.delegate = self
+
         self.view.addSubview(headerTableView)
-        
+                
     }
     
 
@@ -42,6 +46,21 @@ class ProfileViewController: UIViewController {
 
         ])
     }
+}
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    
+     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
+    
+    
 }
 
 // MARK: Keyboard hedding method
