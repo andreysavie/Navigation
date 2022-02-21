@@ -15,8 +15,7 @@ struct ColorSet {
 class LogInViewController: UIViewController, UITextFieldDelegate {  // понять UITextFieldDelegate
     
     var isLogin = false
-    
-    private var bottomConstraint: NSLayoutConstraint?
+        
     
     override func viewDidLoad() {
         
@@ -113,10 +112,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
     }
     
     private func setupConstraints() {
-        
-        self.bottomConstraint = logInScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        self.bottomConstraint?.isActive = true
-
+                
         NSLayoutConstraint.activate([
             
             logInScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -188,41 +184,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
     @objc func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
-            
-            self.bottomConstraint?.constant = keyboardRectangle.height + 20
-            self.view.layoutIfNeeded()
-
-
-            print("Keyboard show! \(keyboardRectangle.height)")
+            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.minY) + 16
         }
     }
     
-    
     @objc func keyboardHide(_ notification: Notification){
-        
-        print("Keyboard Hide!")
-
-        self.bottomConstraint?.constant = 0
-        self.view.layoutIfNeeded()
-
+            logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
         }
-    
-//        @objc func keyboardWillShow(notification:NSNotification){
-//
-//            let userInfo = notification.userInfo!
-//            var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-//            keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-//
-//            var contentInset:UIEdgeInsets = logInScrollView.contentInset
-//            contentInset.bottom = keyboardFrame.size.height + 20
-//            logInScrollView.contentInset = contentInset
-//        }
-//
-//        @objc func keyboardWillHide(notification:NSNotification){
-//            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-//            logInScrollView.contentInset = contentInset
-//        }
 }
+
 
 // MARK: Alpha UIImage
 extension UIImage {
