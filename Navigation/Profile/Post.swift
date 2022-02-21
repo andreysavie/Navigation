@@ -52,3 +52,5 @@ let post_5 = Post(author: "Sergey Nepravda",
                   image: "post_5",
                   likes: 20,
                   views: 2420)
+
+var posts: [Post] = [post_1, post_2, post_3, post_4, post_5]
