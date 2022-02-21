@@ -81,7 +81,9 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         
         statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusTextField.textColor = .black
-        statusTextField.textAlignment = .center
+        statusTextField.leftViewMode = .always
+        statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
+
         
         statusTextField.autocorrectionType = UITextAutocorrectionType.no
         statusTextField.keyboardType = UIKeyboardType.default

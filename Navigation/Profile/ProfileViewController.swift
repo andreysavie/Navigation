@@ -15,6 +15,8 @@ class ProfileViewController: UIViewController {
         
         let headerView = ProfileHeaderView()
         
+//        let loginVC = LogInViewController()
+        
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         return headerView
@@ -49,6 +51,9 @@ class ProfileViewController: UIViewController {
         
         self.view.addSubview(headerView)
         self.view.addSubview(setTitleButton)
+        
+//        self.navigationController?.pushViewController(loginViewController, animated: true)
+//        loginViewController.navigationController?.navigationBar.isHidden = true
 
         headerView.addProfileViews()
         setupProfileConstraints()
@@ -57,10 +62,14 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        self.navigationController?.pushViewController(loginViewController, animated: true)
 
-//        loginViewController.navigationController?.navigationBar.isHidden = true
+
+        if loginViewController.isLogin == false {
+            
+            self.navigationController?.pushViewController(loginViewController, animated: true)
+        }
+        
+        
     }
 
     // MARK: Constraints
