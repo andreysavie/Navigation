@@ -89,7 +89,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         statusTextField.keyboardType = UIKeyboardType.default
         statusTextField.returnKeyType = UIReturnKeyType.done
         statusTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-        statusTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+//        statusTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         
         statusTextField.isEnabled = true
         statusTextField.isUserInteractionEnabled = true
@@ -112,14 +112,22 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         button.setTitle("Show status", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
-        button.backgroundColor = .systemTeal
+//        button.backgroundColor = .systemTeal
 
-        button.layer.cornerRadius = 4
+        if let image = UIImage(named: "blue_pixel") {
+            button.setBackgroundImage(image.image(alpha: 1.0), for: .normal)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .selected)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .highlighted)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
+        }
+
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
         
-        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
+//        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+//        button.layer.shadowRadius = 4.0
+//        button.layer.shadowColor = UIColor.black.cgColor
+//        button.layer.shadowOpacity = 0.7
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
@@ -131,12 +139,10 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     // MARK: METHODS
 
     @objc func buttonPressed(sender: UIButton!) {
-        
         guard statusTextField.text?.isEmpty == false else {return}
         
         statusLabel.text = statusTextChanged(statusTextField)
         self.statusTextField.text = ""
-        
     }
     
     
@@ -145,9 +151,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         if let newStatus = textField.text {
             status = newStatus
         }
-        
         return status
-        
     }
     
     

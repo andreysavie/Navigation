@@ -37,9 +37,16 @@ class ProfileViewController: UIViewController {
         button.setTitle("Set new title", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
-        button.backgroundColor = .systemTeal
+//        button.backgroundColor = .systemTeal
         
-        button.layer.cornerRadius = 4
+        if let image = UIImage(named: "blue_pixel") {
+            button.setBackgroundImage(image.image(alpha: 1.0), for: .normal)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .selected)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .highlighted)
+            button.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
+        }
+        
+//        button.layer.cornerRadius = 4
                 
         return button
         
@@ -94,7 +101,7 @@ class ProfileViewController: UIViewController {
 
 // MARK: Keyboard hedding method
 
-extension ProfileViewController {
+extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
