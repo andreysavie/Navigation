@@ -15,13 +15,13 @@ struct ColorSet {
 class LogInViewController: UIViewController, UITextFieldDelegate {  // понять UITextFieldDelegate
     
     var isLogin = false
-        
+    
     
     override func viewDidLoad() {
         
         self.loginTextField.delegate = self     // понять
         self.passwordTextField.delegate = self  // понять
-
+        
         super.viewDidLoad()
         setupContentViews()
         hideKeyboardWhenTappedAround()
@@ -112,7 +112,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
     }
     
     private func setupConstraints() {
-                
+        
         NSLayoutConstraint.activate([
             
             logInScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -141,7 +141,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
             logInButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
             logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
-                        
+            
         ])
     }
     
@@ -177,7 +177,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
         
         return logPassTextField
     }
-
+    
     
     //MARK: Понять
     
@@ -189,8 +189,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
     }
     
     @objc func keyboardHide(_ notification: Notification){
-            logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
-        }
+        logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+    
 }
 
 
