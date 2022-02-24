@@ -19,30 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Label styles:
         
         let tabBarController = UITabBarController()
-        let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 20) as Any] as [NSAttributedString.Key : Any]
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 16)]
         
-        let postTitleView = UIView(
-            frame: CGRect(
-                    x: 0.0,
-                    y: 0.0,
-                    width: 40.0,
-                    height: 64.0)
-        )
-        
-        let postTitleLabel = UILabel(
-            frame: CGRect(
-                    x: 0.0,
-                    y: 0.0,
-                    width: 40.0,
-                    height: 64.0)
-        )
-        
-        postTitleLabel.text = "NEW POST"
-
-        postTitleView.addSubview(postTitleLabel)
-        
-        
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+                
          
         //VievControllers:
         
@@ -51,31 +30,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedNC = UINavigationController(rootViewController: feedVC)
         
         let profileVC = ProfileViewController()
+        profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
-        
-        tabBarController.viewControllers = [feedNC, profileNC]
-        
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemGray5
+                
         feedNC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "list.bullet.circle"), selectedImage: UIImage(systemName: "list.bullet.circle.fill"))
-        feedNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
-        feedNC.navigationBar.titleTextAttributes = titleAttributes
-        feedNC.navigationBar.topItem?.title = "FEED"
-
-        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), selectedImage: UIImage(systemName: "person.circle.fill"))
+        feedNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any],for: .normal)
+        feedNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+        feedNC.navigationBar.topItem?.title = "Feed"
+        feedNC.navigationBar.barTintColor = UIColor.systemGray5
+        feedNC.navigationBar.standardAppearance = appearance
+        feedNC.navigationBar.scrollEdgeAppearance = feedNC.navigationBar.standardAppearance
+        
+        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), selectedImage: UIImage(systemName:"person.circle.fill"))
         profileNC.tabBarItem.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
-        profileNC.navigationBar.titleTextAttributes = titleAttributes
-        profileNC.navigationBar.topItem?.title = "PROFILE"
+        profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+        profileNC.navigationBar.topItem?.title = "Profile"
+        profileNC.navigationBar.barTintColor = UIColor.systemGray5
+        profileNC.navigationBar.standardAppearance = appearance
+        profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
 
-        tabBarController.tabBar.isHidden = false
+        tabBarController.viewControllers = [feedNC, profileNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
         tabBarController.tabBar.layer.borderWidth = 1
-        tabBarController.tabBar.layer.borderColor = UIColor.systemGray.cgColor
-        
-//        tabBarController.tabBar.layer.shadowOffset = CGSize(width: 0.0, height: -3.0)
-//        tabBarController.tabBar.layer.shadowRadius = 5.0
-//        let shadowColor = UIColor.gray
-//        tabBarController.tabBar.layer.shadowColor = shadowColor.cgColor
-//        tabBarController.tabBar.layer.shadowOpacity = 0.5
-        
+        tabBarController.tabBar.layer.borderColor = UIColor.gray.cgColor
+                        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

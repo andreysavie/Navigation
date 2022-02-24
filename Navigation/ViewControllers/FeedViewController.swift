@@ -10,21 +10,10 @@ import UIKit
 class FeedViewController: UIViewController {
     
     var postVC = PostViewController()
-    
-    init() {
-        postVC = PostViewController()
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let titleAttributes = [NSAttributedString.Key.font: UIFont(name: "Arial", size: 20) as Any] as [NSAttributedString.Key : Any]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let button = UIButton(
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,
@@ -33,14 +22,16 @@ class FeedViewController: UIViewController {
                 height: 50)
         )
         
+        button.setTitle("New post", for: .normal)
+        button.backgroundColor = .systemTeal
         button.layer.cornerRadius = button.frame.size.height / 4
+        
         button.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         button.layer.shadowRadius = 5.0
         let shadowColor = UIColor.black
         button.layer.shadowColor = shadowColor.cgColor
         button.layer.shadowOpacity = 0.8
-        button.backgroundColor = .systemTeal
-        button.setTitle("New post", for: .normal)
+        
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
         self.view.addSubview(button)
     }
@@ -51,7 +42,7 @@ class FeedViewController: UIViewController {
     
     @objc func showNewPostVC(sender: UIButton!) {
         
-        let post = Post(title: "NEW POST")
+        let post = Post(title: "New post")
         
         postVC.post = post
         postVC.view.backgroundColor = UIColor(displayP3Red: 0.582, green: 0.886, blue: 0.878, alpha: 1.0)
