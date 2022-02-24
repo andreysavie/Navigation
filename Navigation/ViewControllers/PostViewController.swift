@@ -8,14 +8,30 @@
 import UIKit
 
 struct Post {
+    
     var title: String
+    var image: UIImage
+    var label: String
+
 }
 
 class PostViewController: UIViewController {
     
-    var post: Post?
+    var post: Post
+    
+    init(post: Post) {
+        self.post = post
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+
     let infoViewController = InfoViewController()
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +43,24 @@ class PostViewController: UIViewController {
             action: #selector(showInfo)
         )
         
-        self.navigationItem.rightBarButtonItem  = infoBarButtonItem
-        view.backgroundColor = UIColor.lightGray
+        let image = UIImageView(image: post.image)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+       
+        view.addSubview(image)
         
-        if let thisPost = post {
-            title = thisPost.title
-        }
+        image.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        image.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        image.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        
+        self.navigationItem.rightBarButtonItem  = infoBarButtonItem
+        
+        view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1.0)
+        
+        title = post.title
     }
     
+
     @objc func showInfo() {
         infoViewController.title = title
         present(infoViewController, animated: true, completion: nil)

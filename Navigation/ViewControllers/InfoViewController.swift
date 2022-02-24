@@ -7,29 +7,13 @@
 
 import UIKit
 
-
-// ПРИМЕР СОЗДАНИЯ VIEW
-
-let testView: UIView = {
-    
-    let view = testView
-    view.frame = CGRect(
-    x: UIScreen.main.bounds.midX - 25,
-    y: UIScreen.main.bounds.maxY - 50,
-    width: 50,
-    height: 50
-)
-    return view
-}()
-
-
 class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "information"
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1)
         
         let button = UIButton(
             frame: CGRect(

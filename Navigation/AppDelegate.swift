@@ -15,15 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-
-        // Label styles:
         
         let tabBarController = UITabBarController()
-        
+
+        // MARK: Label styles
+                
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
                 
          
-        //VievControllers:
+        // MARK: VievControllers
         
         let feedVC = FeedViewController()
         feedVC.view.backgroundColor = .secondarySystemGroupedBackground
