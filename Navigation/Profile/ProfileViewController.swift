@@ -8,9 +8,10 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-            
+    
+    let loginViewController = LogInViewController()
     let tableView: UITableView = {
-      
+        
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.toAutoLayout()
         tableView.isScrollEnabled = true
@@ -18,7 +19,7 @@ class ProfileViewController: UIViewController {
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
         tableView.rowHeight = UITableView.automaticDimension
-
+        
         return tableView
         
     }()
@@ -27,7 +28,6 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.addSubview(tableView)
-        
         setupTableViewCOnstraints()
         
         tableView.register(
@@ -39,10 +39,19 @@ class ProfileViewController: UIViewController {
             ProfileHeaderView.self,
             forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifire
         )
-
+        
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
+        hideKeyboardWhenTappedAround()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard LogInViewController.isLogin == false else { return }
+        
+        self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
     private func setupTableViewCOnstraints() {
@@ -69,7 +78,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-        cell.setConfigureOfCell(post: posts[indexPath.row])        
+        cell.setConfigureOfCell(post: posts[indexPath.row])
         return cell
     }
     
@@ -83,9 +92,9 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-                    let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
-                    return headerView
-                } else { return nil }
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+            return headerView
+        } else { return nil }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -105,7 +114,3 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.pushViewController(loginViewController, animated: true)
-//    }

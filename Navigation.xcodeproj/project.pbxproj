@@ -55,9 +55,7 @@
 				D575870A27BEB11000570D3F /* ProfileHeaderView.swift */,
 				D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */,
 				D562464327C810490022DDFC /* PostTableViewCell.swift */,
-				D562464527C826350022DDFC /* Constants.swift */,
 				D5A7F0B427C245FA00962E7D /* LogInViewController.swift */,
-				D530410D27C39882003DD19F /* Post.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -91,8 +89,10 @@
 		D5ED095E27B5A423007F70C6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D575870927BEB0A900570D3F /* Profile */,
+				D562464527C826350022DDFC /* Constants.swift */,
+				D530410D27C39882003DD19F /* Post.swift */,
 				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
+				D575870927BEB0A900570D3F /* Profile */,
 				D5DBC7CF27B9A71A00F4BD09 /* ViewControllers */,
 				D5ED096827B5A428007F70C6 /* Assets.xcassets */,
 				D5ED096A27B5A428007F70C6 /* LaunchScreen.storyboard */,

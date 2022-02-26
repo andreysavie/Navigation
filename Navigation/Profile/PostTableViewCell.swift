@@ -17,13 +17,6 @@ class PostTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    public func setConfigureOfCell(post: Post) {
-        self.postTitle.text = post.title
-        self.postDescription.text = post.description
-        self.postImage.image = UIImage(named: post.image)
-        self.postLikesCounter.text = "Likes: \(post.likes)"
-        self.postViewsCounter.text = "Views: \(post.views)"
-    }
     
     private lazy var postTitle: UILabel = {
         
@@ -51,15 +44,12 @@ class PostTableViewCell: UITableViewCell {
         postDescription.font = UIFont.systemFont(ofSize: 14)
         postDescription.textColor = .systemGray
         postDescription.numberOfLines = 0
-        
         return postDescription
     }()
-    
     
     private lazy var postLikesCounter = counter()
     private lazy var postViewsCounter = counter()
 
-    
     private func counter() -> UILabel {
         
         let counter = UILabel()
@@ -67,7 +57,14 @@ class PostTableViewCell: UITableViewCell {
         counter.font = UIFont.systemFont(ofSize: 16)
         counter.textColor = .black
         return counter
-
+    }
+    
+    public func setConfigureOfCell(post: Post) {
+        self.postTitle.text = post.title
+        self.postDescription.text = post.description
+        self.postImage.image = UIImage(named: post.image)
+        self.postLikesCounter.text = "Likes: \(post.likes)"
+        self.postViewsCounter.text = "Views: \(post.views)"
     }
     
     // MARK: Constraints

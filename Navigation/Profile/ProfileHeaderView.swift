@@ -18,15 +18,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
-        
         avatar.toAutoLayout()
-        
         avatar.clipsToBounds = true
         avatar.image = UIImage(named: "avatar")
         avatar.layer.cornerRadius = 50
         avatar.layer.borderWidth = 3
         avatar.layer.borderColor = UIColor.white.cgColor
-        
         return avatar
         
     }()
@@ -36,13 +33,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var nameLabel: UILabel = {
         
         let nameLabel = UILabel()
-        
         nameLabel.toAutoLayout()
-        
         nameLabel.text = "Andrey Rybalkin"
         nameLabel.textColor = .black
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        
         return nameLabel
         
     }()
@@ -52,14 +46,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var statusLabel: UILabel = {
         
         let statusLabel = UILabel()
-        
         statusLabel.toAutoLayout()
-        
         statusLabel.text = "Waiting for something..."
         statusLabel.numberOfLines = 2
         statusLabel.textColor = .darkGray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        
         return statusLabel
         
     }()
@@ -69,9 +60,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var statusTextField: UITextField = {
         
         let statusTextField = UITextField()
-        
         statusTextField.toAutoLayout()
-        
         statusTextField.layer.cornerRadius = 12
         statusTextField.clipsToBounds = true
         statusTextField.layer.borderWidth = 1
@@ -79,7 +68,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         statusTextField.backgroundColor = .white
         
         statusTextField.placeholder = "Enter your status..."
-        
         statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusTextField.textColor = .black
         statusTextField.leftViewMode = .always
@@ -92,8 +80,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         statusTextField.isEnabled = true
         statusTextField.isUserInteractionEnabled = true
-        statusTextField.delegate = self
-        
+//        statusTextField.delegate = self
         statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
         
         return statusTextField
@@ -107,27 +94,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         let button = UIButton()
         
         button.toAutoLayout()
-        
         button.setTitle("Show status", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
-
-        if let image = UIImage(named: "blue_pixel") {
-            button.setBackgroundImage(image.image(alpha: 1.0), for: .normal)
-            button.setBackgroundImage(image.image(alpha: 0.8), for: .selected)
-            button.setBackgroundImage(image.image(alpha: 0.8), for: .highlighted)
-            button.setBackgroundImage(image.image(alpha: 0.8), for: .disabled)
-        }
-
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
+        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         return button
-        
     }()
-     // MARK: Понять!!!
+    
     
     override init(reuseIdentifier: String?) {
             super.init(reuseIdentifier: reuseIdentifier)
@@ -159,18 +135,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return status
     }
     
-    
-//    func addProfileViews () {
-//
-//        addSubviews(avatar,
-//                    nameLabel,
-//                    statusLabel,
-//                    statusTextField,
-//                    showStatusButton)
-//        self.setupConstraints()
-//
-//    }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+
+        textField.resignFirstResponder()
+        return true
+    }
+
+
     //     MARK: Constraints
     
     private func setupConstraints() {
@@ -199,10 +171,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             statusLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
             statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
-            
         ])
     }
 }
+
 
 public extension UIView {
 
