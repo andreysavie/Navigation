@@ -17,12 +17,12 @@ class PostTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    public func setConfigureOfCell(title: String, image: String, description: String, likes: Int, views: Int) {
-        self.postTitle.text = title
-        self.postImage.image = UIImage(named: image)
-        self.postDescription.text = description
-        self.postLikesCounter.text = "Likes: \(likes)"
-        self.postViewsCounter.text = "Views: \(views)"
+    public func setConfigureOfCell(post: Post) {
+        self.postTitle.text = post.title
+        self.postDescription.text = post.description
+        self.postImage.image = UIImage(named: post.image)
+        self.postLikesCounter.text = "Likes: \(post.likes)"
+        self.postViewsCounter.text = "Views: \(post.views)"
     }
     
     private lazy var postTitle: UILabel = {

@@ -11,11 +11,10 @@ import UIKit
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     static let identifire = "ProfileHeaderView"
-
     private var status: String = ""
     
     // MARK: Avatar
-    
+        
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
@@ -86,7 +85,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         statusTextField.leftViewMode = .always
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
 
-        
         statusTextField.autocorrectionType = UITextAutocorrectionType.no
         statusTextField.keyboardType = UIKeyboardType.default
         statusTextField.returnKeyType = UIReturnKeyType.done
@@ -129,7 +127,19 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return button
         
     }()
-       
+     // MARK: Понять!!!
+    
+    override init(reuseIdentifier: String?) {
+            super.init(reuseIdentifier: reuseIdentifier)
+        
+            contentView.addSubviews(nameLabel, avatar, statusLabel, statusTextField, showStatusButton)
+            setupConstraints()
+        }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     
     // MARK: METHODS
 
@@ -150,16 +160,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
     
     
-    func addProfileViews () {
-        
-        addSubviews(avatar,
-                    nameLabel,
-                    statusLabel,
-                    statusTextField,
-                    showStatusButton)
-        self.setupConstraints()
-        
-    }
+//    func addProfileViews () {
+//
+//        addSubviews(avatar,
+//                    nameLabel,
+//                    statusLabel,
+//                    statusTextField,
+//                    showStatusButton)
+//        self.setupConstraints()
+//
+//    }
     
     //     MARK: Constraints
     
@@ -170,25 +180,25 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             avatar.widthAnchor.constraint(equalToConstant: 100),
             avatar.heightAnchor.constraint(equalToConstant: 100),
             avatar.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.indent),
-            avatar.leadingAnchor.constraint(equalTo: self.leftAnchor, constant: Constants.leadingMargin),
+            avatar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingMargin),
             
-            nameLabel.leadingAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
+            nameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-            nameLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: Constants.trailingMargin),
+            nameLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
             
-            showStatusButton.leadingAnchor.constraint(equalTo: self.leftAnchor, constant: Constants.leadingMargin),
-            showStatusButton.trailingAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: Constants.trailingMargin),
+            showStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingMargin),
+            showStatusButton.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
             showStatusButton.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: Constants.indent),
             showStatusButton.heightAnchor.constraint(equalToConstant: 50),
             
-            statusTextField.leadingAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
-            statusTextField.trailingAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: Constants.trailingMargin),
+            statusTextField.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
+            statusTextField.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
             statusTextField.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -12),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            statusLabel.leadingAnchor.constraint(equalTo: avatar.rightAnchor, constant: 20),
+            statusLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
-            statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.rightAnchor, constant: Constants.trailingMargin),
+            statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
             
         ])
     }
@@ -199,10 +209,10 @@ public extension UIView {
     func toAutoLayout() {
         translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { addSubview($0) }
-    }
+          subviews.forEach { addSubview($0) }
+      }
 }
 
 

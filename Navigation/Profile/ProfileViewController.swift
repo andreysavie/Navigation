@@ -9,24 +9,26 @@ import UIKit
 
 class ProfileViewController: UIViewController {
             
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    let headerView = ProfileHeaderView()
+    let tableView: UITableView = {
+      
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.toAutoLayout()
+        tableView.isScrollEnabled = true
+        tableView.separatorInset = .zero
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 220
+        tableView.rowHeight = UITableView.automaticDimension
+
+        return tableView
+        
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(tableView)
-        self.view.addSubview(headerView)
-
-        self.tableView.toAutoLayout()
         
-        [
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ]
-            .forEach{ $0.isActive = true }
+        setupTableViewCOnstraints()
         
         tableView.register(
             PostTableViewCell.self,
@@ -37,9 +39,20 @@ class ProfileViewController: UIViewController {
             ProfileHeaderView.self,
             forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifire
         )
-        
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+    }
+    
+    private func setupTableViewCOnstraints() {
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
     }
 }
 
@@ -56,14 +69,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-        cell.setConfigureOfCell(
-            title: posts[indexPath.row].title,
-            image: posts[indexPath.row].image,
-            description: posts[indexPath.row].description,
-            likes: posts[indexPath.row].likes,
-            views: posts[indexPath.row].views
-        )
-        
+        cell.setConfigureOfCell(post: posts[indexPath.row])        
         return cell
     }
     
@@ -76,16 +82,16 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire)
-        return header
+        if section == 0 {
+                    let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+                    return headerView
+                } else { return nil }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 220
     }
 }
-
-
 
 
 extension UIViewController {
