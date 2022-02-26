@@ -42,17 +42,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    private lazy var loginTextField = logPassTextField(placeholder: "Email or phone", secure: false)
-    private lazy var passwordTextField = logPassTextField(placeholder: "Password", secure: true)
-    
+        
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
         logInScrollView.toAutoLayout()
         return logInScrollView
     }()
     
-    private lazy var logInHeaderView: UIView = {
+    private lazy var contentView: UIView = {
         let logInHeaderView = UIView()
         logInHeaderView.toAutoLayout()
         return logInHeaderView
@@ -71,11 +68,10 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
         stackView.toAutoLayout()
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
-        stackView.backgroundColor = .clear
+//        stackView.backgroundColor = .clear
         stackView.layer.borderColor = UIColor.lightGray.cgColor
         stackView.layer.borderWidth = 0.5
         stackView.layer.cornerRadius = 10
-        stackView.distribution = .fillProportionally
         stackView.backgroundColor = .systemGray6
         stackView.clipsToBounds = true
         return stackView
@@ -101,60 +97,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
         return button
     }()
     
-    private func setupContentViews() {
-        view.backgroundColor = .white
-        view.addSubview(logInScrollView)
-        logInScrollView.addSubview(logInHeaderView)
-        logInHeaderView.addSubviews(logo, textFieldsStackView, logInButton)
-        textFieldsStackView.addArrangedSubview(loginTextField)
-        textFieldsStackView.addArrangedSubview(passwordTextField)
-        setupConstraints()
-    }
-    
-    private func setupConstraints() {
-        
-        NSLayoutConstraint.activate([
-            
-            logInScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            logInScrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            logInScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            logInScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            logInHeaderView.leftAnchor.constraint(equalTo: logInScrollView.leftAnchor),
-            logInHeaderView.rightAnchor.constraint(equalTo: logInScrollView.rightAnchor),
-            logInHeaderView.topAnchor.constraint(equalTo: logInScrollView.topAnchor),
-            logInHeaderView.bottomAnchor.constraint(equalTo: logInScrollView.bottomAnchor),
-            logInHeaderView.centerXAnchor.constraint(equalTo: logInScrollView.centerXAnchor),
-            logInHeaderView.centerYAnchor.constraint(equalTo: logInScrollView.centerYAnchor),
-            
-            logo.widthAnchor.constraint(equalToConstant: 100),
-            logo.heightAnchor.constraint(equalToConstant: 100),
-            logo.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            logo.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 120),
-            
-            textFieldsStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            textFieldsStackView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
-            textFieldsStackView.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
-            textFieldsStackView.heightAnchor.constraint(equalToConstant: 100),
-            
-            logInButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            logInButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -32),
-            logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: 16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
-            
-        ])
-    }
-    
-    //MARK: METHODS
-    
-    @objc private func logInButtonPressed(sender: UIButton!) {
-        
-        guard loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false else {return}
-        isLogin = true
-        self.navigationController?.popViewController(animated: true)
-        
-    }
-    
     private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
         let logPassTextField = UITextField()
         
@@ -178,8 +120,66 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
         return logPassTextField
     }
     
+    private lazy var loginTextField = logPassTextField(placeholder: "Email or phone", secure: false)
     
-    //MARK: Понять
+    private lazy var passwordTextField = logPassTextField(placeholder: "Password", secure: true)
+
+
+    
+    private func setupContentViews() {
+        view.backgroundColor = .white
+        view.addSubview(logInScrollView)
+        logInScrollView.addSubview(contentView)
+        contentView.addSubviews(logo, textFieldsStackView, logInButton)
+        textFieldsStackView.addArrangedSubview(loginTextField)
+        textFieldsStackView.addArrangedSubview(passwordTextField)
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        
+        NSLayoutConstraint.activate([
+            
+            logInScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            logInScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            logInScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            logInScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+              
+            contentView.topAnchor.constraint(equalTo: logInScrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: logInScrollView.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: logInScrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: logInScrollView.trailingAnchor),
+            contentView.centerXAnchor.constraint(equalTo: logInScrollView.centerXAnchor),
+            contentView.centerYAnchor.constraint(equalTo: logInScrollView.centerYAnchor),
+              
+            logo.widthAnchor.constraint(equalToConstant: 100),
+            logo.heightAnchor.constraint(equalToConstant: 100),
+            logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            logo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+              
+              textFieldsStackView.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 120),
+            textFieldsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
+            textFieldsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
+            textFieldsStackView.heightAnchor.constraint(equalToConstant: 100),
+              
+              logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: Constants.indent),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
+            logInButton.heightAnchor.constraint(equalToConstant: 50)
+
+        ])
+    }
+    
+    //MARK: METHODS
+    
+    @objc private func logInButtonPressed(sender: UIButton!) {
+        
+        guard loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false else {return}
+        isLogin = true
+        self.navigationController?.popViewController(animated: true)
+        
+    }
+        
     
     @objc func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -191,7 +191,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {  // поня�
     @objc func keyboardHide(_ notification: Notification){
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
-    
 }
 
 

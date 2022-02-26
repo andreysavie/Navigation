@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: VievControllers
         
         let feedVC = FeedViewController()
+//        let loginVC = LogInViewController()
         feedVC.view.backgroundColor = .secondarySystemGroupedBackground
         let feedNC = UINavigationController(rootViewController: feedVC)
         

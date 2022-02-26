@@ -9,8 +9,8 @@ import UIKit
 
 struct Constants {
     
-    static let leftMargin:CGFloat = 16
-    static let rightMargin:CGFloat = -16
+    static let leadingMargin:CGFloat = 16
+    static let trailingMargin:CGFloat = -16
     static let indent:CGFloat = 16
     
 }

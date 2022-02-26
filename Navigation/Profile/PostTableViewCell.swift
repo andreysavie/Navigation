@@ -78,23 +78,23 @@ class PostTableViewCell: UITableViewCell {
             contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
             
             postTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.indent),
-            postTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leftMargin),
-            postTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.rightMargin),
+            postTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
+            postTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
             
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor),
             postImage.topAnchor.constraint(equalTo: postTitle.bottomAnchor, constant: Constants.indent),
             
             postDescription.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: Constants.indent),
-            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leftMargin),
-            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.rightMargin),
+            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
+            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
             
             postLikesCounter.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: Constants.indent),
-            postLikesCounter.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leftMargin),
-            postLikesCounter.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.rightMargin),
+            postLikesCounter.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
+            postLikesCounter.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.trailingMargin),
             
             postViewsCounter.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: Constants.indent),
-            postViewsCounter.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.rightMargin),
+            postViewsCounter.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
             postViewsCounter.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.indent),
         ])
     }
