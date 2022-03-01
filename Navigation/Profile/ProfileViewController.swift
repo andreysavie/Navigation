@@ -68,18 +68,37 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+       
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return posts.count
+        default:
+            return 0
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-        cell.setConfigureOfCell(post: posts[indexPath.row])
-        return cell
+        
+        if indexPath.section == 0 {
+            
+            return UITableViewCell()
+            
+        } else if indexPath.section == 1 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
+            cell.setConfigureOfCell(post: posts[indexPath.row])
+            return cell
+
+        }
+        
+        return UITableViewCell()
     }
     
 }
@@ -98,7 +117,15 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 220
+        
+        switch section {
+        case 0:
+            return 220
+        case 1:
+            return 10
+        default:
+            return 0
+        }
     }
 }
 
