@@ -13,7 +13,7 @@ struct ColorSet {
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
-    static var isLogin = false
+    static var isLogin = true
     
     override func viewDidLoad() {
         

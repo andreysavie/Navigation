@@ -35,6 +35,11 @@ class ProfileViewController: UIViewController {
             forCellReuseIdentifier: PostTableViewCell.identifire
         )
         
+        tableView.register(
+            PhotosTableViewCell.self,
+            forCellReuseIdentifier: PhotosTableViewCell.identifire
+        )
+        
         self.tableView.register(
             ProfileHeaderView.self,
             forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifire
@@ -42,6 +47,7 @@ class ProfileViewController: UIViewController {
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
         
         hideKeyboardWhenTappedAround()
         
@@ -88,8 +94,10 @@ extension ProfileViewController: UITableViewDataSource {
         
         if indexPath.section == 0 {
             
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifire, for: indexPath) as! PhotosTableViewCell
             
+            return cell
+
         } else if indexPath.section == 1 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
@@ -122,11 +130,15 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             return 220
         case 1:
-            return 10
+            return 5
         default:
             return 0
         }
     }
+    
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
 }
 
 
