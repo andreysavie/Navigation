@@ -20,9 +20,9 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var photosView: PhotosView = {
         
-    let photosView = PhotosView(frame: UIScreen.main.bounds)
+    let photosView = PhotosView()
         photosView.toAutoLayout()
-        
+        photosView.setupContent()
         return photosView
     }()
     
@@ -65,10 +65,16 @@ class PhotosTableViewCell: UITableViewCell {
 //            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
 //            photosView.heightAnchor.constraint(equalToConstant: 100 ),
 
+//            photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
+//            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            photosView.heightAnchor.constraint(equalToConstant: 90)
+
             photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
-            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            photosView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+            photosView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            photosView.heightAnchor.constraint(equalToConstant: 90)
+
+//            photosView.heightAnchor.constraint(equalTo: postImage.widthAnchor),
 
 
             

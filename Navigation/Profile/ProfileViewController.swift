@@ -130,15 +130,15 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             return 220
         case 1:
-            return 5
+            return 90
         default:
             return 0
         }
     }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
 
 

@@ -31,7 +31,7 @@ class PhotosView: UIView {
         collection.register(CustomCell.self, forCellWithReuseIdentifier: String(describing: CustomCell.self))
         collection.dataSource = self
         collection.delegate = self
-        collection.backgroundColor = .lightGray
+        collection.backgroundColor = .white
         return collection
     }()
 
@@ -49,7 +49,7 @@ class PhotosView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 90)
+            collectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 }
