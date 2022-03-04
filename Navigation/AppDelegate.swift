@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let profileVC = ProfileViewController()
         profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
-
+        
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -57,6 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.standardAppearance = appearance
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
 
+//        photosNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+//        photosNC.navigationBar.topItem?.title = "Photos"
+//        photosNC.navigationBar.barTintColor = UIColor.systemGray5
+//        photosNC.navigationBar.standardAppearance = appearance
+//        photosNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
+
+        
         tabBarController.viewControllers = [feedNC, profileNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
 //        tabBarController.tabBar.layer.borderWidth = 1

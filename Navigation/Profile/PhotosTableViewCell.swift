@@ -5,6 +5,8 @@
 //  Created by Андрей Рыбалкин on 02.03.2022.
 //
 
+// MARK: ВЫНЕСТИ PhotosCollectionViewCell в отдельный файл!!!
+
 import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
@@ -13,8 +15,10 @@ class PhotosTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        contentView.addSubviews(photosTitle, arrowImage, photosView)
         contentView.addSubviews(photosTitle, arrowImage, photosView)
 
+        
         setupConstraints()
     }
     
@@ -39,8 +43,8 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var arrowImage: UIImageView = {
         let arrowImage = UIImageView()
-        arrowImage.image = UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal)
         arrowImage.toAutoLayout()
+        arrowImage.image = UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal)
         return arrowImage
     }()
 
@@ -60,24 +64,10 @@ class PhotosTableViewCell: UITableViewCell {
             arrowImage.heightAnchor.constraint(equalToConstant: 40),
             arrowImage.widthAnchor.constraint(equalToConstant: 40),
 
-//            photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
-//            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-//            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-//            photosView.heightAnchor.constraint(equalToConstant: 100 ),
-
-//            photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
-//            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            photosView.heightAnchor.constraint(equalToConstant: 90)
-
             photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
             photosView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            photosView.heightAnchor.constraint(equalToConstant: 90)
-
-//            photosView.heightAnchor.constraint(equalTo: postImage.widthAnchor),
-
-
-            
+            photosView.heightAnchor.constraint(equalToConstant: 70),
+            photosView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
     

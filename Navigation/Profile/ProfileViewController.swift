@@ -9,7 +9,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let loginViewController = LogInViewController()
+    let loginViewController = LogInViewController() // убрать
+    let photosViewController = PhotosViewController()
+    let postVC = PostViewController()
     let tableView: UITableView = {
         
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -18,7 +20,7 @@ class ProfileViewController: UIViewController {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.rowHeight = UITableView.automaticDimension
         
         return tableView
         
@@ -48,16 +50,15 @@ class ProfileViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        
         hideKeyboardWhenTappedAround()
-        
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         
         guard LogInViewController.isLogin == false else { return }
-        
         self.navigationController?.pushViewController(loginViewController, animated: true)
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func setupTableViewCOnstraints() {
@@ -69,6 +70,14 @@ class ProfileViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
+    
+    func showPhotosVC() {
+        photosViewController.title = "Photo Gallery"
+        photosViewController.view.backgroundColor = .white
+        self.navigationController?.pushViewController(photosViewController, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
+
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -78,7 +87,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
+        
         switch section {
         case 0:
             return 1
@@ -91,32 +100,20 @@ extension ProfileViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.section == 0 {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifire, for: indexPath) as! PhotosTableViewCell
-            
             return cell
-
         } else if indexPath.section == 1 {
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
             cell.setConfigureOfCell(post: posts[indexPath.row])
             return cell
-
         }
-        
         return UITableViewCell()
     }
     
 }
-
 extension ProfileViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
+        
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
@@ -130,19 +127,31 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             return 220
         case 1:
-            return 90
+            return 1
         default:
             return 0
         }
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        if indexPath.section == 0 {
+//            navigationController?.pushViewController(photosViewController, animated: true)
+
+//            navigationController?.pushViewController(postVC, animated: true)
+            showPhotosVC()
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+
+    
 }
 
-
 extension UIViewController {
+   
+    // сменить название!
+    
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
