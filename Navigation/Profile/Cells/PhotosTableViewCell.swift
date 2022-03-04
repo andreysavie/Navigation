@@ -15,19 +15,15 @@ class PhotosTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        contentView.addSubviews(photosTitle, arrowImage, photosView)
-        contentView.addSubviews(photosTitle, arrowImage, photosView)
-
-        
+        contentView.addSubviews(photosTitle, arrowImage, photosPreview)
         setupConstraints()
     }
     
-    private lazy var photosView: PhotosView = {
-        
-    let photosView = PhotosView()
-        photosView.toAutoLayout()
-        photosView.setupContent()
-        return photosView
+    private lazy var photosPreview: PhotosPreview = {
+            let photosPreview = PhotosPreview()
+        photosPreview.toAutoLayout()
+        photosPreview.setupContent()
+        return photosPreview
     }()
     
     private lazy var photosTitle: UILabel = {
@@ -38,8 +34,6 @@ class PhotosTableViewCell: UITableViewCell {
         photosTitle.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return photosTitle
     }()
-    
-    // Временное название...
     
     private lazy var arrowImage: UIImageView = {
         let arrowImage = UIImageView()
@@ -55,7 +49,7 @@ class PhotosTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             
             contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
-//
+
             photosTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             photosTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
 
@@ -64,10 +58,10 @@ class PhotosTableViewCell: UITableViewCell {
             arrowImage.heightAnchor.constraint(equalToConstant: 40),
             arrowImage.widthAnchor.constraint(equalToConstant: 40),
 
-            photosView.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
-            photosView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            photosView.heightAnchor.constraint(equalToConstant: 70),
-            photosView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
+            photosPreview.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
+            photosPreview.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            photosPreview.heightAnchor.constraint(equalToConstant: 70),
+            photosPreview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
     

@@ -9,9 +9,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let loginViewController = LogInViewController() // убрать
+    let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
-    let postVC = PostViewController()
+    
     let tableView: UITableView = {
         
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -20,8 +20,6 @@ class ProfileViewController: UIViewController {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-//        tableView.rowHeight = UITableView.automaticDimension
-        
         return tableView
         
     }()
@@ -30,7 +28,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.addSubview(tableView)
-        setupTableViewCOnstraints()
+        setupConstraints()
         
         tableView.register(
             PostTableViewCell.self,
@@ -61,7 +59,7 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    private func setupTableViewCOnstraints() {
+    private func setupConstraints() {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -100,25 +98,43 @@ extension ProfileViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifire, for: indexPath) as! PhotosTableViewCell
+//        if indexPath.section == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifire, for: indexPath) as! PhotosTableViewCell
+//            return cell
+//        } else if indexPath.section == 1 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
+//            cell.setConfigureOfCell(post: posts[indexPath.row])
+//            return cell
+//        }
+//        return UITableViewCell()
+        
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: PhotosTableViewCell.identifire,
+                for: indexPath) as! PhotosTableViewCell
             return cell
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
+            
+        case 1:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: PostTableViewCell.identifire,
+                for: indexPath) as! PostTableViewCell
             cell.setConfigureOfCell(post: posts[indexPath.row])
             return cell
+            
+        default:
+            return UITableViewCell()
         }
-        return UITableViewCell()
     }
-    
 }
+
 extension ProfileViewController: UITableViewDelegate {
         
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
+        guard section == 0 else { return nil }
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
             return headerView
-        } else { return nil }
+//        } else { return nil }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -135,13 +151,9 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        if indexPath.section == 0 {
-//            navigationController?.pushViewController(photosViewController, animated: true)
-
-//            navigationController?.pushViewController(postVC, animated: true)
-            showPhotosVC()
-        }
+        guard indexPath.section == 0 else {return}
         
+        showPhotosVC()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -150,8 +162,6 @@ extension ProfileViewController: UITableViewDelegate {
 
 extension UIViewController {
    
-    // сменить название!
-    
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

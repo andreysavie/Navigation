@@ -13,4 +13,6 @@ struct Constants {
     static let trailingMargin:CGFloat = -16
     static let indent:CGFloat = 16
     
+    static let Inset: CGFloat = 8
+    
 }
