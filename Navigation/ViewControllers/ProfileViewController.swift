@@ -75,7 +75,7 @@ class ProfileViewController: UIViewController {
         self.navigationController?.pushViewController(photosViewController, animated: true)
         tabBarController?.tabBar.isHidden = true
     }
-
+    
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -98,16 +98,6 @@ extension ProfileViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.section == 0 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifire, for: indexPath) as! PhotosTableViewCell
-//            return cell
-//        } else if indexPath.section == 1 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-//            cell.setConfigureOfCell(post: posts[indexPath.row])
-//            return cell
-//        }
-//        return UITableViewCell()
-        
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(
@@ -129,12 +119,11 @@ extension ProfileViewController: UITableViewDataSource {
 }
 
 extension ProfileViewController: UITableViewDelegate {
-        
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
-            return headerView
-//        } else { return nil }
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -150,18 +139,18 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         guard indexPath.section == 0 else {return}
         
         showPhotosVC()
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     
 }
 
 extension UIViewController {
-   
+    
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

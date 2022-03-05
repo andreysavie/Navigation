@@ -66,9 +66,6 @@
 			children = (
 				D575870A27BEB11000570D3F /* ProfileHeaderView.swift */,
 				D5AB1A4627D0D7130072E723 /* PhotosPreview.swift */,
-				D5AB1A4827D144370072E723 /* PhotosViewController.swift */,
-				D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */,
-				D5A7F0B427C245FA00962E7D /* LogInViewController.swift */,
 				D5AB1A4F27D2B7530072E723 /* Cells */,
 			);
 			path = Profile;
@@ -88,6 +85,9 @@
 		D5DBC7CF27B9A71A00F4BD09 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D5A7F0B427C245FA00962E7D /* LogInViewController.swift */,
+				D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */,
+				D5AB1A4827D144370072E723 /* PhotosViewController.swift */,
 				D5ED097927B68627007F70C6 /* InfoViewController.swift */,
 				D5ED097727B66965007F70C6 /* PostViewController.swift */,
 				D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */,

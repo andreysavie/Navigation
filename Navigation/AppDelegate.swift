@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: VievControllers
         
         let feedVC = FeedViewController()
-//        let loginVC = LogInViewController()
         feedVC.view.backgroundColor = .secondarySystemGroupedBackground
         let feedNC = UINavigationController(rootViewController: feedVC)
         
@@ -56,18 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.barTintColor = UIColor.systemGray5
         profileNC.navigationBar.standardAppearance = appearance
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
-
-//        photosNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
-//        photosNC.navigationBar.topItem?.title = "Photos"
-//        photosNC.navigationBar.barTintColor = UIColor.systemGray5
-//        photosNC.navigationBar.standardAppearance = appearance
-//        photosNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
-
         
         tabBarController.viewControllers = [feedNC, profileNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
-//        tabBarController.tabBar.layer.borderWidth = 1
-//        tabBarController.tabBar.layer.borderColor = UIColor.gray.cgColor
                         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
