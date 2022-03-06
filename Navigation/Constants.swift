@@ -14,3 +14,16 @@ struct Constants {
     static let indent: CGFloat = 16
     static let Inset: CGFloat = 8
 }
+
+
+
+public extension UIView {
+
+    func toAutoLayout() {
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func addSubviews(_ subviews: UIView...) {
+          subviews.forEach { addSubview($0) }
+      }
+}

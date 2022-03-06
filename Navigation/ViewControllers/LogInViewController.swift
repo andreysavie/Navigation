@@ -7,61 +7,12 @@
 
 import UIKit
 
-struct ColorSet {
-    static let mainColor = UIColor(named: "main_color")
-}
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
-    static var isLogin = false
-    
-    override func viewDidLoad() {
-        
-        self.loginTextField.delegate = self
-        self.passwordTextField.delegate = self
-                
-        super.viewDidLoad()
-        setupContentViews()
-        hideKeyboardWhenTappedAround()
-        self.navigationController?.navigationBar.isHidden = true
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
-    }
-    // MARK: Subscribing for keyboard notifications
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardShow),
-            name: UIResponder.keyboardWillShowNotification, object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardHide),
-            name: UIResponder.keyboardWillHideNotification, object: nil
-        )
-    }
-    
-    // MARK: Unsubscribing from keyboard notifications
+    // MARK: PROPERTY
 
-    override func viewDidDisappear(_ animated: Bool) {
-        
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    // MARK: Making ScrollView for content moving possibility
+    static var isLogin = false
     
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
@@ -69,8 +20,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return logInScrollView
     }()
     
-    // MARK: Making the container for views
-
     private lazy var contentView: UIView = {
         let logInHeaderView = UIView()
         logInHeaderView.toAutoLayout()
@@ -107,10 +56,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         button.clipsToBounds = true
         button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
+        button.alpha = 0.5
+        button.isEnabled = false
+    
+
         return button
     }()
     
-    // MARK: general property for each textFIelds
+    // MARK: METHODS
 
         private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
         let logPassTextField = UITextField()
@@ -131,14 +84,78 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         logPassTextField.returnKeyType = .done
         logPassTextField.clearButtonMode = UITextField.ViewMode.whileEditing
         logPassTextField.isSecureTextEntry = secure
-        
+            
         return logPassTextField
     }
     
-    private lazy var loginTextField = logPassTextField(placeholder: "Email or phone", secure: false)
+//    private lazy var loginTextField = logPassTextField(placeholder: "Email or phone", secure: false)
     
-    private lazy var passwordTextField = logPassTextField(placeholder: "Password", secure: true)
+    private lazy var loginTextField: UITextField = {
+        let textField = logPassTextField(placeholder: "Email or phone", secure: false)
+        textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
+        return textField
+    }()
     
+    private lazy var passwordTextField: UITextField = {
+        let textField = logPassTextField(placeholder: "Password", secure: true)
+        textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
+        return textField
+    }()
+
+
+    
+//    private lazy var passwordTextField = logPassTextField(placeholder: "Password", secure: true)
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        
+        loginTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        setupContentViews()
+        hideKeyboardWhenTappedAround()
+
+
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
+    }
+    // MARK: Subscribing for keyboard notifications
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardShow),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardHide),
+            name: UIResponder.keyboardWillHideNotification, object: nil
+        )
+    }
+    
+    // MARK: Unsubscribing from keyboard notifications
+
+    override func viewDidDisappear(_ animated: Bool) {
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
     
     // MARK: method of views composition building
     
@@ -197,14 +214,31 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             self.navigationController?.popViewController(animated: true)
     }
     
-        @objc func keyboardShow(_ notification: Notification){
+    @objc func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
-            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.minY) + 16
+            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.maxY) + 16
         }
     }
     
     @objc func keyboardHide(_ notification: Notification){
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
+    }
+    
+    @objc func logInButtonAlpha() {
+        if loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false {
+            logInButton.alpha = 1.0
+            logInButton.isEnabled = true
+
+        } else {
+            logInButton.alpha = 0.5
+            logInButton.isEnabled = false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        textField.resignFirstResponder()
+        return true
     }
 }

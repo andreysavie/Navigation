@@ -7,10 +7,11 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
+    let profileView = ProfileHeaderView()
     
     let tableView: UITableView = {
         
@@ -48,16 +49,20 @@ class ProfileViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        hideKeyboardWhenTappedAround()
+        
+//        hideKeyboardWhenTappedAround()
     }
-    
+
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+
         guard LogInViewController.isLogin == false else { return }
         self.navigationController?.pushViewController(loginViewController, animated: true)
-        tabBarController?.tabBar.isHidden = false
     }
+    
     
     private func setupConstraints() {
         
@@ -140,10 +145,10 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard indexPath.section == 0 else {return}
-        
-        showPhotosVC()
         tableView.deselectRow(at: indexPath, animated: true)
+
+        guard indexPath.section == 0 else {return}
+        showPhotosVC()
     }
     
     

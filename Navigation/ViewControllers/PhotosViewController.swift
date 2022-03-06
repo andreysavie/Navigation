@@ -44,9 +44,16 @@ class PhotosViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
-
+                
+        self.tabBarController?.tabBar.isHidden = true
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+                
+        self.tabBarController?.tabBar.isHidden = false
+    }
+
+    
     
     private func setup() {
         view.addSubview(collectionView)

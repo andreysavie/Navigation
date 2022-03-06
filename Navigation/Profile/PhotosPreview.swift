@@ -11,6 +11,7 @@ class PhotosPreview: UIView {
 
 
     let itemsPerRow: CGFloat = 4
+    
     let sectionInserts = UIEdgeInsets(
         top: Constants.Inset,
         left: Constants.Inset,
@@ -33,7 +34,7 @@ class PhotosPreview: UIView {
         collection.register(PhotosPreviewCollectionViewCell.self, forCellWithReuseIdentifier: PhotosPreviewCollectionViewCell.identifire)
         collection.dataSource = self
         collection.delegate = self
-        collection.backgroundColor = .white
+        collection.backgroundColor = .clear
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
