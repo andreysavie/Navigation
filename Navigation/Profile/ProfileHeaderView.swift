@@ -12,6 +12,27 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     static let identifire = "ProfileHeaderView"
     private var status: String = ""
+    var defaultAvatarCenter: CGPoint = CGPoint(x: 0, y: 0)
+
+    
+    private lazy var backView: UIView = {
+        let View = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        View.toAutoLayout()
+        View.backgroundColor = .black
+        View.layer.opacity = 0
+        return View
+    }()
+    
+    private lazy var xmarkButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        button.layer.opacity = 0
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(self.hideAvatar), for: .touchUpInside)
+        return button
+    }()
+
     
     // MARK: Avatar
         
@@ -21,9 +42,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         avatar.toAutoLayout()
         avatar.clipsToBounds = true
         avatar.image = UIImage(named: "avatar")
+        avatar.contentMode = .scaleAspectFill
         avatar.layer.cornerRadius = 50
         avatar.layer.borderWidth = 3
         avatar.layer.borderColor = UIColor.white.cgColor
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.showAvatar))
+        recognizer.numberOfTapsRequired = 1
+        avatar.addGestureRecognizer(recognizer)
+        avatar.isUserInteractionEnabled = true
+
         return avatar
         
     }()
@@ -108,7 +135,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubviews(nameLabel, avatar, statusLabel, statusTextField, showStatusButton)
+        contentView.addSubviews(nameLabel, statusLabel, statusTextField, showStatusButton, backView, avatar, xmarkButton)
         setupConstraints()
         
         statusTextField.delegate = self
@@ -122,6 +149,46 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: METHODS
 
+    @objc func showAvatar() {
+        UIImageView.animate(withDuration: 0.5,
+                            animations: {
+            self.defaultAvatarCenter = self.avatar.center
+            self.avatar.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            self.avatar.transform = CGAffineTransform(scaleX: self.contentView.frame.width / self.avatar.frame.width, y: self.contentView.frame.width / self.avatar.frame.width)
+            self.avatar.layer.cornerRadius = 0
+            self.avatar.layer.borderWidth = 0
+            self.avatar.isUserInteractionEnabled = false
+            self.backView.layer.opacity = 0.5
+             ProfileViewController.tableView.isScrollEnabled = false
+             ProfileViewController.tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.isUserInteractionEnabled = false
+        },
+                            completion: { _ in
+            UIImageView.animate(withDuration: 0.3) {
+                self.xmarkButton.alpha = 1
+            }
+        })
+    }
+    
+    @objc func hideAvatar() {
+        UIImageView.animate(withDuration: 0.3,
+                            animations: {
+            self.xmarkButton.layer.opacity = 0
+        },
+                            completion: { _ in
+            UIImageView.animate(withDuration: 0.5) {
+                self.avatar.center = self.defaultAvatarCenter
+                self.avatar.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.avatar.layer.cornerRadius = self.avatar.frame.width / 2
+                self.avatar.layer.borderWidth = 3
+                self.avatar.isUserInteractionEnabled = true
+                self.backView.layer.opacity = 0
+                ProfileViewController.tableView.isScrollEnabled = true
+                ProfileViewController.tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.isUserInteractionEnabled = true
+            }
+        })
+    }
+    
+    
     @objc func buttonPressed(sender: UIButton!) {
         guard statusTextField.text?.isEmpty == false else {return}
         
@@ -173,6 +240,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             statusLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
             statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
+            
+            xmarkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.indent),
+            xmarkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.indent)
+
         ])
     }
 }

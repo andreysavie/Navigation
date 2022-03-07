@@ -102,10 +102,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
 
-
-    
-//    private lazy var passwordTextField = logPassTextField(placeholder: "Password", secure: true)
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,8 +115,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         setupContentViews()
         hideKeyboardWhenTappedAround()
 
-
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
     // MARK: Subscribing for keyboard notifications

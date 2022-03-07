@@ -14,7 +14,8 @@ class PhotosViewController: UIViewController {
         top: Constants.Inset,
         left: Constants.Inset,
         bottom: Constants.Inset,
-        right: Constants.Inset)
+        right: Constants.Inset
+    )
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -30,7 +31,8 @@ class PhotosViewController: UIViewController {
         collection.toAutoLayout()
         collection.register(
             PhotosCollectionViewCell.self,
-            forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire)
+            forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire
+        )
         
         collection.dataSource = self
         collection.delegate = self
