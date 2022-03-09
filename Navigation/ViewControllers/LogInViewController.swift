@@ -87,9 +87,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             
         return logPassTextField
     }
-    
-//    private lazy var loginTextField = logPassTextField(placeholder: "Email or phone", secure: false)
-    
+        
     private lazy var loginTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Email or phone", secure: false)
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
@@ -208,22 +206,29 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             self.navigationController?.popViewController(animated: true)
     }
     
+    
+    
+    //MARK: Method of content moving depending of keyboard show/hide
+
     @objc func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.maxY) + 16
         }
     }
-    
+
     @objc func keyboardHide(_ notification: Notification){
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
+    
+    
+
+    // MARK: Method of changing the button alpha depending on entered data
     
     @objc func logInButtonAlpha() {
         if loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false {
             logInButton.alpha = 1.0
             logInButton.isEnabled = true
-
         } else {
             logInButton.alpha = 0.5
             logInButton.isEnabled = false

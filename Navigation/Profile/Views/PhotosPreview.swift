@@ -73,7 +73,7 @@ extension PhotosPreview: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingWidth = sectionInserts.left * (itemsPerRow + 1)
-        let availableWidth = collectionView.frame.width - paddingWidth
+        let availableWidth = UIScreen.main.bounds.width - paddingWidth
         let widthPerItem = (availableWidth / itemsPerRow) - sectionInserts.left / itemsPerRow
         return CGSize(width: widthPerItem, height: widthPerItem * 0.85)
     }

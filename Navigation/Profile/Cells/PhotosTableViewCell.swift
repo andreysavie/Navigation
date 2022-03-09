@@ -50,18 +50,18 @@ class PhotosTableViewCell: UITableViewCell {
             
             contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
 
-            photosTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.Inset),
-            photosTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.Inset),
+            photosTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            photosTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
 
-            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.Inset),
+            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             arrowImage.centerYAnchor.constraint(equalTo: photosTitle.centerYAnchor),
             arrowImage.heightAnchor.constraint(equalToConstant: 40),
             arrowImage.widthAnchor.constraint(equalToConstant: 40),
 
-            photosPreview.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: Constants.Inset),
+            photosPreview.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
             photosPreview.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            photosPreview.heightAnchor.constraint(equalToConstant: 70),
-            photosPreview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.Inset)
+            photosPreview.heightAnchor.constraint(equalToConstant: 80),
+            photosPreview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
     

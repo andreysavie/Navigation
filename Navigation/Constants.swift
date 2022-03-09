@@ -15,8 +15,6 @@ struct Constants {
     static let Inset: CGFloat = 8
 }
 
-
-
 public extension UIView {
 
     func toAutoLayout() {

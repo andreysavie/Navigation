@@ -12,6 +12,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
     let profileView = ProfileHeaderView()
+
     
     static let tableView: UITableView = {
         

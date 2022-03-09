@@ -66,11 +66,19 @@
 		D575870927BEB0A900570D3F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				D575870A27BEB11000570D3F /* ProfileHeaderView.swift */,
-				D5AB1A4627D0D7130072E723 /* PhotosPreview.swift */,
+				D57B4D2E27D7B59F00F1403C /* Views */,
 				D5AB1A4F27D2B7530072E723 /* Cells */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		D57B4D2E27D7B59F00F1403C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D575870A27BEB11000570D3F /* ProfileHeaderView.swift */,
+				D5AB1A4627D0D7130072E723 /* PhotosPreview.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D5AB1A4F27D2B7530072E723 /* Cells */ = {
@@ -119,8 +127,8 @@
 				D562464527C826350022DDFC /* Constants.swift */,
 				D530410D27C39882003DD19F /* Post.swift */,
 				D52F469D27D4E224002BD753 /* ColorSet.swift */,
-				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
 				D5AB1A4C27D2B6880072E723 /* PhotosArray.swift */,
+				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
 				D575870927BEB0A900570D3F /* Profile */,
 				D5DBC7CF27B9A71A00F4BD09 /* ViewControllers */,
 				D5ED096827B5A428007F70C6 /* Assets.xcassets */,
