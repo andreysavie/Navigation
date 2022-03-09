@@ -13,9 +13,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     static let identifire = "ProfileHeaderView"
     private var status: String = ""
     var defaultAvatarCenter: CGPoint = CGPoint(x: 0, y: 0)
-    
-    let profileHeaderView = ProfileHeaderView()
-    
+        
     private lazy var blurEffectView: UIVisualEffectView = {
         
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
