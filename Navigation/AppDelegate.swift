@@ -31,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
         
+        let loginVC = LogInViewController()
+        let loginNC = UINavigationController(rootViewController: loginVC)
+
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.systemGray5
@@ -47,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedNC.navigationBar.standardAppearance = appearance
         feedNC.navigationBar.scrollEdgeAppearance = feedNC.navigationBar.standardAppearance
         
-        profileNC.tabBarItem = UITabBarItem(
+        profileVC.tabBarItem = UITabBarItem(
             title: "Profile",
             image: UIImage(systemName: "person.circle"),
             selectedImage: UIImage(systemName:"person.circle.fill")
@@ -59,7 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.standardAppearance = appearance
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
         
-        tabBarController.viewControllers = [feedNC, profileNC]
+        loginNC.tabBarItem = profileNC.tabBarItem
+
+        tabBarController.viewControllers = [feedNC, loginNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
                         
         window?.rootViewController = tabBarController

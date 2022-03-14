@@ -54,12 +54,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
 
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
-
-        guard LogInViewController.isLogin == false else { return }
-        self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
     

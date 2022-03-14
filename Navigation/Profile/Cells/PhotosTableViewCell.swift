@@ -5,8 +5,6 @@
 //  Created by Андрей Рыбалкин on 02.03.2022.
 //
 
-// MARK: ВЫНЕСТИ PhotosCollectionViewCell в отдельный файл!!!
-
 import UIKit
 
 class PhotosTableViewCell: UITableViewCell {

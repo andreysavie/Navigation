@@ -152,7 +152,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         UIImageView.animate(withDuration: 0.5,
                             animations: {
             self.defaultAvatarCenter = self.avatar.center
-            self.avatar.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            self.avatar.center = CGPoint(x: UIScreen.main.bounds.midX, y: (UIScreen.main.bounds.midY + ProfileViewController.tableView.contentOffset.y))
             self.avatar.transform = CGAffineTransform(scaleX: self.contentView.frame.width / self.avatar.frame.width, y: self.contentView.frame.width / self.avatar.frame.width)
             self.avatar.layer.cornerRadius = 0
             self.avatar.layer.borderWidth = 0

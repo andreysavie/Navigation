@@ -12,7 +12,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTY
 
-    static var isLogin = false
+    private var isLogin = false
     
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
@@ -147,6 +147,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: method of views composition building
@@ -200,14 +203,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     //MARK: METHODS
     
     @objc private func logInButtonPressed(sender: UIButton!) {
-        
-        guard loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false else {return}
-            LogInViewController.isLogin = true
-            self.navigationController?.popViewController(animated: true)
+        isLogin = true
+        let profileVC = ProfileViewController()
+        navigationController?.pushViewController(profileVC, animated: true)
+        if isLogin {
+            navigationController?.setViewControllers([profileVC], animated: true)
+        }
     }
-    
-    
-    
+
+        
     //MARK: Method of content moving depending of keyboard show/hide
 
     @objc func keyboardShow(_ notification: Notification){
@@ -236,7 +240,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
         textField.resignFirstResponder()
         return true
     }

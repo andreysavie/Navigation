@@ -24,7 +24,6 @@ class InfoViewController: UIViewController {
             )
         )
         
-        
         button.layer.cornerRadius = button.frame.size.height / 4
         button.backgroundColor = .systemIndigo
         button.setTitle("Show info", for: .normal)
