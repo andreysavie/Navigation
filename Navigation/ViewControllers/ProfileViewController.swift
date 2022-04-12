@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -139,14 +140,10 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
-
         guard indexPath.section == 0 else {return}
         showPhotosVC()
     }
-    
-    
 }
 
 extension UIViewController {
