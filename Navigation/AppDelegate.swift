@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let profileVC = ProfileViewController()
         profileVC.view.backgroundColor = .systemGray3
+
+        
         let profileNC = UINavigationController(rootViewController: profileVC)
         
         let loginVC = LogInViewController()

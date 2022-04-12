@@ -23,8 +23,16 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-        return tableView
         
+        // Задача 2. Добавил разные цвета фона для режимов DEBUG и RELEASE
+        
+        #if DEBUG
+        tableView.backgroundColor = .red
+        #else
+        tableView.backgroundColor = .white
+        #endif
+
+        return tableView
     }()
     
     override func viewDidLoad() {
