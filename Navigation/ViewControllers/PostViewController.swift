@@ -27,6 +27,17 @@ class PostViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+                
+        self.tabBarController?.tabBar.isHidden = true
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+                
+        self.tabBarController?.tabBar.isHidden = false
+    }
+
+    
     @objc func showInfo() {
         infoViewController.title = title
         present(infoViewController, animated: true, completion: nil)

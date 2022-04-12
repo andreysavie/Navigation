@@ -38,7 +38,9 @@ class FeedViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
+        
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     @objc func showNewPostVC(sender: UIButton!) {
@@ -46,7 +48,6 @@ class FeedViewController: UIViewController {
         postVC.title = "New post"
         postVC.view.backgroundColor = .systemGray5
         self.navigationController?.pushViewController(postVC, animated: true)
-        tabBarController?.tabBar.isHidden = true
     }
 }
 

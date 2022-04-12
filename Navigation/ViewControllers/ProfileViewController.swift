@@ -7,9 +7,12 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     let loginViewController = LogInViewController()
+    let photosViewController = PhotosViewController()
+    let profileView = ProfileHeaderView()
+    
     let tableView: UITableView = {
         
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -18,8 +21,6 @@ class ProfileViewController: UIViewController {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-        tableView.rowHeight = UITableView.automaticDimension
-        
         return tableView
         
     }()
@@ -28,11 +29,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.addSubview(tableView)
-        setupTableViewCOnstraints()
+        setupConstraints()
         
         tableView.register(
             PostTableViewCell.self,
             forCellReuseIdentifier: PostTableViewCell.identifire
+        )
+        
+        tableView.register(
+            PhotosTableViewCell.self,
+            forCellReuseIdentifier: PhotosTableViewCell.identifire
         )
         
         self.tableView.register(
@@ -43,18 +49,22 @@ class ProfileViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        hideKeyboardWhenTappedAround()
         
+//        hideKeyboardWhenTappedAround()
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+
         guard LogInViewController.isLogin == false else { return }
-        
         self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
-    private func setupTableViewCOnstraints() {
+    
+    private func setupConstraints() {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -63,47 +73,89 @@ class ProfileViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
+    
+    func showPhotosVC() {
+        photosViewController.title = "Photo Gallery"
+        photosViewController.view.backgroundColor = .white
+        self.navigationController?.pushViewController(photosViewController, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
 }
 
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return posts.count
+        default:
+            return 0
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
-        cell.setConfigureOfCell(post: posts[indexPath.row])
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: PhotosTableViewCell.identifire,
+                for: indexPath) as! PhotosTableViewCell
+            return cell
+            
+        case 1:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: PostTableViewCell.identifire,
+                for: indexPath) as! PostTableViewCell
+            cell.setConfigureOfCell(post: posts[indexPath.row])
+            return cell
+            
+        default:
+            return UITableViewCell()
+        }
     }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
-            return headerView
-        } else { return nil }
+        guard section == 0 else { return nil }
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 220
+        
+        switch section {
+        case 0:
+            return 220
+        case 1:
+            return 1
+        default:
+            return 0
+        }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        guard indexPath.section == 0 else {return}
+        showPhotosVC()
+    }
+    
+    
 }
 
-
 extension UIViewController {
+    
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

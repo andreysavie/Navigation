@@ -57,7 +57,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: Status textField
 
-    private lazy var statusTextField: UITextField = {
+    lazy var statusTextField: UITextField = {
         
         let statusTextField = UITextField()
         statusTextField.toAutoLayout()
@@ -106,11 +106,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     
     override init(reuseIdentifier: String?) {
-            super.init(reuseIdentifier: reuseIdentifier)
+        super.init(reuseIdentifier: reuseIdentifier)
         
-            contentView.addSubviews(nameLabel, avatar, statusLabel, statusTextField, showStatusButton)
-            setupConstraints()
-        }
+        contentView.addSubviews(nameLabel, avatar, statusLabel, statusTextField, showStatusButton)
+        setupConstraints()
+        
+        statusTextField.delegate = self
+        
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -135,8 +138,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return status
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         textField.resignFirstResponder()
         return true
@@ -174,17 +176,3 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         ])
     }
 }
-
-
-public extension UIView {
-
-    func toAutoLayout() {
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    func addSubviews(_ subviews: UIView...) {
-          subviews.forEach { addSubview($0) }
-      }
-}
-
-
