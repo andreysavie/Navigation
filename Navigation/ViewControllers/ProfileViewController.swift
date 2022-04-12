@@ -12,8 +12,9 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
     let profileView = ProfileHeaderView()
+
     
-    let tableView: UITableView = {
+    static let tableView: UITableView = {
         
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.toAutoLayout()
@@ -28,49 +29,43 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(tableView)
+        self.view.addSubview(ProfileViewController.tableView)
         setupConstraints()
         
-        tableView.register(
+        ProfileViewController.tableView.register(
             PostTableViewCell.self,
             forCellReuseIdentifier: PostTableViewCell.identifire
         )
         
-        tableView.register(
+        ProfileViewController.tableView.register(
             PhotosTableViewCell.self,
             forCellReuseIdentifier: PhotosTableViewCell.identifire
         )
         
-        self.tableView.register(
+        ProfileViewController.tableView.register(
             ProfileHeaderView.self,
             forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifire
         )
         
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+        ProfileViewController.tableView.dataSource = self
+        ProfileViewController.tableView.delegate = self
         
-        
-//        hideKeyboardWhenTappedAround()
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
-
-        guard LogInViewController.isLogin == false else { return }
-        self.navigationController?.pushViewController(loginViewController, animated: true)
     }
     
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            ProfileViewController.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            ProfileViewController.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            ProfileViewController.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            ProfileViewController.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
     

@@ -13,36 +13,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
         let tabBarController = UITabBarController()
-        
 
         // MARK: Label styles
                 
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
                 
-         
         // MARK: VievControllers
         
         let feedVC = FeedViewController()
         feedVC.view.backgroundColor = .secondarySystemGroupedBackground
         let feedNC = UINavigationController(rootViewController: feedVC)
         
-
         let profileVC = ProfileViewController()
         profileVC.view.backgroundColor = .systemGray3
         let profileNC = UINavigationController(rootViewController: profileVC)
         
+        let loginVC = LogInViewController()
+        let loginNC = UINavigationController(rootViewController: loginVC)
 
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.systemGray5
                 
-        feedNC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "list.bullet.circle"), selectedImage: UIImage(systemName: "list.bullet.circle.fill"))
+        feedNC.tabBarItem = UITabBarItem(
+            title: "Feed",
+            image: UIImage(systemName: "list.bullet.circle"),
+            selectedImage: UIImage(systemName: "list.bullet.circle.fill")
+        )
         feedNC.tabBarItem.setTitleTextAttributes(attributes,for: .normal)
         feedNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
         feedNC.navigationBar.topItem?.title = "Feed"
@@ -50,7 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedNC.navigationBar.standardAppearance = appearance
         feedNC.navigationBar.scrollEdgeAppearance = feedNC.navigationBar.standardAppearance
         
-        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), selectedImage: UIImage(systemName:"person.circle.fill"))
+        profileVC.tabBarItem = UITabBarItem(
+            title: "Profile",
+            image: UIImage(systemName: "person.circle"),
+            selectedImage: UIImage(systemName:"person.circle.fill")
+        )
         profileNC.tabBarItem.setTitleTextAttributes(attributes, for: .normal)
         profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
         profileNC.navigationBar.topItem?.title = "Profile"
@@ -58,7 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileNC.navigationBar.standardAppearance = appearance
         profileNC.navigationBar.scrollEdgeAppearance = profileNC.navigationBar.standardAppearance
         
-        tabBarController.viewControllers = [feedNC, profileNC]
+        loginNC.tabBarItem = profileNC.tabBarItem
+
+        tabBarController.viewControllers = [feedNC, loginNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
                         
         window?.rootViewController = tabBarController
