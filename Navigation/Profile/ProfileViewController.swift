@@ -1,81 +1,110 @@
 //
-//  ProfileViewController.swift
-//  Navigation
+//  ViewController.swift
+//  lection_tableView
 //
-//  Created by Андрей Рыбалкин on 10.02.2022.
+//  Created by Андрей Рыбалкин on 22.02.2022.
 //
 
 import UIKit
 
 class ProfileViewController: UIViewController {
     
-    // MARK: Header
-
-    private lazy var headerView: ProfileHeaderView = {
+    let loginViewController = LogInViewController()
+    let tableView: UITableView = {
         
-        let headerView = ProfileHeaderView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.toAutoLayout()
+        tableView.isScrollEnabled = true
+        tableView.separatorInset = .zero
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 220
+        tableView.rowHeight = UITableView.automaticDimension
         
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-
-        return headerView
-        
-    }()
-    
-    // MARK: Button "Set title"
-
-    private lazy var setTitleButton: UIButton = {
-        
-        let button = UIButton()
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.setTitle("Set new title", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        button.titleLabel?.textColor = UIColor.white
-        button.backgroundColor = .systemTeal
-        
-        button.layer.cornerRadius = 4
-                
-        return button
+        return tableView
         
     }()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(headerView)
-        self.view.addSubview(setTitleButton)
-
-        headerView.addProfileViews()
-        setupProfileConstraints()
+        self.view.addSubview(tableView)
+        setupTableViewCOnstraints()
+        
+        tableView.register(
+            PostTableViewCell.self,
+            forCellReuseIdentifier: PostTableViewCell.identifire
+        )
+        
+        self.tableView.register(
+            ProfileHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifire
+        )
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
         hideKeyboardWhenTappedAround()
         
     }
-
-    // MARK: Constraints
-
-    private func setupProfileConstraints() {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard LogInViewController.isLogin == false else { return }
+        
+        self.navigationController?.pushViewController(loginViewController, animated: true)
+    }
+    
+    private func setupTableViewCOnstraints() {
         
         NSLayoutConstraint.activate([
-           
-            headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 220),
-
-            setTitleButton.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            setTitleButton.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            setTitleButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            setTitleButton.heightAnchor.constraint(equalToConstant: 50)
-
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
 }
 
-// MARK: Keyboard hedding method
+extension ProfileViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as! PostTableViewCell
+        cell.setConfigureOfCell(post: posts[indexPath.row])
+        return cell
+    }
+    
+}
 
-extension ProfileViewController {
+extension ProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+            return headerView
+        } else { return nil }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 220
+    }
+}
+
+
+extension UIViewController {
+    
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -85,4 +114,3 @@ extension ProfileViewController {
         view.endEditing(true)
     }
 }
-
