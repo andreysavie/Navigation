@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
@@ -13,16 +14,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     static let identifire = "ProfileHeaderView"
     private var status: String = ""
     var defaultAvatarCenter: CGPoint = CGPoint(x: 0, y: 0)
-        
+    
     private lazy var blurEffectView: UIVisualEffectView = {
         
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        blurEffectView.toAutoLayout()
         blurEffectView.layer.opacity = 0
         blurEffectView.isUserInteractionEnabled = false
-
+        
         
         return blurEffectView
     }()
@@ -36,14 +36,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         button.addTarget(self, action: #selector(self.hideAvatar), for: .touchUpInside)
         return button
     }()
-
+    
     
     // MARK: Avatar
-        
+    
     private lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
-        avatar.toAutoLayout()
         avatar.clipsToBounds = true
         avatar.image = UIImage(named: "avatar")
         avatar.contentMode = .scaleAspectFill
@@ -54,16 +53,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         recognizer.numberOfTapsRequired = 1
         avatar.addGestureRecognizer(recognizer)
         avatar.isUserInteractionEnabled = true
-
+        
         return avatar
     }()
     
     // MARK: Name
-
+    
     private lazy var nameLabel: UILabel = {
         
         let nameLabel = UILabel()
-        nameLabel.toAutoLayout()
         nameLabel.text = "Andrey Rybalkin"
         nameLabel.textColor = .black
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -76,7 +74,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var statusLabel: UILabel = {
         
         let statusLabel = UILabel()
-        statusLabel.toAutoLayout()
         statusLabel.text = "Waiting for something..."
         statusLabel.numberOfLines = 2
         statusLabel.textColor = .darkGray
@@ -86,11 +83,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
     
     // MARK: Status textField
-
+    
     lazy var statusTextField: UITextField = {
         
         let statusTextField = UITextField()
-        statusTextField.toAutoLayout()
         statusTextField.layer.cornerRadius = 12
         statusTextField.clipsToBounds = true
         statusTextField.layer.borderWidth = 1
@@ -102,7 +98,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         statusTextField.textColor = .black
         statusTextField.leftViewMode = .always
         statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
-
+        
         statusTextField.autocorrectionType = UITextAutocorrectionType.no
         statusTextField.keyboardType = UIKeyboardType.default
         statusTextField.returnKeyType = UIReturnKeyType.done
@@ -117,12 +113,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
     
     // MARK: Button "Show status"
-
+    
     private lazy var showStatusButton: UIButton = {
         
         let button = UIButton()
         
-        button.toAutoLayout()
         button.setTitle("Show status", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.titleLabel?.textColor = UIColor.white
@@ -144,10 +139,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     // MARK: METHODS
-
+    
     @objc func showAvatar() {
         UIImageView.animate(withDuration: 0.5,
                             animations: {
@@ -160,10 +155,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             self.showStatusButton.isUserInteractionEnabled = false
             self.statusTextField.isUserInteractionEnabled = false
             self.blurEffectView.layer.opacity = 1
-             ProfileViewController.tableView.isScrollEnabled = false
-             ProfileViewController.tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.isUserInteractionEnabled = false
+            ProfileViewController.tableView.isScrollEnabled = false
+            ProfileViewController.tableView.cellForRow(at: IndexPath(item: 0, section: 0))?.isUserInteractionEnabled = false
             ProfileViewController.tableView.cellForRow(at: IndexPath(item: 0, section: 1))?.isUserInteractionEnabled = false
-
+            
         },
                             completion: { _ in
             UIImageView.animate(withDuration: 0.3) {
@@ -212,43 +207,49 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+        
         textField.resignFirstResponder()
         return true
     }
-
-
+    
+    
     //     MARK: Constraints
     
     private func setupConstraints() {
         
-        NSLayoutConstraint.activate([
-            
-            avatar.widthAnchor.constraint(equalToConstant: 100),
-            avatar.heightAnchor.constraint(equalToConstant: 100),
-            avatar.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.indent),
-            avatar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingMargin),
-
-            nameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
-            nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-            nameLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
-
-            showStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.leadingMargin),
-            showStatusButton.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
-            showStatusButton.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: Constants.indent),
-            showStatusButton.heightAnchor.constraint(equalToConstant: 50),
-
-            statusTextField.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
-            statusTextField.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
-            statusTextField.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -12),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-
-            statusLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 20),
-            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -12),
-            statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor, constant: Constants.trailingMargin),
-
-            xmarkButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.indent),
-            xmarkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.indent)
-        ])
+        avatar.snp.makeConstraints { make in
+            make.width.height.equalTo(100)
+            make.top.equalToSuperview().inset(Constants.indent)
+            make.leading.equalToSuperview().inset(Constants.leadingMargin)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(avatar.snp.trailing).inset(-20) // ?????? чооооооо
+            make.top.equalToSuperview().inset(27)
+            make.trailing.equalToSuperview().inset(Constants.indent)
+        }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.leading.equalTo(avatar.snp.trailing).inset(-20) // or +20??
+            make.bottom.equalTo(statusTextField.snp.top).inset(-12) // or +?
+            make.trailing.greaterThanOrEqualToSuperview().inset(16)
+        }
+        
+        showStatusButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(Constants.indent)
+            make.top.equalTo(avatar.snp.bottom).inset(-Constants.indent) // отрицательное??
+            make.height.equalTo(50)
+        }
+        
+        statusTextField.snp.makeConstraints { make in
+            make.leading.equalTo(avatar.snp.trailing).inset(-20) //-20??
+            make.trailing.greaterThanOrEqualToSuperview().inset(Constants.indent) // tr marg
+            make.bottom.equalTo(showStatusButton.snp.top).inset(-12) // or +?
+            make.height.equalTo(40)
+        }
+        
+        xmarkButton.snp.makeConstraints { make in
+            make.top.trailing.equalToSuperview().inset(Constants.indent)
+        }
     }
 }
