@@ -219,37 +219,37 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         avatar.snp.makeConstraints { make in
             make.width.height.equalTo(100)
-            make.top.equalToSuperview().inset(Constants.indent)
-            make.leading.equalToSuperview().inset(Constants.leadingMargin)
+            make.top.equalToSuperview().offset(Constants.topMargin)
+            make.leading.equalToSuperview().offset(Constants.leadingMargin)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(avatar.snp.trailing).inset(-20) // ?????? чооооооо
-            make.top.equalToSuperview().inset(27)
-            make.trailing.equalToSuperview().inset(Constants.indent)
+            make.leading.equalTo(avatar.snp.trailing).offset(Constants.offset)
+            make.top.equalToSuperview().offset(27)
+            make.trailing.equalToSuperview().offset(Constants.trailingMargin)
         }
         
         statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(avatar.snp.trailing).inset(-20) // or +20??
-            make.bottom.equalTo(statusTextField.snp.top).inset(-12) // or +?
-            make.trailing.greaterThanOrEqualToSuperview().inset(16)
+            make.leading.equalTo(avatar.snp.trailing).offset(Constants.offset)
+            make.bottom.equalTo(statusTextField.snp.top).offset(-12)
+            make.trailing.greaterThanOrEqualToSuperview().offset(Constants.trailingMargin)
         }
         
         showStatusButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(Constants.indent)
-            make.top.equalTo(avatar.snp.bottom).inset(-Constants.indent) // отрицательное??
+            make.leading.trailing.equalToSuperview().inset(Constants.leadingMargin)
+            make.top.equalTo(avatar.snp.bottom).offset(Constants.topMargin)
             make.height.equalTo(50)
         }
         
         statusTextField.snp.makeConstraints { make in
-            make.leading.equalTo(avatar.snp.trailing).inset(-20) //-20??
-            make.trailing.greaterThanOrEqualToSuperview().inset(Constants.indent) // tr marg
-            make.bottom.equalTo(showStatusButton.snp.top).inset(-12) // or +?
-            make.height.equalTo(40)
+            make.leading.equalTo(avatar.snp.trailing).offset(Constants.offset)
+            make.trailing.greaterThanOrEqualToSuperview().offset(Constants.trailingMargin)
+            make.bottom.equalTo(showStatusButton.snp.top).offset(-12)
+            make.height.equalTo(Constants.offset * 2)
         }
-        
+                
         xmarkButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(Constants.indent)
+            make.top.trailing.equalToSuperview().inset(Constants.topMargin)
         }
     }
 }

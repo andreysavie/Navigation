@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         #if DEBUG
         tableView.backgroundColor = .red
         #else
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemGray6
         #endif
 
         return tableView
