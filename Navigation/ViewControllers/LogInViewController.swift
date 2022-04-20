@@ -204,7 +204,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func logInButtonPressed(sender: UIButton!) {
         isLogin = true
-        let profileVC = ProfileViewController()
+        let profileVC = ProfileViewController(userService: curre, name: loginTextField.text!)
         navigationController?.pushViewController(profileVC, animated: true)
         if isLogin {
             navigationController?.setViewControllers([profileVC], animated: true)

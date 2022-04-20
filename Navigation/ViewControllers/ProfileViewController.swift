@@ -14,6 +14,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
     let profileView = ProfileHeaderView()
+    
+    let userService: UserService?
+    let name: String
+    
+    init (userService: UserService, name: String) {
+        self.userService = userService
+        self.name = name //временно
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
     
     static let tableView: UITableView = {
