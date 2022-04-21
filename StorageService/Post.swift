@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-struct Post {
+public struct Post {
     
-    var author: String
-    var title: String       // needs to delete
-    var description: String
-    var image: String
-    var likes: Int
-    var views: Int
+    public var author: String
+    public var title: String
+    public var description: String
+    public var image: String
+    public var likes: Int
+    public var views: Int
 }
     
 let post_1 = Post(author: "Sergey Smirnov",
@@ -53,4 +53,4 @@ let post_5 = Post(author: "Sergey Nepravda",
                   likes: 20,
                   views: 2420)
 
-var posts: [Post] = [post_1, post_2, post_3, post_4, post_5]
+public var posts: [Post] = [post_1, post_2, post_3, post_4, post_5]
