@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -22,8 +23,16 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-        return tableView
         
+        // Задача 2. Добавил разные цвета фона для режимов DEBUG и RELEASE
+        
+        #if DEBUG
+        tableView.backgroundColor = .red
+        #else
+        tableView.backgroundColor = .white
+        #endif
+
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -139,14 +148,10 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
-
         guard indexPath.section == 0 else {return}
         showPhotosVC()
     }
-    
-    
 }
 
 extension UIViewController {
