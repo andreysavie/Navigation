@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import SnapKit
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -29,7 +30,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         #if DEBUG
         tableView.backgroundColor = .red
         #else
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemGray6
         #endif
 
         return tableView
