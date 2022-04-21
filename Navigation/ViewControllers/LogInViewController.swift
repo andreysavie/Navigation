@@ -192,7 +192,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             textFieldsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
             textFieldsStackView.heightAnchor.constraint(equalToConstant: 100),
             
-            logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: Constants.indent),
+            logInButton.topAnchor.constraint(equalTo: textFieldsStackView.bottomAnchor, constant: Constants.topMargin),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
