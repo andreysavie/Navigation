@@ -27,7 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedVC.view.backgroundColor = .secondarySystemGroupedBackground
         let feedNC = UINavigationController(rootViewController: feedVC)
         
-        let profileVC = ProfileViewController()
+        let profileVC = ProfileViewController(userService: TestUserService() as UserService, name: "testname")
+        
         profileVC.view.backgroundColor = .systemGray3
 
         

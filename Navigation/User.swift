@@ -14,34 +14,42 @@ protocol UserService {
 
 final class User {
     
-    let name: String
+    let fullName: String
     let status: String
-    let avatar: UIImage
+    let avatar: UIImage?
     
     init ( name: String, status: String, avatar: UIImage) {
-        self.name = name
+        self.fullName = name
         self.status = status
         self.avatar = avatar
     }
-    
 }
 
 final class CurrentUserService: UserService {
     
-    private let user: User
-    
-    init (user: User) {
-        self.user = user
-    }
-    
+    let user = User(
+        name: "Andrey Rybalkin",
+        status: "Release mode!",
+        avatar: UIImage(named: "avatar")!
+    )
+  
     
     func userIdentify(name: String) -> User? {
-        
-        guard name == user.name else { return nil }
+        guard name == user.fullName else { return nil }
         return self.user
     }
-    
-    
+}
 
-
+final class TestUserService: UserService {
+    
+    let user = User(
+        name: "Andrey Savie",
+        status: "Debug make drink!",
+        avatar: UIImage(named: "debug")!
+    )
+    
+    func userIdentify(name: String) -> User? {
+        guard name == user.fullName else { return nil }
+        return self.user
+    }
 }
