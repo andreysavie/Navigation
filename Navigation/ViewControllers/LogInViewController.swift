@@ -7,6 +7,15 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate {
+    func userValidation (log: String, pass: String) -> Bool
+}
+
+class LoginInspector: LoginViewControllerDelegate {
+    func userValidation (log: String, pass: String) -> Bool {
+        return Checker.shared.logPassChecker(log: log, pass: pass)
+    }
+}
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -14,6 +23,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private var isLogin = false
     
+    var delegate: LoginViewControllerDelegate!
+
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
         logInScrollView.toAutoLayout()
@@ -126,7 +137,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         
     }
-    // MARK: Subscribing for keyboard notifications
+    // Subscribing for keyboard notifications
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -143,7 +154,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
-    // MARK: Unsubscribing from keyboard notifications
+    // Unsubscribing from keyboard notifications
     
     override func viewDidDisappear(_ animated: Bool) {
         
@@ -163,7 +174,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    // MARK: method of views composition building
+    // method of views composition building
     
     private func setupContentViews() {
         view.backgroundColor = .white
@@ -211,39 +222,49 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
-
-    
     //MARK: METHODS
     
     @objc private func logInButtonPressed(sender: UIButton!) {
         
-        //MARK: Задача 3. Настроим передачу данных пользователя на контроллер страницы профиля
-        // в случае успешной валидации перейдём в профиль, в случае неуспешной - покажем алерт
         
-#if DEBUG
         let currentUserService = TestUserService()
+
         let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
         
-        if loginTextField.text == currentUserService.user.fullName {
-            isLogin = true
-            navigationController?.pushViewController(profileVC, animated: true)
-            navigationController?.setViewControllers([profileVC], animated: true)
-        } else {
-            present(loginAlertController, animated: true, completion: nil)
+        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
+                isLogin = true
+                navigationController?.pushViewController(profileVC, animated: true)
+                navigationController?.setViewControllers([profileVC], animated: true)
+            } else {
+                present(loginAlertController, animated: true, completion: nil)
         }
-#else
-        let currentUserService = CurrentUserService()
-        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
-        
-        if loginTextField.text == currentUserService.user.fullName {
-            isLogin = true
-            navigationController?.pushViewController(profileVC, animated: true)
-            navigationController?.setViewControllers([profileVC], animated: true)
-        } else {
-            present(loginAlertController, animated: true, completion: nil)
-        }
-#endif
     }
+            
+//
+//#if DEBUG
+//        let currentUserService = TestUserService()
+//        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
+//
+//        if loginTextField.text == currentUserService.user.fullName {
+//            isLogin = true
+//            navigationController?.pushViewController(profileVC, animated: true)
+//            navigationController?.setViewControllers([profileVC], animated: true)
+//        } else {
+//            present(loginAlertController, animated: true, completion: nil)
+//        }
+//#else
+//        let currentUserService = CurrentUserService()
+//        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
+//
+//        if loginTextField.text == currentUserService.user.fullName {
+//            isLogin = true
+//            navigationController?.pushViewController(profileVC, animated: true)
+//            navigationController?.setViewControllers([profileVC], animated: true)
+//        } else {
+//            present(loginAlertController, animated: true, completion: nil)
+//        }
+//#endif
+//    }
     
     
     //MARK: Method of content moving depending of keyboard show/hide

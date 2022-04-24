@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        let inspector = LoginInspector()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         let tabBarController = UITabBarController()
 
@@ -31,12 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         profileVC.view.backgroundColor = .systemGray3
 
-        
         let profileNC = UINavigationController(rootViewController: profileVC)
         
         let loginVC = LogInViewController()
         let loginNC = UINavigationController(rootViewController: loginVC)
-
+        
+        loginVC.delegate = inspector
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
