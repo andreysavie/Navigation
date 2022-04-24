@@ -19,6 +19,22 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Задача 3. Создадим инициализацию для приёма параметров из контроллера авторизации
     
+    //MARK: PROPERTIES
+    
+    static let tableView: UITableView = {
+        
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        //        tableView.toAutoLayout()
+        tableView.isScrollEnabled = true
+        tableView.separatorInset = .zero
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 220
+        tableView.backgroundColor = .systemGray6
+        return tableView
+    }()
+    
+    //MARK: INITS
+
     init (userService: UserService, name: String) {
         self.userService = userService
         self.fullName = name
@@ -29,23 +45,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    static let tableView: UITableView = {
-        
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.toAutoLayout()
-        tableView.isScrollEnabled = true
-        tableView.separatorInset = .zero
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = 220
-        tableView.backgroundColor = .systemGray6
-        return tableView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(ProfileViewController.tableView)
-        setupConstraints()
+        ProfileViewController.tableView.snp.makeConstraints { make in
+            make.leading.top.trailing.bottom.equalTo(self.view)
+        }
         
         ProfileViewController.tableView.register(
             PostTableViewCell.self,
@@ -64,25 +70,14 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         ProfileViewController.tableView.dataSource = self
         ProfileViewController.tableView.delegate = self
-                
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    
-    private func setupConstraints() {
-        
-        NSLayoutConstraint.activate([
-            ProfileViewController.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            ProfileViewController.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            ProfileViewController.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            ProfileViewController.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-    }
+    //MARK: METHODS
     
     func showPhotosVC() {
         photosViewController.title = "Photo Gallery"
@@ -90,7 +85,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.pushViewController(photosViewController, animated: true)
         tabBarController?.tabBar.isHidden = true
     }
-    
 }
 
 extension ProfileViewController: UITableViewDataSource {

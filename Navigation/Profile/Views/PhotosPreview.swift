@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PhotosPreview: UIView {
 
@@ -31,7 +32,10 @@ class PhotosPreview: UIView {
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.register(PhotosPreviewCollectionViewCell.self, forCellWithReuseIdentifier: PhotosPreviewCollectionViewCell.identifire)
+        collection.register(
+            PhotosPreviewCollectionViewCell.self,
+            forCellWithReuseIdentifier:PhotosPreviewCollectionViewCell.identifire)
+        
         collection.dataSource = self
         collection.delegate = self
         collection.backgroundColor = .clear
@@ -41,17 +45,13 @@ class PhotosPreview: UIView {
 
      func setupContent() {
          self.addSubview(collectionView)
-         setupPhotosPreviewConstraints()
+         setupPhotosPreviewLayout()
     }
     
-    private func setupPhotosPreviewConstraints() {
-        
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-        ])
+    private func setupPhotosPreviewLayout() {
+        collectionView.snp.makeConstraints { make in
+            make.leading.top.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
+        }
     }
 }
 
@@ -62,7 +62,6 @@ extension PhotosPreview: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosPreviewCollectionViewCell.identifire, for: indexPath) as? PhotosPreviewCollectionViewCell else { return UICollectionViewCell() }
         cell.configure(with: photosArray[indexPath.item])
         return cell
