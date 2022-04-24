@@ -10,9 +10,10 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    // MARK: PROPERTIES
+    
+    private lazy var newPostButton: UIButton = {
         
-    override func viewDidLoad() {
-        super.viewDidLoad()
         let button = UIButton(
             frame: CGRect(
                 x: UIScreen.main.bounds.midX - 75,
@@ -29,7 +30,14 @@ class FeedViewController: UIViewController {
         button.layer.shadowColor = shadowColor.cgColor
         button.layer.shadowOpacity = 0.8
         button.addTarget(self, action: #selector(showNewPostVC), for: .touchUpInside)
-        self.view.addSubview(button)
+        return button
+    }()
+    
+    // MARK: INITS
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.addSubview(newPostButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +45,8 @@ class FeedViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    // MARK: METHODS
+
     @objc func showNewPostVC(sender: UIButton!) {
         let postVC = PostViewController()
         postVC.title = "New post"

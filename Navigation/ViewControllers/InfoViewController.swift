@@ -9,6 +9,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
+    // MARK: INITS
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +34,8 @@ class InfoViewController: UIViewController {
         self.view.addSubview(button)
     }
     
+    // MARK: METHODS
+
     @objc func buttonAction(sender: UIButton!) {
                 
         let alertController = UIAlertController(title: "⚠️ Attention ⚠️", message: "You have opened my first alert written with code. Do you like him?", preferredStyle: .alert)

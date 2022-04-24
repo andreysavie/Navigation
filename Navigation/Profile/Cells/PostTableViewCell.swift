@@ -7,22 +7,18 @@
 
 import UIKit
 import StorageService
+import SnapKit
 
 class PostTableViewCell: UITableViewCell {
     
+    // MARK: PROPERTIES
+    
     static let identifire = "PostTableViewCell"
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubviews(postTitle, postImage, postDescription, postLikesCounter, postViewsCounter)
-        setupConstraints()
-    }
-    
     
     private lazy var postTitle: UILabel = {
         
         let postTitle = UILabel()
-        postTitle.toAutoLayout()
+//        postTitle.toAutoLayout()
         postTitle.numberOfLines = 2
         postTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return postTitle
@@ -31,7 +27,7 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postImage: UIImageView = {
         
         let postImage = UIImageView()
-        postImage.toAutoLayout()
+//        postImage.toAutoLayout()
         postImage.backgroundColor = .black
         postImage.contentMode = .scaleAspectFit
         return postImage
@@ -41,7 +37,7 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postDescription: UILabel = {
         
         let postDescription = UILabel()
-        postDescription.toAutoLayout()
+//        postDescription.toAutoLayout()
         postDescription.font = UIFont.systemFont(ofSize: 14)
         postDescription.textColor = .systemGray
         postDescription.numberOfLines = 0
@@ -51,10 +47,28 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postLikesCounter = counter()
     private lazy var postViewsCounter = counter()
 
+    // MARK: INITS
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubviews(
+            postTitle,
+            postImage,
+            postDescription,
+            postLikesCounter,
+            postViewsCounter
+        )
+        setupPostLayout()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: METHODS
+
     private func counter() -> UILabel {
-        
         let counter = UILabel()
-        counter.toAutoLayout()
+//        counter.toAutoLayout()
         counter.font = UIFont.systemFont(ofSize: 16)
         counter.textColor = .black
         return counter
@@ -68,38 +82,33 @@ class PostTableViewCell: UITableViewCell {
         self.postViewsCounter.text = "Views: \(post.views)"
     }
     
-    // MARK: Constraints
-    private func setupConstraints(){
+    private func setupPostLayout(){
         
-        NSLayoutConstraint.activate([
-            
-            contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            
-            postTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.topMargin),
-            postTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
-            postTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
-            
-            postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            postImage.heightAnchor.constraint(equalTo: postImage.widthAnchor),
-            postImage.topAnchor.constraint(equalTo: postTitle.bottomAnchor, constant: Constants.topMargin),
-            
-            postDescription.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: Constants.topMargin),
-            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
-            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
-            
-            postLikesCounter.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: Constants.topMargin),
-            postLikesCounter.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leadingMargin),
-            postLikesCounter.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.trailingMargin),
-            
-            postViewsCounter.topAnchor.constraint(equalTo: postDescription.bottomAnchor, constant: Constants.topMargin),
-            postViewsCounter.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMargin),
-            postViewsCounter.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.bottomMargin),
-        ])
+        postTitle.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(contentView).inset(Constants.margin)
+        }
+        
+        postImage.snp.makeConstraints { make in
+            make.width.height.equalTo(contentView.snp.width)
+            make.top.equalTo(postTitle.snp.bottom).offset(Constants.margin)
+        }
+        
+        postDescription.snp.makeConstraints { make in
+            make.top.equalTo(postImage.snp.bottom).offset(Constants.margin)
+            make.leadingMargin.trailing.equalTo(contentView).inset(Constants.margin)
+        }
+        
+        postLikesCounter.snp.makeConstraints { make in
+            make.top.equalTo(postDescription.snp.bottom).offset(Constants.margin)
+            make.leading.bottom.equalTo(contentView).inset(Constants.margin)
+        }
+        
+        postViewsCounter.snp.makeConstraints { make in
+            make.top.equalTo(postDescription.snp.bottom).offset(Constants.margin)
+            make.trailing.bottom.equalTo(contentView).inset(Constants.margin)
+        }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
