@@ -24,7 +24,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     static let tableView: UITableView = {
         
         let tableView = UITableView(frame: .zero, style: .grouped)
-        //        tableView.toAutoLayout()
         tableView.isScrollEnabled = true
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension

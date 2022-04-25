@@ -18,7 +18,6 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postTitle: UILabel = {
         
         let postTitle = UILabel()
-//        postTitle.toAutoLayout()
         postTitle.numberOfLines = 2
         postTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return postTitle
@@ -27,7 +26,6 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postImage: UIImageView = {
         
         let postImage = UIImageView()
-//        postImage.toAutoLayout()
         postImage.backgroundColor = .black
         postImage.contentMode = .scaleAspectFit
         return postImage
@@ -37,7 +35,6 @@ class PostTableViewCell: UITableViewCell {
     private lazy var postDescription: UILabel = {
         
         let postDescription = UILabel()
-//        postDescription.toAutoLayout()
         postDescription.font = UIFont.systemFont(ofSize: 14)
         postDescription.textColor = .systemGray
         postDescription.numberOfLines = 0
@@ -68,7 +65,6 @@ class PostTableViewCell: UITableViewCell {
 
     private func counter() -> UILabel {
         let counter = UILabel()
-//        counter.toAutoLayout()
         counter.font = UIFont.systemFont(ofSize: 16)
         counter.textColor = .black
         return counter
