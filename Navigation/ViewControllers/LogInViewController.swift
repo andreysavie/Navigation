@@ -12,11 +12,7 @@ protocol LoginViewControllerDelegate {
     func userValidation (log: String, pass: String) -> Bool
 }
 
-class LoginInspector: LoginViewControllerDelegate {
-    func userValidation (log: String, pass: String) -> Bool {
-        return Checker.shared.logPassChecker(log: log, pass: pass)
-    }
-}
+
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -28,19 +24,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
-//        logInScrollView.toAutoLayout()
         return logInScrollView
     }()
     
     private lazy var contentView: UIView = {
         let logInHeaderView = UIView()
-//        logInHeaderView.toAutoLayout()
         return logInHeaderView
     }()
     
     private lazy var logo: UIImageView = {
         let logo = UIImageView()
-//        logo.toAutoLayout()
         logo.image = UIImage(named: "logo")
         logo.contentMode = .scaleAspectFit
         return logo
@@ -48,7 +41,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var textFieldsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [loginTextField, passwordTextField])
-//        stackView.toAutoLayout()
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.layer.borderColor = UIColor.lightGray.cgColor
@@ -77,7 +69,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
         let logPassTextField = UITextField()
         
-//        logPassTextField.toAutoLayout()
         logPassTextField.leftViewMode = .always
         logPassTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: logPassTextField.frame.height))
         

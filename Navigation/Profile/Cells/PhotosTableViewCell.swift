@@ -16,14 +16,12 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var photosPreview: PhotosPreview = {
             let photosPreview = PhotosPreview()
-//        photosPreview.toAutoLayout()
         photosPreview.setupContent()
         return photosPreview
     }()
     
     private lazy var photosTitle: UILabel = {
         let photosTitle = UILabel()
-//        photosTitle.toAutoLayout()
         photosTitle.numberOfLines = 2
         photosTitle.text = "Photos"
         photosTitle.font = UIFont.systemFont(ofSize: 24, weight: .bold)
@@ -32,7 +30,6 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var arrowImage: UIImageView = {
         let arrowImage = UIImageView()
-//        arrowImage.toAutoLayout()
         arrowImage.image = UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal)
         return arrowImage
     }()
@@ -68,24 +65,6 @@ class PhotosTableViewCell: UITableViewCell {
             make.height.equalTo(80)
             make.bottom.equalTo(contentView).inset(12)
         }
-        
-//        NSLayoutConstraint.activate([
-//            
-//            contentView.widthAnchor.constraint(equalTo: self.widthAnchor),
-
-//            photosTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-//            photosTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-
-//            arrowImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-//            arrowImage.centerYAnchor.constraint(equalTo: photosTitle.centerYAnchor),
-//            arrowImage.heightAnchor.constraint(equalToConstant: 40),
-//            arrowImage.widthAnchor.constraint(equalToConstant: 40),
-
-//            photosPreview.topAnchor.constraint(equalTo: photosTitle.bottomAnchor, constant: 12),
-//            photosPreview.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-//            photosPreview.heightAnchor.constraint(equalToConstant: 80),
-//            photosPreview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
-//        ])
     }
     
     override func prepareForReuse() {
