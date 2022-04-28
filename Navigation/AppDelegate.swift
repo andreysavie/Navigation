@@ -68,7 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         tabBarController.viewControllers = [feedNC, loginNC]
         tabBarController.tabBar.backgroundColor = UIColor.systemGray5
-                        
+        
+        createPhotosArray()
+        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

@@ -13,14 +13,14 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     static let identifire = "PhotosCollectionViewCell"
     
-    //MARK: For PhotoFilters
-    private let filtersSet: [ColorFilter] = [.colorInvert, .noir, .chrome, .fade, .posterize, .tonal,
-                                             .process, .transfer, .bloom(intensity: 10),
-                                             .sepia(intensity: 80)]
-    
-    private var imageProcessor: ImageProcessor {
-        return ImageProcessor()
-    }
+//    //MARK: For PhotoFilters
+//    private let filtersSet: [ColorFilter] = [.colorInvert, .noir, .chrome, .fade, .posterize, .tonal,
+//                                             .process, .transfer, .bloom(intensity: 10),
+//                                             .sepia(intensity: 80)]
+//    
+//    private var imageProcessor: ImageProcessor {
+//        return ImageProcessor()
+//    }
     
     private let photo: UIImageView = {
         let photo = UIImageView()
@@ -31,39 +31,45 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.addSubview(photo)
-        
-        PhotoCellLayout()
         contentView.clipsToBounds = true
+        
+        photo.snp.makeConstraints { make in
+            make.height.centerX.equalTo(contentView)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func PhotoCellLayout() {
-        
-        photo.snp.makeConstraints { make in
-            make.height.centerX.equalTo(contentView)
-            
-        }
-    }
     
     
-    func configure(with photoName: String) {
-        photo.image = UIImage(named: photoName)
-        
-        guard let image = photo.image else { return }
-        
-        // Добавим наложение фильтра при помощи зависимости iOSIntPackage:
-        imageProcessor.processImage(sourceImage: image, filter: getRandomFilter(set: filtersSet)) { filteredImage in
-            photo.image = filteredImage
-        }
-    }
     
-    // метод для выдачи случайного фотофильтра из представленного массива
-    func getRandomFilter (set: [ColorFilter]) -> ColorFilter {
-        let randomFilterNumber = Int.random(in: 0..<set.count)
-        return set[randomFilterNumber]
+//    func configure(with image: UIImage) {
+//        photo.image = image
+//
+//        guard let image = photo.image else { return }
+//
+//        // Добавим наложение фильтра при помощи зависимости iOSIntPackage:
+//        imageProcessor.processImage(sourceImage: image, filter: getRandomFilter(set: filtersSet)) { filteredImage in
+//            photo.image = filteredImage
+//        }
+//    }
+    
+//    func configure(with photoName: String) {
+//        photo.image = UIImage(named: photoName)
+//
+//        guard let image = photo.image else { return }
+//
+//        // Добавим наложение фильтра при помощи зависимости iOSIntPackage:
+//        imageProcessor.processImage(sourceImage: image, filter: getRandomFilter(set: filtersSet)) { filteredImage in
+//            photo.image = filteredImage
+//        }
+//    }
+    
+    // ВРЕМЕННО!!!
+    func configure(image: UIImage) {
+        self.photo.image = image
     }
 }
 

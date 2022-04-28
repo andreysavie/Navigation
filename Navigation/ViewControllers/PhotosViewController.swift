@@ -62,15 +62,21 @@ class PhotosViewController: UIViewController {
     
 }
 
-extension PhotosViewController: UICollectionViewDataSource {
+extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        <#code#>
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosArray.count
+        return filtredPhotosArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifire, for: indexPath) as? PhotosCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(with: photosArray[indexPath.item])
+        cell.configure(image: filtredPhotosArray[indexPath.item])
+
         return cell
     }
     
