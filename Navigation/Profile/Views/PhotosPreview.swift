@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 class PhotosPreview: UIView {
-
-
+    
+    
     let itemsPerRow: CGFloat = 4
     
     let sectionInserts = UIEdgeInsets(
@@ -20,7 +20,7 @@ class PhotosPreview: UIView {
         right: Constants.Inset
     )
     
-
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = sectionInserts.left
@@ -42,13 +42,9 @@ class PhotosPreview: UIView {
         collection.showsHorizontalScrollIndicator = false
         return collection
     }()
-
-     func setupContent() {
-         self.addSubview(collectionView)
-         setupPhotosPreviewLayout()
-    }
     
-    private func setupPhotosPreviewLayout() {
+    func setupContent() {
+        self.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.safeAreaLayoutGuide)
         }
@@ -63,7 +59,7 @@ extension PhotosPreview: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosPreviewCollectionViewCell.identifire, for: indexPath) as? PhotosPreviewCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(with: photosArray[indexPath.item])
+        cell.configure(image: filtredPhotosArray[indexPath.item])
         return cell
     }
 }

@@ -35,7 +35,7 @@ class PhotosPreviewCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(with photoName: String) {
-        photo.image = UIImage(named: photoName)
+    func configure(image: UIImage) {
+        self.photo.image = image
     }
 }
