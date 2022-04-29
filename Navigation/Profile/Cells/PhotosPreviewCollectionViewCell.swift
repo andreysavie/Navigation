@@ -13,7 +13,7 @@ class PhotosPreviewCollectionViewCell: UICollectionViewCell {
     static let identifire = "PhotosPreviewCollectionViewCell"
    
     private let photo: UIImageView = {
-       let photo = UIImageView()
+        let photo = UIImageView()
         return photo
     }()
 
