@@ -12,7 +12,13 @@ class PhotosViewController: UIViewController {
     
     // MARK: PROPERTIES
     
+    private let facade = ImagePublisherFacade()
+    
+    private var newPhotoArray = [UIImage]()
+
+    
     private let itemsPerRow: CGFloat = 3
+    
     private let sectionInserts = UIEdgeInsets(
         top: Constants.Inset,
         left: Constants.Inset,
@@ -31,14 +37,9 @@ class PhotosViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(
-            PhotosCollectionViewCell.self,
-            forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire
-        )
-        
+        collection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire)
         collection.dataSource = self
         collection.delegate = self
-        
         return collection
     }()
     
@@ -50,6 +51,13 @@ class PhotosViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
         }
+        facade.subscribe(self)
+        facade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: filtredPhotosArray)
+    }
+    
+    deinit {
+        facade.rechargeImageLibrary()
+        facade.removeSubscription(for: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,23 +68,28 @@ class PhotosViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    
 }
 
 extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
     
+    
     func receive(images: [UIImage]) {
-        <#code#>
+        newPhotoArray = images
+        collectionView.reloadData()
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filtredPhotosArray.count
+        return newPhotoArray.count
+        //        return filtredPhotosArray.count // оставил на свякий случай))
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifire, for: indexPath) as? PhotosCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(image: filtredPhotosArray[indexPath.item])
-
+        cell.configure(image: newPhotoArray[indexPath.item])
+        //        cell.configure(image: filtredPhotosArray[indexPath.item]) // оставил на свякий случай))
         return cell
     }
     
