@@ -8,9 +8,9 @@ import Foundation
 
 // MARK: Задача 4. Создаем сервис для проверки логина и пароля
 
-final class UserValidation {
+final class Checker {
     
-    static let shared = UserValidation()
+    static let shared = Checker()
     
     private init() {}
     
@@ -24,9 +24,9 @@ final class UserValidation {
 }
 // MARK: Задача 4. Класс для проверки точности введенных данных авторизации
 
-class UserValidationInspector: LoginViewControllerDelegate {
+class LoginInspector: LoginViewControllerDelegate {
     func userValidation (log: String, pass: String) -> Bool {
-        return UserValidation.shared.checker(log: log, pass: pass)
+        return Checker.shared.checker(log: log, pass: pass)
     }
 }
 

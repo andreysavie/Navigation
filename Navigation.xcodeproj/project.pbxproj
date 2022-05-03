@@ -24,7 +24,7 @@
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
 		D575870B27BEB11000570D3F /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D575870A27BEB11000570D3F /* ProfileHeaderView.swift */; };
 		D58DDCBD280F4DF400BE55F1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58DDCBC280F4DF400BE55F1 /* User.swift */; };
-		D5A0745F28159082003BF856 /* UserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A0745E28159082003BF856 /* UserValidation.swift */; };
+		D5A0745F28159082003BF856 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A0745E28159082003BF856 /* Checker.swift */; };
 		D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */; };
 		D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A7F0B427C245FA00962E7D /* LogInViewController.swift */; };
 		D5AB1A4727D0D7130072E723 /* PhotosPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB1A4627D0D7130072E723 /* PhotosPreview.swift */; };
@@ -99,7 +99,7 @@
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D575870A27BEB11000570D3F /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		D58DDCBC280F4DF400BE55F1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "/Users/andreysavie/Library/Mobile Documents/com~apple~CloudDocs/NETOLOGY/4. Design and UI/Navigation/Navigation/User.swift"; sourceTree = "<absolute>"; };
-		D5A0745E28159082003BF856 /* UserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidation.swift; sourceTree = "<group>"; };
+		D5A0745E28159082003BF856 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5A7F0B427C245FA00962E7D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D5AB1A4627D0D7130072E723 /* PhotosPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPreview.swift; sourceTree = "<group>"; };
@@ -219,9 +219,9 @@
 				D5A7F0B427C245FA00962E7D /* LogInViewController.swift */,
 				D5ED097527B5A5D0007F70C6 /* ProfileViewController.swift */,
 				D5AB1A4827D144370072E723 /* PhotosViewController.swift */,
+				D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */,
 				D5ED097927B68627007F70C6 /* InfoViewController.swift */,
 				D5ED097727B66965007F70C6 /* PostViewController.swift */,
-				D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -229,7 +229,7 @@
 		D5E9222B2816A84200748286 /* AppState */ = {
 			isa = PBXGroup;
 			children = (
-				D5A0745E28159082003BF856 /* UserValidation.swift */,
+				D5A0745E28159082003BF856 /* Checker.swift */,
 				D5E922292816A81F00748286 /* Factory.swift */,
 				D58DDCBC280F4DF400BE55F1 /* User.swift */,
 				D562464527C826350022DDFC /* Constants.swift */,
@@ -548,7 +548,7 @@
 				D5ED097A27B68627007F70C6 /* InfoViewController.swift in Sources */,
 				D5CBFD5E27CEC7B600B4FCEC /* PhotosTableViewCell.swift in Sources */,
 				D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */,
-				D5A0745F28159082003BF856 /* UserValidation.swift in Sources */,
+				D5A0745F28159082003BF856 /* Checker.swift in Sources */,
 				D58DDCBD280F4DF400BE55F1 /* User.swift in Sources */,
 				D562464627C826350022DDFC /* Constants.swift in Sources */,
 				D5AB1A4727D0D7130072E723 /* PhotosPreview.swift in Sources */,

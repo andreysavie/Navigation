@@ -10,15 +10,15 @@ import Foundation
 // MARK: Задача 4. Создаем фабрику
 
 protocol LoginFactory {
-    func returnLoginInspector() -> UserValidationInspector
+    func returnLoginInspector() -> LoginInspector
 }
 
 class MyLoginFactory: LoginFactory {
     
     static let shared = MyLoginFactory()
 
-    func returnLoginInspector() -> UserValidationInspector {
-        let inspector = UserValidationInspector()
+    func returnLoginInspector() -> LoginInspector {
+        let inspector = LoginInspector()
         return inspector
     }
 }

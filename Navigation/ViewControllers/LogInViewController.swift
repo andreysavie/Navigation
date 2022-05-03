@@ -13,14 +13,13 @@ protocol LoginViewControllerDelegate {
 }
 
 
-
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTY
     
     private var isLogin = false
     
-    var delegate: LoginViewControllerDelegate!
+    var delegate: LoginViewControllerDelegate?
 
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
