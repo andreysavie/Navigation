@@ -13,8 +13,21 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
-    let profileView = ProfileHeaderView()
-
+    
+    var userService: UserService?
+    var fullName: String
+    
+    //MARK: Задача 3. Создадим инициализацию для приёма параметров из контроллера авторизации
+    
+    init (userService: UserService, name: String) {
+        self.userService = userService
+        self.fullName = name
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     static let tableView: UITableView = {
         
@@ -24,15 +37,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 220
-        
-        // Задача 2. Добавил разные цвета фона для режимов DEBUG и RELEASE
-        
-        #if DEBUG
-        tableView.backgroundColor = .red
-        #else
         tableView.backgroundColor = .systemGray6
-        #endif
-
         return tableView
     }()
     
@@ -59,7 +64,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         ProfileViewController.tableView.dataSource = self
         ProfileViewController.tableView.delegate = self
-        
+                
     }
 
     
@@ -133,6 +138,13 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
+        
+        // MARK: Задача 3. Проведём валидацию пользователя и присвоим полям нужные значения
+        
+        let currentUser = userService?.userIdentify(name: fullName)
+        headerView.nameLabel.text = currentUser?.fullName
+        headerView.avatar.image = currentUser?.avatar
+        headerView.statusLabel.text = currentUser?.status
         return headerView
     }
     
@@ -156,7 +168,6 @@ extension ProfileViewController: UITableViewDelegate {
 }
 
 extension UIViewController {
-    
     
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

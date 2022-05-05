@@ -40,7 +40,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: Avatar
     
-    private lazy var avatar: UIImageView = {
+    public lazy var avatar: UIImageView = {
         
         let avatar = UIImageView()
         avatar.clipsToBounds = true
@@ -59,7 +59,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: Name
     
-    private lazy var nameLabel: UILabel = {
+    public lazy var nameLabel: UILabel = {
         
         let nameLabel = UILabel()
         nameLabel.text = "Andrey Rybalkin"
@@ -71,7 +71,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: Status
     
-    private lazy var statusLabel: UILabel = {
+    public lazy var statusLabel: UILabel = {
         
         let statusLabel = UILabel()
         statusLabel.text = "Waiting for something..."

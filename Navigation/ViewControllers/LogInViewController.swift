@@ -11,7 +11,7 @@ import UIKit
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTY
-
+    
     private var isLogin = false
     
     private lazy var logInScrollView: UIScrollView = {
@@ -58,14 +58,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         button.alpha = 0.5
         button.isEnabled = false
-    
-
+        
+        
         return button
     }()
     
     // MARK: METHODS
-
-        private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
+    
+    private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
         let logPassTextField = UITextField()
         
         logPassTextField.toAutoLayout()
@@ -84,11 +84,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         logPassTextField.returnKeyType = .done
         logPassTextField.clearButtonMode = UITextField.ViewMode.whileEditing
         logPassTextField.isSecureTextEntry = secure
-            
+        
         return logPassTextField
     }
-        
-    private lazy var loginTextField: UITextField = {
+    
+    public lazy var loginTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Email or phone", secure: false)
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
         return textField
@@ -99,7 +99,18 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
         return textField
     }()
-
+    
+    private lazy var loginAlertController: UIAlertController = {
+        let alertController = UIAlertController(
+            title: "⚠️ User not found! ⚠️",
+            message: "please check login or password",
+            preferredStyle: .alert)
+        
+        let acceptAction = UIAlertAction(title: "OK", style: .default) { (_) -> Void in
+        }
+        alertController.addAction(acceptAction)
+        return alertController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +123,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         setupContentViews()
         hideKeyboardWhenTappedAround()
-
+        
         
     }
     // MARK: Subscribing for keyboard notifications
@@ -133,7 +144,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: Unsubscribing from keyboard notifications
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         
         NotificationCenter.default.removeObserver(
@@ -165,7 +176,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: CONSTRAINTS
-
+    
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
@@ -200,33 +211,56 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
+
+    
     //MARK: METHODS
     
     @objc private func logInButtonPressed(sender: UIButton!) {
-        isLogin = true
-        let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: true)
-        if isLogin {
-            navigationController?.setViewControllers([profileVC], animated: true)
-        }
-    }
-
         
+        //MARK: Задача 3. Настроим передачу данных пользователя на контроллер страницы профиля
+        // в случае успешной валидации перейдём в профиль, в случае неуспешной - покажем алерт
+        
+#if DEBUG
+        let currentUserService = TestUserService()
+        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
+        
+        if loginTextField.text == currentUserService.user.fullName {
+            isLogin = true
+            navigationController?.pushViewController(profileVC, animated: true)
+            navigationController?.setViewControllers([profileVC], animated: true)
+        } else {
+            present(loginAlertController, animated: true, completion: nil)
+        }
+#else
+        let currentUserService = CurrentUserService()
+        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
+        
+        if loginTextField.text == currentUserService.user.fullName {
+            isLogin = true
+            navigationController?.pushViewController(profileVC, animated: true)
+            navigationController?.setViewControllers([profileVC], animated: true)
+        } else {
+            present(loginAlertController, animated: true, completion: nil)
+        }
+#endif
+    }
+    
+    
     //MARK: Method of content moving depending of keyboard show/hide
-
+    
     @objc func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.maxY) + 16
         }
     }
-
+    
     @objc func keyboardHide(_ notification: Notification){
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
     
-
+    
     // MARK: Method of changing the button alpha depending on entered data
     
     @objc func logInButtonAlpha() {
