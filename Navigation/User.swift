@@ -41,15 +41,16 @@ final class CurrentUserService: UserService {
 }
 
 final class TestUserService: UserService {
-    
+
     let user = User(
         name: "Andrey Savie",
         status: "Debug make drink!",
         avatar: UIImage(named: "debug")!
     )
     
+    
     func userIdentify(name: String) -> User? {
-        guard name == user.fullName else { return nil }
+//        guard name == user.fullName else { return nil } Временно закомментировал для 4 домашки
         return self.user
     }
 }

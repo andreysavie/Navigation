@@ -9,7 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    let infoViewController = InfoViewController()
+    // MARK: INITS
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,10 @@ class PostViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
 
-    
+    // MARK: METHODS
+
     @objc func showInfo() {
+        let infoViewController = InfoViewController()
         infoViewController.title = title
         present(infoViewController, animated: true, completion: nil)
     }

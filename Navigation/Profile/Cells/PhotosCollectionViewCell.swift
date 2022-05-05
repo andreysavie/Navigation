@@ -7,6 +7,7 @@
 
 import UIKit
 import iOSIntPackage
+import SnapKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
     
@@ -23,7 +24,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     
     private let photo: UIImageView = {
         let photo = UIImageView()
-        photo.toAutoLayout()
         photo.contentMode = .scaleAspectFit
         return photo
     }()
@@ -32,7 +32,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         super.init(frame: .zero)
         contentView.addSubview(photo)
         
-        setupPhotoCellConstraints()
+        PhotoCellLayout()
         contentView.clipsToBounds = true
     }
     
@@ -40,12 +40,12 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupPhotoCellConstraints() {
+    private func PhotoCellLayout() {
         
-        NSLayoutConstraint.activate([
-            photo.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-            photo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
+        photo.snp.makeConstraints { make in
+            make.height.centerX.equalTo(contentView)
+            
+        }
     }
     
     

@@ -9,9 +9,11 @@ import UIKit
 import iOSIntPackage
 
 class PhotosViewController: UIViewController {
-        
-    let itemsPerRow: CGFloat = 3
-    let sectionInserts = UIEdgeInsets(
+    
+    // MARK: PROPERTIES
+    
+    private let itemsPerRow: CGFloat = 3
+    private let sectionInserts = UIEdgeInsets(
         top: Constants.Inset,
         left: Constants.Inset,
         bottom: Constants.Inset,
@@ -29,7 +31,6 @@ class PhotosViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.toAutoLayout()
         collection.register(
             PhotosCollectionViewCell.self,
             forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire
@@ -41,30 +42,24 @@ class PhotosViewController: UIViewController {
         return collection
     }()
     
+    // MARK: INITS
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.leading.top.trailing.bottom.equalTo(self.view)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
-
     
-    
-    private func setup() {
-        view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
-    }
 }
 
 extension PhotosViewController: UICollectionViewDataSource {
