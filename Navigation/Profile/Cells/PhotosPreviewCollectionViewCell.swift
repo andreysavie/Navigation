@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PhotosPreviewCollectionViewCell: UICollectionViewCell {
     
@@ -13,7 +14,6 @@ class PhotosPreviewCollectionViewCell: UICollectionViewCell {
    
     private let photo: UIImageView = {
        let photo = UIImageView()
-        photo.toAutoLayout()
         return photo
     }()
 
@@ -22,23 +22,20 @@ class PhotosPreviewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(photo)
         contentView.layer.cornerRadius = 6
         contentView.clipsToBounds = true
-        setupPhotosPreviewCellConstraints()
+        PhotosPreviewLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
          
-    func setupPhotosPreviewCellConstraints() {
-        NSLayoutConstraint.activate([
-    photo.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-    photo.widthAnchor.constraint(equalTo: contentView.widthAnchor)
-])
-
+    func PhotosPreviewLayout() {
+        photo.snp.makeConstraints { make in
+            make.width.height.equalTo(contentView)
+        }
     }
     
     func configure(with photoName: String) {
         photo.image = UIImage(named: photoName)
     }
-
 }
