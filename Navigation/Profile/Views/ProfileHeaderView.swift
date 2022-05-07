@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
-
+    
     // MARK: PROPERTIES
 
     static let identifire = "ProfileHeaderView"
@@ -25,13 +25,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return blurEffectView
     }()
     
-    private lazy var xmarkButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+    
+    private lazy var xmarkButton: CustomButton = {
+        let button = CustomButton(
+            title: "",
+            titleColor: .white,
+            backColor: .clear,
+            backImage: (UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal))!
+        )
         button.layer.opacity = 0
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(self.hideAvatar), for: .touchUpInside)
         return button
     }()
     
@@ -94,15 +96,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return statusTextField
     }()
     
-    private lazy var showStatusButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Show status", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        button.titleLabel?.textColor = UIColor.white
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+    
+    private lazy var showStatusButton: CustomButton = {
+        let button = CustomButton(
+            title: "Show status",
+            titleColor: UIColor.white,
+            backColor: UIColor.white,
+            backImage: UIImage(named: "blue_pixel")!
+        )
+        
         return button
     }()
     
@@ -122,6 +124,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         )
         setupHeaderLayout()
         statusTextField.delegate = self
+
+        showStatusButton.tapAction = { [weak self] in
+            guard let self = self else { return }
+            self.showStatusbuttonPressed()
+        }
+        
+        xmarkButton.tapAction = { [weak self] in
+            guard let self = self else { return }
+            self.hideAvatar()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -155,7 +167,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         })
     }
     
-    @objc func hideAvatar() {
+    private func hideAvatar() {
         UIImageView.animate(withDuration: 0.3,
                             animations: {
             self.xmarkButton.layer.opacity = 0
@@ -178,13 +190,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
     
     
-    @objc func buttonPressed(sender: UIButton!) {
+    private func showStatusbuttonPressed() {
         guard statusTextField.text?.isEmpty == false else {return}
-        
         statusLabel.text = statusTextChanged(statusTextField)
         self.statusTextField.text = ""
     }
-    
+
     
     @objc func statusTextChanged(_ textField: UITextField) -> String {
         if let newStatus = textField.text {
@@ -199,7 +210,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
     
     
-    //     MARK: Constraints
+    //     MARK: - ProfileHeaderView Layout
     
     private func setupHeaderLayout() {
         
