@@ -6,9 +6,22 @@
 //
 
 import UIKit
+import SnapKit
 
 class InfoViewController: UIViewController {
+    
+    // MARK: PROPERTIES
 
+    private lazy var showInfoButton: CustomButton = {
+        let button = CustomButton (
+            title: "Show info",
+            titleColor: .white,
+            backColor: .systemIndigo,
+            backImage: UIImage()
+        )
+        return button
+    }()
+    
     // MARK: INITS
 
     override func viewDidLoad() {
@@ -16,41 +29,35 @@ class InfoViewController: UIViewController {
         
         title = "information"
         view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1)
+        self.view.addSubview(showInfoButton)
+        setupInfoLayout()
         
-        let button = UIButton(
-            frame: CGRect(
-                x: UIScreen.main.bounds.midX - 75,
-                y: UIScreen.main.bounds.midY - 25,
-                width: 150,
-                height: 50
-            )
-        )
-        
-        button.layer.cornerRadius = button.frame.size.height / 4
-        button.backgroundColor = .systemIndigo
-        button.setTitle("Show info", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.autoresizingMask = .init(arrayLiteral: [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleRightMargin])
-        self.view.addSubview(button)
+        showInfoButton.tapAction = { [weak self] in
+            guard let self = self else { return }
+            self.showInfoButtonPressed()
+        }
     }
     
     // MARK: METHODS
+    
+    private func setupInfoLayout() {
+        showInfoButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(150)
+            make.height.equalTo(50)
+        }
+    }
 
-    @objc func buttonAction(sender: UIButton!) {
-                
-        let alertController = UIAlertController(title: "⚠️ Attention ⚠️", message: "You have opened my first alert written with code. Do you like him?", preferredStyle: .alert)
-        
-        let acceptAction = UIAlertAction(title: "Yes", style: .default) { (_) -> Void in
+    private func showInfoButtonPressed() {
+        let alertController = UIAlertController(title: "⚠️ Attention ⚠️", message: "Do you like that?", preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Yes", style: .default) { _ in
             print("thank you so much!")
         }
-        
-        let declineAction = UIAlertAction(title: "No", style: .destructive) { (_) -> Void in
+        let declineAction = UIAlertAction(title: "No", style: .destructive) { _ in
             print("very sad :(")
         }
-        
         alertController.addAction(acceptAction)
         alertController.addAction(declineAction)
-
         present(alertController, animated: true, completion: nil)
     }
 }

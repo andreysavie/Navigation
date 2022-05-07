@@ -12,8 +12,6 @@ protocol LoginViewControllerDelegate {
     func userValidation (log: String, pass: String) -> Bool
 }
 
-
-
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTY
@@ -21,7 +19,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     private var isLogin = false
     
     var delegate: LoginViewControllerDelegate!
-
+    
     private lazy var logInScrollView: UIScrollView = {
         let logInScrollView = UIScrollView()
         return logInScrollView
@@ -51,42 +49,19 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return stackView
     }()
     
-    private lazy var logInButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Log in", for: .normal)
-        button.titleLabel?.textColor = UIColor.white
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
-        button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton (
+            title: "Log in",
+            titleColor: UIColor.white,
+            backColor: UIColor.white,
+            backImage: UIImage(named: "blue_pixel") ?? UIImage()
+        )
+        
         button.alpha = 0.5
         button.isEnabled = false
+
         return button
     }()
-    
-    // MARK: METHODS
-    
-    private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
-        let logPassTextField = UITextField()
-        
-        logPassTextField.leftViewMode = .always
-        logPassTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: logPassTextField.frame.height))
-        
-        logPassTextField.placeholder = placeholder
-        logPassTextField.layer.borderColor = UIColor.lightGray.cgColor
-        logPassTextField.layer.borderWidth = 0.25
-        logPassTextField.textColor = .black
-        logPassTextField.font = UIFont.systemFont(ofSize: 16)
-        
-        logPassTextField.autocorrectionType = .no
-        logPassTextField.autocapitalizationType = .none
-        logPassTextField.keyboardType = .emailAddress
-        logPassTextField.returnKeyType = .done
-        logPassTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-        logPassTextField.isSecureTextEntry = secure
-        
-        return logPassTextField
-    }
     
     public lazy var loginTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Email or phone", secure: false)
@@ -111,7 +86,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         alertController.addAction(acceptAction)
         return alertController
     }()
-    
+
+    // MARK: INITS
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -124,10 +101,14 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         setupContentViews()
         hideKeyboardWhenTappedAround()
         
+        // MARK: Task #6. Вызываем action кнопки Log In через замыкание
         
+        logInButton.tapAction = { [weak self] in
+            guard let self = self else { return }
+            self.logInButtonPressed()
+        }
     }
-    // Subscribing for keyboard notifications
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         
         NotificationCenter.default.addObserver(
@@ -143,7 +124,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         )
     }
     
-    // Unsubscribing from keyboard notifications
     
     override func viewDidDisappear(_ animated: Bool) {
         
@@ -162,8 +142,31 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
+
     
-    // method of views composition building
+    // MARK: METHODS
+    
+    private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
+        let logPassTextField = UITextField()
+        
+        logPassTextField.leftViewMode = .always
+        logPassTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: logPassTextField.frame.height))
+        
+        logPassTextField.placeholder = placeholder
+        logPassTextField.layer.borderColor = UIColor.lightGray.cgColor
+        logPassTextField.layer.borderWidth = 0.25
+        logPassTextField.textColor = .black
+        logPassTextField.font = UIFont.systemFont(ofSize: 16)
+        
+        logPassTextField.autocorrectionType = .no
+        logPassTextField.autocapitalizationType = .none
+        logPassTextField.keyboardType = .emailAddress
+        logPassTextField.returnKeyType = .done
+        logPassTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        logPassTextField.isSecureTextEntry = secure
+        
+        return logPassTextField
+    }
     
     private func setupContentViews() {
         view.backgroundColor = .white
@@ -204,28 +207,31 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             make.leading.trailing.equalTo(contentView).inset(Constants.margin)
             make.height.equalTo(50)
         }
-}
+    }
     
     //MARK: METHODS
     
-    @objc private func logInButtonPressed(sender: UIButton!) {
+    
+    private func logInButtonPressed() {
         
-//        #if DEBUG
+        //        #if DEBUG
         let currentUserService = TestUserService()
-//        #else
-//        let currentUserService = CurrentUserService()
-//        #endif
+        //        #else
+        //        let currentUserService = CurrentUserService()
+        //        #endif
 
         let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
-        
+
         if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
-                isLogin = true
-                navigationController?.pushViewController(profileVC, animated: true)
-                navigationController?.setViewControllers([profileVC], animated: true)
-            } else {
-                present(loginAlertController, animated: true, completion: nil)
+            isLogin = true
+            navigationController?.pushViewController(profileVC, animated: true)
+            navigationController?.setViewControllers([profileVC], animated: true)
+        } else {
+            present(loginAlertController, animated: true, completion: nil)
         }
     }
+    
+     
     
     //MARK: SUBMETHODS
     
