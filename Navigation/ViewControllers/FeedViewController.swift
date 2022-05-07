@@ -14,7 +14,6 @@ class FeedViewController: UIViewController {
     // MARK: PROPERTIES
     
    private var model = Model()
-
     
     private lazy var newPostButton: CustomButton = {
         let button = CustomButton (
@@ -32,23 +31,20 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    
+    // MARK: - Task 6. part 1. interface objects
+
     private lazy var someTextField: UITextField = {
-        
         let textField = UITextField()
-        
         textField.layer.cornerRadius = 12
         textField.clipsToBounds = true
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
-        
-        textField.placeholder = "Enter your status..."
+        textField.placeholder = "Enter password..."
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.leftViewMode = .always
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
         return textField
     }()
     
@@ -65,7 +61,6 @@ class FeedViewController: UIViewController {
     private lazy var someLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        label.text = "some text..."
         label.textAlignment = .center
         return label
     }()
@@ -88,7 +83,7 @@ class FeedViewController: UIViewController {
             self.someButtonAction()
         }
 
-        // MARK: - Task 6. part 2. Notification center addObserver
+    // MARK: - Task 6. part 2. Notification center addObserver
         
         NotificationCenter.default.addObserver(
             self,

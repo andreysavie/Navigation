@@ -7,7 +7,9 @@
 
 import UIKit
 
-class CustomButton: UIButton {
+// MARK: - Task 6. part 1. CustomButton
+
+final class CustomButton: UIButton {
     
     let title: String
     let titleColor: UIColor
@@ -38,8 +40,6 @@ class CustomButton: UIButton {
         addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         backgroundColor = backColor
         setBackgroundImage(backImage, for: .normal)
-
-        
     }
     
     required init?(coder: NSCoder) {
