@@ -234,13 +234,13 @@
 			isa = PBXGroup;
 			children = (
 				D5A0745E28159082003BF856 /* UserValidation.swift */,
-				D5BA980B28268499005921CF /* Model.swift */,
 				D5E922292816A81F00748286 /* Factory.swift */,
 				D58DDCBC280F4DF400BE55F1 /* User.swift */,
 				D562464527C826350022DDFC /* Constants.swift */,
 				D52F469D27D4E224002BD753 /* ColorSet.swift */,
 				D5AB1A4C27D2B6880072E723 /* PhotosArray.swift */,
 				D5FB342F282467D40007BF59 /* CustomButton.swift */,
+				D5BA980B28268499005921CF /* Model.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";

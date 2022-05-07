@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Task 6. part 2. Model. NotificationCenter posts
 
@@ -22,4 +23,14 @@ final class Model {
             NotificationCenter.default.post(name: NSNotification.Name.codeRed, object: nil)
         }
     }
+    
+    private lazy var passwordAlert: UIAlertController = {
+        let alertController = UIAlertController(
+            title: "Invalid password!",
+            message: "",
+            preferredStyle: .alert)
+                
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        return alertController
+    }()
 }
