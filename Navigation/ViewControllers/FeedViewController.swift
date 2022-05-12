@@ -13,7 +13,8 @@ class FeedViewController: UIViewController {
     
     // MARK: PROPERTIES
     
-   private var model = Model()
+    private var model: Model
+    private weak var coordinator: FeedCoordinator?
     
     private lazy var newPostButton: CustomButton = {
         let button = CustomButton (
@@ -68,6 +69,16 @@ class FeedViewController: UIViewController {
     
     // MARK: INITS
         
+    init (model: Model, coordinator: FeedCoordinator) {
+        self.model = model
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubviews(newPostButton, someLabel, someTextField, someButton)

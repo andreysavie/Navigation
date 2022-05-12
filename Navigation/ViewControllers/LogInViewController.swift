@@ -220,15 +220,18 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         //        let currentUserService = CurrentUserService()
         //        #endif
 
-        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
-
-        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
-            isLogin = true
-            navigationController?.pushViewController(profileVC, animated: true)
-            navigationController?.setViewControllers([profileVC], animated: true)
-        } else {
-            present(loginAlertController, animated: true, completion: nil)
-        }
+        // MARK: Временно закомментировал для 7 домашки
+        
+//        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
+//
+//
+//        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
+//            isLogin = true
+//            navigationController?.pushViewController(profileVC, animated: true)
+//            navigationController?.setViewControllers([profileVC], animated: true)
+//        } else {
+//            present(loginAlertController, animated: true, completion: nil)
+//        }
     }
     
      
