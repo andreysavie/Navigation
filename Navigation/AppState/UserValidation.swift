@@ -30,3 +30,16 @@ class UserValidationInspector: LoginViewControllerDelegate {
     }
 }
 
+protocol LoginFactory {
+    func returnLoginInspector() -> UserValidationInspector
+}
+
+class MyLoginFactory: LoginFactory {
+    
+    static let shared = MyLoginFactory()
+    
+    func returnLoginInspector() -> UserValidationInspector {
+        let inspector = UserValidationInspector()
+        return inspector
+    }
+}

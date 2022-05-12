@@ -12,6 +12,15 @@ struct Constants {
     static let margin: CGFloat = 16
     static let offset: CGFloat = 20
     static let Inset: CGFloat = 8
+    
+    static let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+           
+    static let navigationBarAppearance: UINavigationBarAppearance = {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemGray5
+        return appearance
+    }()
 }
 
 public extension UIView {

@@ -11,6 +11,9 @@ import SnapKit
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
+    private var model: Model
+    private weak var coordinator: ProfileCoordinator?
+
     let loginViewController = LogInViewController()
     let photosViewController = PhotosViewController()
     
@@ -34,11 +37,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: INITS
 
-    init (userService: UserService, name: String) {
+    init (
+        userService: UserService,
+        name: String,
+        model: Model,
+        coordinator: ProfileCoordinator
+    ) {
         self.userService = userService
         self.fullName = name
+        self.model = model
+        self.coordinator = coordinator
+
         super.init(nibName: nil, bundle: nil)
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
