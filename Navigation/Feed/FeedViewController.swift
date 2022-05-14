@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
     
     // MARK: PROPERTIES
     
-    private var model: Model
+    private var model: FeedModel
     private weak var coordinator: FeedCoordinator?
     
     private lazy var newPostButton: CustomButton = {
@@ -33,7 +33,7 @@ class FeedViewController: UIViewController {
     }()
     
     // MARK: - Task 6. part 1. interface objects
-
+    
     private lazy var someTextField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 12
@@ -68,8 +68,8 @@ class FeedViewController: UIViewController {
     
     
     // MARK: INITS
-        
-    init (model: Model, coordinator: FeedCoordinator) {
+    
+    init (model: FeedModel, coordinator: FeedCoordinator) {
         self.model = model
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -93,8 +93,8 @@ class FeedViewController: UIViewController {
             guard let self = self else { return }
             self.someButtonAction()
         }
-
-    // MARK: - Task 6. part 2. Notification center addObserver
+        
+        // MARK: - Task 6. part 2. Notification center addObserver
         
         NotificationCenter.default.addObserver(
             self,
@@ -119,7 +119,7 @@ class FeedViewController: UIViewController {
     // MARK: METHODS
     
     // MARK: - Task 6. part 2. Notification center actions
-
+    
     @objc func codeRed() {
         someLabel.text = "CODE RED"
         someLabel.textColor = .red
@@ -165,10 +165,10 @@ class FeedViewController: UIViewController {
         }
     }
     
-    private func showNewPostVC() {
-        let postVC = PostViewController()
-        postVC.title = "New post"
-        postVC.view.backgroundColor = .systemGray5
-        self.navigationController?.pushViewController(postVC, animated: true)
-    }
+        private func showNewPostVC() {
+            let postVC = PostViewController()
+            postVC.title = "New post"
+            postVC.view.backgroundColor = .systemGray5
+            self.navigationController?.pushViewController(postVC, animated: true)
+        }
 }

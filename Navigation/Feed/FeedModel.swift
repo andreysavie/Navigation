@@ -1,8 +1,8 @@
 //
-//  Model.swift
+//  FeedModel.swift
 //  Navigation
 //
-//  Created by Андрей Рыбалкин on 07.05.2022.
+//  Created by Андрей Рыбалкин on 12.05.2022.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Task 6. part 2. Model. NotificationCenter posts
 
-final class Model {
+final class FeedModel {
     
     let password = "Password"
     

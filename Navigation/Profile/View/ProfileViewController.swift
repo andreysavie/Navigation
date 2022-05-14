@@ -11,7 +11,9 @@ import SnapKit
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
-    private var model: Model
+    var viewModel: PostTableViewViewModelType?
+
+    private var model: ProfileViewModel
     private weak var coordinator: ProfileCoordinator?
 
     let loginViewController = LogInViewController()
@@ -40,7 +42,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     init (
         userService: UserService,
         name: String,
-        model: Model,
+        model: ProfileViewModel,
         coordinator: ProfileCoordinator
     ) {
         self.userService = userService
