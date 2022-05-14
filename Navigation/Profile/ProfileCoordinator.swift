@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileCoordinator {
     func start(coordinator: ProfileCoordinator) -> UIViewController {
-        let viewModel = Model()
+        let viewModel = ProfileViewModel()
         let viewController = ProfileViewController(
             userService: TestUserService() as UserService,
             name: "testname",

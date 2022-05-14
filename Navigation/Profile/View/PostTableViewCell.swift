@@ -78,6 +78,21 @@ class PostTableViewCell: UITableViewCell {
         self.postViewsCounter.text = "Views: \(post.views)"
     }
     
+    weak var viewModel: PostTableViewCellViewModelType? {
+        willSet(viewModel) {
+            guard let viewModel = viewModel else { return }
+            postTitle.text = viewModel.title
+            postDescription.text = viewModel.description
+            postImage.image = UIImage(named: viewModel.image)
+            postLikesCounter.text = "Likes: \(viewModel.likes)"
+            postViewsCounter.text = "Views: \(viewModel.views)"
+
+//            fullNameLabel.text = viewModel.fullName
+//            ageLabel.text = viewModel.age
+        }
+    }
+
+    
     private func setupPostLayout(){
         
         postTitle.snp.makeConstraints { make in

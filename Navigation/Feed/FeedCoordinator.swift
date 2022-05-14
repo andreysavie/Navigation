@@ -9,7 +9,7 @@ import UIKit
 
 final class FeedCoordinator {
     func start(coordinator: FeedCoordinator) -> UIViewController {
-        let viewModel = Model()
+        let viewModel = FeedModel()
         let viewController = FeedViewController(model: viewModel, coordinator: coordinator)
         viewController.view.backgroundColor = .secondarySystemGroupedBackground
         viewController.title = "Feed"
