@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
     
     // MARK: PROPERTIES
     
-    private var model: FeedModel
+    private var ViewModel: FeedViewModel?
     private weak var coordinator: FeedCoordinator?
     
     private lazy var newPostButton: CustomButton = {
@@ -31,8 +31,6 @@ class FeedViewController: UIViewController {
         
         return button
     }()
-    
-    // MARK: - Task 6. part 1. interface objects
     
     private lazy var someTextField: UITextField = {
         let textField = UITextField()
@@ -69,8 +67,8 @@ class FeedViewController: UIViewController {
     
     // MARK: INITS
     
-    init (model: FeedModel, coordinator: FeedCoordinator) {
-        self.model = model
+    init (model: FeedViewModel, coordinator: FeedCoordinator) {
+        self.ViewModel = model
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,7 +80,6 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubviews(newPostButton, someLabel, someTextField, someButton)
-        setupFeedLayout()
         
         newPostButton.tapAction = { [weak self] in
             guard let self = self else { return }
@@ -93,8 +90,6 @@ class FeedViewController: UIViewController {
             guard let self = self else { return }
             self.someButtonAction()
         }
-        
-        // MARK: - Task 6. part 2. Notification center addObserver
         
         NotificationCenter.default.addObserver(
             self,
@@ -109,6 +104,16 @@ class FeedViewController: UIViewController {
             name: NSNotification.Name.codeGreen,
             object: nil
         )
+        
+        guard let ViewModel = ViewModel else { return }
+        
+        ViewModel.setupFeedLayout(
+            newPostButton: newPostButton,
+            label: someLabel,
+            textField: someTextField,
+            someButton: someButton
+        )
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,8 +122,6 @@ class FeedViewController: UIViewController {
     }
     
     // MARK: METHODS
-    
-    // MARK: - Task 6. part 2. Notification center actions
     
     @objc func codeRed() {
         someLabel.text = "CODE RED"
@@ -130,45 +133,16 @@ class FeedViewController: UIViewController {
         someLabel.textColor = .green
     }
     
-    // MARK: - Task 6. part 2. sending textField's text to model
-    
     private func someButtonAction() {
-        model.check(word: someTextField.text!)
-    }
-    
-    private func setupFeedLayout() {
-        newPostButton.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(50)
-        }
-        
-        someLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(newPostButton.snp.bottom).offset(16)
-            make.width.equalTo(200)
-            make.height.equalTo(40)
-        }
-        
-        someTextField.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(someLabel.snp.bottom).offset(16)
-            make.width.equalTo(200)
-            make.height.equalTo(40)
-        }
-        
-        someButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(someTextField.snp.bottom).offset(16)
-            make.width.equalTo(150)
-            make.height.equalTo(50)
+        guard let ViewModel = ViewModel else { return }
+        if ViewModel.check(word: someTextField.text!) == false {
+            ViewModel.presentAlert(viewController: self)
         }
     }
     
-        private func showNewPostVC() {
-            let postVC = PostViewController()
-            postVC.title = "New post"
-            postVC.view.backgroundColor = .systemGray5
-            self.navigationController?.pushViewController(postVC, animated: true)
-        }
+    private func showNewPostVC() {
+        let coordinator = NewPostCoordinator()
+        coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
+    }
+    
 }

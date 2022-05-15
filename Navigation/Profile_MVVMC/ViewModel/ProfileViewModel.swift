@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ProfileViewModel: PostTableViewViewModelType {
+final class ProfileViewModel {
     
     public var posts = [
     
@@ -47,7 +47,7 @@ final class ProfileViewModel: PostTableViewViewModelType {
         return posts.count
     }
     
-    func cellViewModel(forIndexPath indexPath: IndexPath) -> PostTableViewCellViewModelType? {
+    func cellViewModel(forIndexPath indexPath: IndexPath) -> PostTableViewCellViewModel? {
         let post = posts[indexPath.row]
         return PostTableViewCellViewModel(post: post)
     }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PhotosCollectionViewCellViewModel: PhotosCollectionViewCellViewModelType {
+class PhotosCollectionViewCellViewModel {
     
     var image: UIImage
     

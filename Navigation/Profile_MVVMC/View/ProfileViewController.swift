@@ -11,19 +11,14 @@ import SnapKit
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
-    var viewModel: PostTableViewViewModelType?
-
-    private var model: ProfileViewModel
+    private var viewModel: ProfileViewModel?
     private weak var coordinator: ProfileCoordinator?
 
-    let loginViewController = LogInViewController()
-//    let photosViewController = PhotosViewController()
+    private let loginViewController = LogInViewController()
     
-    var userService: UserService?
-    var fullName: String
-    
-    //MARK: Задача 3. Создадим инициализацию для приёма параметров из контроллера авторизации
-    
+    private var userService: UserService?
+    private var fullName: String
+        
     //MARK: PROPERTIES
     
     static let tableView: UITableView = {
@@ -42,12 +37,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     init (
         userService: UserService,
         name: String,
-        model: ProfileViewModel,
+        viewModel: ProfileViewModel,
         coordinator: ProfileCoordinator
     ) {
         self.userService = userService
         self.fullName = name
-        self.model = model
+        self.viewModel = viewModel
         self.coordinator = coordinator
 
         super.init(nibName: nil, bundle: nil)
@@ -91,16 +86,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
-    
-    //MARK: METHODS
-    
-//    func showPhotosVC() {
-//        photosViewController.title = "Photo Gallery"
-//        photosViewController.view.backgroundColor = .white
-//        self.navigationController?.pushViewController(photosViewController, animated: true)
-//        tabBarController?.tabBar.isHidden = true
-//    }
+
 }
+
+// MARK: UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {
     
@@ -144,13 +133,15 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
+
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
         
-        // MARK: Задача 3. Проведём валидацию пользователя и присвоим полям нужные значения
+        // MARK: user validation
         
         let currentUser = userService?.userIdentify(name: fullName)
         headerView.nameLabel.text = currentUser?.fullName

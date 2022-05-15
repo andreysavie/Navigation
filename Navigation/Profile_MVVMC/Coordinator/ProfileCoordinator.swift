@@ -13,7 +13,7 @@ final class ProfileCoordinator {
         let viewController = ProfileViewController(
             userService: TestUserService() as UserService,
             name: "testname",
-            model: viewModel,
+            viewModel: viewModel,
             coordinator: coordinator)
         viewController.view.backgroundColor = .systemGray3
         viewController.title = "Profile"

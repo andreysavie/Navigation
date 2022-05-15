@@ -31,7 +31,7 @@ final class Factory {
         switch state {
         case .feed:
             let coordinator = FeedCoordinator()
-            let feedViewController = coordinator.start(coordinator: coordinator)
+            let feedViewController = coordinator.showDetail(coordinator: coordinator)
 
             navigationController.setViewControllers([feedViewController], animated: true)
             navigationController.navigationBar.barTintColor = UIColor.systemGray5
@@ -58,13 +58,7 @@ final class Factory {
                 image: UIImage(systemName: "person.circle"),
                 selectedImage: UIImage(systemName:"person.circle.fill")
             )
-//        case .photos:
-//            let coordinator = PhotosCoordinator()
-//            let photosViewController = coordinator.showDetail(coordinator: coordinator)
-//
-//            navigationController.setViewControllers([photosViewController], animated: true)
-
-            
         }
     }
+    
 }
