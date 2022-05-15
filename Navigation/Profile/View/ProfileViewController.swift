@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     private weak var coordinator: ProfileCoordinator?
 
     let loginViewController = LogInViewController()
-    let photosViewController = PhotosViewController()
+//    let photosViewController = PhotosViewController()
     
     var userService: UserService?
     var fullName: String
@@ -61,6 +61,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel = ProfileViewModel()
+        
         self.view.addSubview(ProfileViewController.tableView)
         ProfileViewController.tableView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
@@ -92,12 +94,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: METHODS
     
-    func showPhotosVC() {
-        photosViewController.title = "Photo Gallery"
-        photosViewController.view.backgroundColor = .white
-        self.navigationController?.pushViewController(photosViewController, animated: true)
-        tabBarController?.tabBar.isHidden = true
-    }
+//    func showPhotosVC() {
+//        photosViewController.title = "Photo Gallery"
+//        photosViewController.view.backgroundColor = .white
+//        self.navigationController?.pushViewController(photosViewController, animated: true)
+//        tabBarController?.tabBar.isHidden = true
+//    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -112,7 +114,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return posts.count
+            return viewModel?.numberOfRows() ?? 0
         default:
             return 0
         }
@@ -128,11 +130,13 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
             
         case 1:
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: PostTableViewCell.identifire,
-                for: indexPath) as! PostTableViewCell
-            cell.setConfigureOfCell(post: posts[indexPath.row])
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell
+            
+            guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
+            let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
+            tableViewCell.viewModel = cellViewModel
+            
+            return tableViewCell
             
         default:
             return UITableViewCell()
@@ -169,8 +173,9 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.section == 0 else {return}
-        showPhotosVC()
+        guard indexPath.section == 0 else { return }
+        let coordinator = PhotosCoordinator()
+        coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
     }
 }
 

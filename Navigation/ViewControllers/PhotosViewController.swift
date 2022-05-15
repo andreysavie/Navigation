@@ -12,30 +12,14 @@ class PhotosViewController: UIViewController {
     
     // MARK: PROPERTIES
     
+    private var viewModel: PhotosCollectionViewViewModelType?
+    private let coordinator: PhotosCoordinator
+    
     private let facade = ImagePublisherFacade()
-    
     private var newPhotoArray = [UIImage]()
-
-    
-    private let itemsPerRow: CGFloat = 3
-    
-    private let sectionInserts = UIEdgeInsets(
-        top: Constants.Inset,
-        left: Constants.Inset,
-        bottom: Constants.Inset,
-        right: Constants.Inset
-    )
-    
-    private lazy var layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = Constants.Inset
-        layout.minimumLineSpacing = Constants.Inset
-        layout.sectionInset = sectionInserts
-        layout.scrollDirection = .vertical
-        return layout
-    }()
     
     private lazy var collectionView: UICollectionView = {
+        guard let layout = viewModel?.layout else { return UICollectionView() }
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifire)
         collection.dataSource = self
@@ -44,6 +28,19 @@ class PhotosViewController: UIViewController {
     }()
     
     // MARK: INITS
+    
+    init(
+        coordinator: PhotosCoordinator,
+        viewModel: PhotosViewModel
+    ) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,12 +64,10 @@ class PhotosViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
-    
-    
+
 }
 
 extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
-    
     
     func receive(images: [UIImage]) {
         newPhotoArray = images
@@ -82,14 +77,13 @@ extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscrib
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return newPhotoArray.count
-        //        return filtredPhotosArray.count // оставил на свякий случай))
-
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifire, for: indexPath) as? PhotosCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(image: newPhotoArray[indexPath.item])
-        //        cell.configure(image: filtredPhotosArray[indexPath.item]) // оставил на свякий случай))
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifire, for: indexPath) as? PhotosCollectionViewCell, let viewModel = viewModel else { return UICollectionViewCell() }
+        let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath, array: newPhotoArray)
+        cell.viewModel = cellViewModel
         return cell
     }
     
@@ -102,9 +96,9 @@ extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscrib
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingWidth = sectionInserts.left * (itemsPerRow + 1)
-        let availableWidth = collectionView.frame.width - paddingWidth
-        let widthPerItem = availableWidth / itemsPerRow
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        guard let viewModel = viewModel else { return CGSize() }
+        let layout = viewModel.collectionViewLayout(collectionView: collectionView)
+        return layout
     }
+    
 }

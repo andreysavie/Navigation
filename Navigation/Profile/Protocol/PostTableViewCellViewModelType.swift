@@ -19,6 +19,7 @@ protocol PostTableViewCellViewModelType: AnyObject {
     var likes: Int { get }
     var views: Int { get }
     
+}
     
 //    var postTitle: UILabel { get }
 //
@@ -36,4 +37,3 @@ protocol PostTableViewCellViewModelType: AnyObject {
 //    var age: String { get }
     
 //    private var post: Post
-}

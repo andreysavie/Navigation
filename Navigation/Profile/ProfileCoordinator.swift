@@ -8,7 +8,7 @@
 import UIKit
 
 final class ProfileCoordinator {
-    func start(coordinator: ProfileCoordinator) -> UIViewController {
+    func showDetail(coordinator: ProfileCoordinator) -> UIViewController {
         let viewModel = ProfileViewModel()
         let viewController = ProfileViewController(
             userService: TestUserService() as UserService,
@@ -18,5 +18,20 @@ final class ProfileCoordinator {
         viewController.view.backgroundColor = .systemGray3
         viewController.title = "Profile"
         return viewController
+    }
+}
+
+final class PhotosCoordinator {
+    func showDetail(navCon: UINavigationController?, coordinator: PhotosCoordinator) {
+        let viewModel = PhotosViewModel()
+        let viewController = PhotosViewController(coordinator: coordinator, viewModel: viewModel)
+        viewController.view.backgroundColor = .white
+        viewController.title = "Photo Gallery"
+        navCon?.tabBarController?.tabBar.isHidden = true
+        navCon?.pushViewController(viewController, animated: true)
+    }
+    
+    func pop(navCon: UINavigationController?) {
+        navCon?.popViewController(animated: true)
     }
 }
