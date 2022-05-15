@@ -12,6 +12,7 @@ final class Factory {
     enum State {
         case feed
         case profile
+//        case photos
     }
 
     let navigationController: UINavigationController
@@ -45,10 +46,9 @@ final class Factory {
 
         case .profile:
             let coordinator = ProfileCoordinator()
-            let profileViewController = coordinator.start(coordinator: coordinator)
+            let profileViewController = coordinator.showDetail(coordinator: coordinator)
 
             navigationController.setViewControllers([profileViewController], animated: true)
-
             navigationController.navigationBar.barTintColor = UIColor.systemGray5
             navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
             navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes, for: .normal)
@@ -58,6 +58,13 @@ final class Factory {
                 image: UIImage(systemName: "person.circle"),
                 selectedImage: UIImage(systemName:"person.circle.fill")
             )
+//        case .photos:
+//            let coordinator = PhotosCoordinator()
+//            let photosViewController = coordinator.showDetail(coordinator: coordinator)
+//
+//            navigationController.setViewControllers([photosViewController], animated: true)
+
+            
         }
     }
 }

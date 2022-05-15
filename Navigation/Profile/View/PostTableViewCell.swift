@@ -41,9 +41,20 @@ class PostTableViewCell: UITableViewCell {
         return postDescription
     }()
     
-    private lazy var postLikesCounter = counter()
-    private lazy var postViewsCounter = counter()
-
+    private lazy var postLikesCounter: UILabel = {
+        let counter = UILabel()
+        counter.font = UIFont.systemFont(ofSize: 16)
+        counter.textColor = .black
+        return counter
+    }()
+    
+    private lazy var postViewsCounter: UILabel = {
+        let counter = UILabel()
+        counter.font = UIFont.systemFont(ofSize: 16)
+        counter.textColor = .black
+        return counter
+    }()
+    
     // MARK: INITS
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -62,13 +73,6 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // MARK: METHODS
-
-    private func counter() -> UILabel {
-        let counter = UILabel()
-        counter.font = UIFont.systemFont(ofSize: 16)
-        counter.textColor = .black
-        return counter
-    }
     
     public func setConfigureOfCell(post: Post) {
         self.postTitle.text = post.title
@@ -87,8 +91,6 @@ class PostTableViewCell: UITableViewCell {
             postLikesCounter.text = "Likes: \(viewModel.likes)"
             postViewsCounter.text = "Views: \(viewModel.views)"
 
-//            fullNameLabel.text = viewModel.fullName
-//            ageLabel.text = viewModel.age
         }
     }
 

@@ -32,9 +32,17 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func configure(image: UIImage) {
-        self.photo.image = image
+//    
+//    func configure(image: UIImage) {
+//        self.photo.image = image
+//    }
+    
+    weak var viewModel: PhotosCollectionViewCellViewModelType? {
+        willSet(viewModel) {
+            guard let viewModel = viewModel else { return }
+            photo.image = viewModel.image
+        }
     }
+    
 }
 
