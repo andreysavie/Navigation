@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainCoordinator: Coordinator {
+final class MainCoordinator {
     func startApplication() -> UIViewController {
         return MainTabBarViewController()
     }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class PhotosViewModel: PhotosCollectionViewViewModelType {
+final class PhotosViewModel {
     
     private var newPhotoArray = [UIImage]()
     
@@ -29,13 +29,8 @@ final class PhotosViewModel: PhotosCollectionViewViewModelType {
         layout.scrollDirection = .vertical
         return layout
     }
-    
-    func receive(images: [UIImage], collectionView: UICollectionView) {
-        newPhotoArray = images
-        collectionView.reloadData()
-    }
         
-    func cellViewModel(forIndexPath indexPath: IndexPath, array: [UIImage]) -> PhotosCollectionViewCellViewModelType? {
+    func cellViewModel(forIndexPath indexPath: IndexPath, array: [UIImage]) -> PhotosCollectionViewCellViewModel? {
         let image = array[indexPath.item]
         return PhotosCollectionViewCellViewModel(image: image)
     }

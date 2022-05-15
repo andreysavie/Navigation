@@ -215,7 +215,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     private func logInButtonPressed() {
         
         //        #if DEBUG
-        let currentUserService = TestUserService()
+//        let currentUserService = TestUserService()
         //        #else
         //        let currentUserService = CurrentUserService()
         //        #endif

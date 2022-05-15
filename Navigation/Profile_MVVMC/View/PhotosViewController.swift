@@ -12,8 +12,8 @@ class PhotosViewController: UIViewController {
     
     // MARK: PROPERTIES
     
-    private var viewModel: PhotosCollectionViewViewModelType?
-    private let coordinator: PhotosCoordinator
+    private var viewModel: PhotosViewModel?
+    private let coordinator: PhotosCoordinator?
     
     private let facade = ImagePublisherFacade()
     private var newPhotoArray = [UIImage]()
@@ -88,7 +88,6 @@ extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscrib
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
@@ -96,6 +95,7 @@ extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscrib
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         guard let viewModel = viewModel else { return CGSize() }
         let layout = viewModel.collectionViewLayout(collectionView: collectionView)
         return layout
