@@ -14,7 +14,7 @@ struct Constants {
     static let Inset: CGFloat = 8
     
     static let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
-           
+    
     static let navigationBarAppearance: UINavigationBarAppearance = {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -23,6 +23,26 @@ struct Constants {
     }()
 }
 
+// MARK: - Task 8: for asynchronous development and multithreading
+extension Constants {
+    
+    static func timeToString(sec: Double) -> String {
+        let minutes = Int(sec) / 60
+        let seconds = sec - Double(minutes) * 60
+        let secondsFraction = seconds - Double(Int(seconds))
+        return String(format:"%02i:%02i.%02d",minutes,Int(seconds),Int(secondsFraction * 100.0))
+    }
+    
+    static func showElapsedTimeAlert(navCon: UINavigationController, sec: Double)  {
+        let alertController = UIAlertController(
+            title: "Done!",
+            message: "elapsed time: \(timeToString(sec: sec))",
+            preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        navCon.present(alertController, animated: true, completion: nil)
+    }
+}
 public extension UIView {
     
     func addSubviews(_ subviews: UIView...) {
