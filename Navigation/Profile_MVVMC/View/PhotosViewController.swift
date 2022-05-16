@@ -18,6 +18,11 @@ class PhotosViewController: UIViewController {
     private let facade = ImagePublisherFacade()
     private var newPhotoArray = [UIImage]()
     
+    // MARK: - Task 8: properties for using in task
+    private let imageProcessor = ImageProcessor()
+    private var count: Double = 0
+    private var timer: Timer?
+    
     private lazy var collectionView: UICollectionView = {
         guard let layout = viewModel?.layout else { return UICollectionView() }
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -48,14 +53,29 @@ class PhotosViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
         }
-        facade.subscribe(self)
-        facade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: filtredPhotosArray)
+        // MARK: - Task 8: method of image processing in a thread:
+
+        imageProcessor.processImagesOnThread(sourceImages: threadPhotosArray, filter: .colorInvert, qos: QualityOfService.userInteractive) { cgImages in
+            self.newPhotoArray = cgImages.map({UIImage(cgImage: $0!)})
+            DispatchQueue.main.async{
+                self.collectionView.reloadData()
+            }
+        }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.035, repeats: true, block: { [weak self] _ in
+            self?.count += 0.035
+            self?.checkTimer()
+        })
+        
+        
+        //        facade.subscribe(self)
+        //        facade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: filtredPhotosArray)
     }
     
-    deinit {
-        facade.rechargeImageLibrary()
-        facade.removeSubscription(for: self)
-    }
+    //    deinit {
+    //        facade.rechargeImageLibrary()
+    //        facade.removeSubscription(for: self)
+    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
@@ -64,15 +84,26 @@ class PhotosViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
+    
+    // MARK: - Task 8: timer for image processing
 
+    func checkTimer() {
+        if !newPhotoArray.isEmpty {
+            print("Elapsed time: \(Constants.timeToString(sec: count))")
+            Constants.showElapsedTimeAlert(navCon: self.navigationController!, sec: count)
+            timer!.invalidate()
+        }
+    }
+    
 }
 
-extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
+//extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
+extension PhotosViewController: UICollectionViewDataSource {
     
-    func receive(images: [UIImage]) {
-        newPhotoArray = images
-        collectionView.reloadData()
-    }
+    //    func receive(images: [UIImage]) {
+    //        newPhotoArray = images
+    //        collectionView.reloadData()
+    //    }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
