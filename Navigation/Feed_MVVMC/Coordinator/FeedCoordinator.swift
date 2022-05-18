@@ -37,3 +37,10 @@ final class InfoCoordinator {
         navCon?.present(viewController, animated: true, completion: nil)
     }
 }
+
+final class LoginCoordinator {
+    func showDetail(coordinator: LoginCoordinator) -> UIViewController {
+        let viewController = LogInViewController()
+        return viewController
+    }
+}

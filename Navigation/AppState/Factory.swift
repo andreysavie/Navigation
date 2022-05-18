@@ -12,6 +12,7 @@ final class Factory {
     enum State {
         case feed
         case profile
+        case login
 //        case photos
     }
 
@@ -58,6 +59,21 @@ final class Factory {
                 image: UIImage(systemName: "person.circle"),
                 selectedImage: UIImage(systemName:"person.circle.fill")
             )
+            
+        case .login:
+            let coordinator = LoginCoordinator()
+            let loginViewController = coordinator.showDetail(coordinator: coordinator)
+
+            navigationController.setViewControllers([loginViewController], animated: true)
+//            navigationController.navigationBar.barTintColor = UIColor.systemGray5
+//            navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
+//            navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes, for: .normal)
+//            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+            navigationController.tabBarItem = UITabBarItem(
+                        title: "Profile",
+                        image: UIImage(systemName: "person.circle"),
+                        selectedImage: UIImage(systemName:"person.circle.fill")
+                    )
         }
     }
     
