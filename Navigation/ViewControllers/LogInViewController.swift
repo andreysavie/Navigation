@@ -66,6 +66,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    private lazy var hackThePasswordButton: CustomButton = {
+        let button = CustomButton (
+            title: "Hack the password",
+            titleColor: UIColor.white,
+            backColor: UIColor.white,
+            backImage: UIImage(named: "blue_pixel") ?? UIImage()
+        )
+        
+        return button
+    }()
     public lazy var loginTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Email or phone", secure: false)
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
@@ -111,6 +121,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         logInButton.tapAction = { [weak self] in
             guard let self = self else { return }
             self.logInButtonPressed()
+        }
+        
+        hackThePasswordButton.tapAction = { [weak self] in
+            guard let self = self else { return }
+//            self.hackPassword()
         }
     }
         
@@ -177,7 +192,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         view.addSubview(logInScrollView)
         logInScrollView.addSubview(contentView)
-        contentView.addSubviews(logo, textFieldsStackView, logInButton)
+        contentView.addSubviews(logo, textFieldsStackView, logInButton, hackThePasswordButton)
         textFieldsStackView.addArrangedSubview(loginTextField)
         textFieldsStackView.addArrangedSubview(passwordTextField)
         setupLoginLayout()
@@ -209,6 +224,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         logInButton.snp.makeConstraints { make in
             make.top.equalTo(textFieldsStackView.snp.bottom).offset(Constants.margin)
+            make.leading.trailing.equalTo(contentView).inset(Constants.margin)
+            make.height.equalTo(50)
+        }
+        
+        hackThePasswordButton.snp.makeConstraints { make in
+            make.top.equalTo(logInButton.snp.bottom).offset(Constants.margin)
             make.leading.trailing.equalTo(contentView).inset(Constants.margin)
             make.height.equalTo(50)
         }
