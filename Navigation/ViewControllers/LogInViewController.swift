@@ -125,7 +125,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         hackThePasswordButton.tapAction = { [weak self] in
             guard let self = self else { return }
-//            self.hackPassword()
+            self.hackPassword()
         }
     }
         
@@ -262,6 +262,19 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func hackPassword() {
+        let hack = BrutForce()
+        var pass: String = ""
+        DispatchQueue.global().async {
+            pass = hack.bruteForce(passwordToUnlock: "1111")
+            DispatchQueue.main.async {
+                self.passwordTextField.text = pass
+                self.passwordTextField.isSecureTextEntry = false
+                self.logInButtonAlpha()
+            }
+        }
+        
+    }
      
     
     //MARK: SUBMETHODS
