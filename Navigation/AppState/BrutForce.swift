@@ -34,7 +34,7 @@ class BrutForce {
     //        }
     
     
-    func bruteForce(passwordToUnlock: String) {
+    func bruteForce(passwordToUnlock: String) -> String {
         let ALLOWED_CHARACTERS: [String] = String().printable.map { String($0) }
         
         var password: String = ""
@@ -46,7 +46,7 @@ class BrutForce {
             print(password)
             // Your stuff here
         }
-        print(password)
+        return password
     }
     
 }
