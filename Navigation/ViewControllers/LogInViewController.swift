@@ -18,6 +18,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private var isLogin = false
     
+    private let inspector = MyLoginFactory.shared.returnLoginInspector()
+
+    
     var delegate: LoginViewControllerDelegate!
     
     private lazy var logInScrollView: UIScrollView = {
@@ -97,6 +100,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
+        self.delegate = inspector
+
         
         setupContentViews()
         hideKeyboardWhenTappedAround()
@@ -224,14 +229,16 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
 //        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
 //
-//
-//        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
-//            isLogin = true
-//            navigationController?.pushViewController(profileVC, animated: true)
-//            navigationController?.setViewControllers([profileVC], animated: true)
-//        } else {
-//            present(loginAlertController, animated: true, completion: nil)
-//        }
+        let coordinator = ProfileCoordinator()
+        let profileViewController = coordinator.showDetail(coordinator: coordinator)
+        
+        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
+            isLogin = true
+            navigationController?.pushViewController(profileViewController, animated: true)
+            navigationController?.setViewControllers([profileViewController], animated: true)
+        } else {
+            present(loginAlertController, animated: true, completion: nil)
+        }
     }
     
      

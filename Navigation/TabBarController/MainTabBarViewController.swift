@@ -13,6 +13,8 @@ class MainTabBarViewController: UITabBarController {
     
     private let profileViewController = Factory(navigationController: UINavigationController(), state: .profile)
 
+    private let loginViewController = Factory(navigationController: UINavigationController(), state: .login)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.backgroundColor = UIColor.systemGray5
@@ -23,7 +25,8 @@ class MainTabBarViewController: UITabBarController {
     private func setControllers() {
         viewControllers = [
             feedViewController.navigationController,
-            profileViewController.navigationController
+            loginViewController.navigationController
+//            profileViewController.navigationController
         ]
     }
 

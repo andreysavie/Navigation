@@ -17,6 +17,7 @@
 		D50610A628061EBF00BC51AC /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; };
 		D50610A728061EBF00BC51AC /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D52F469E27D4E224002BD753 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F469D27D4E224002BD753 /* ColorSet.swift */; };
+		D55D2B202835354900D001CC /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D2B1F2835354900D001CC /* BrutForce.swift */; };
 		D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464327C810490022DDFC /* PostTableViewCell.swift */; };
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
 		D5660866281C7D6B00A3F9C1 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = D5660865281C7D6B00A3F9C1 /* iOSIntPackage */; };
@@ -106,6 +107,7 @@
 		D50610A128061EBF00BC51AC /* StorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceTests.swift; sourceTree = "<group>"; };
 		D52F469D27D4E224002BD753 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		D530410D27C39882003DD19F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		D55D2B1F2835354900D001CC /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D575870A27BEB11000570D3F /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				D52F469D27D4E224002BD753 /* ColorSet.swift */,
 				D5AB1A4C27D2B6880072E723 /* PhotosArray.swift */,
 				D5FB342F282467D40007BF59 /* CustomButton.swift */,
+				D55D2B1F2835354900D001CC /* BrutForce.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				D5A392DA282FD7430073E034 /* Post.swift in Sources */,
 				D5ED097627B5A5D0007F70C6 /* ProfileViewController.swift in Sources */,
 				D575870B27BEB11000570D3F /* ProfileHeaderView.swift in Sources */,
+				D55D2B202835354900D001CC /* BrutForce.swift in Sources */,
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
 				D5A392DC28310D210073E034 /* PhotosVIewModel.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
