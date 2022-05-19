@@ -28,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     )
         loginVC.delegate = inspector
         
-        createPhotosArray()
+        DispatchQueue.global().async {
+            createPhotosArray()
+        }
         
         let mainCoordinator = MainCoordinator()
         window?.rootViewController = mainCoordinator.startApplication()

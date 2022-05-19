@@ -32,6 +32,12 @@ class PhotosViewController: UIViewController {
         return collection
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.center = self.view.center
+        return indicator
+    }()
+    
     // MARK: INITS
     
     init(
@@ -50,15 +56,18 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
         }
         // MARK: - Task 8: method of image processing in a thread:
-
-        imageProcessor.processImagesOnThread(sourceImages: threadPhotosArray, filter: .colorInvert, qos: QualityOfService.userInteractive) { cgImages in
+        activityIndicator.startAnimating()
+        imageProcessor.processImagesOnThread(sourceImages: threadPhotosArray, filter: .colorInvert, qos: QualityOfService.userInteractive) { [unowned self] cgImages in
             self.newPhotoArray = cgImages.map({UIImage(cgImage: $0!)})
             DispatchQueue.main.async{
                 self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
+
             }
         }
         

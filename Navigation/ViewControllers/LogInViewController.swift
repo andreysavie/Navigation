@@ -76,14 +76,21 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         return button
     }()
+    
     public lazy var loginTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Email or phone", secure: false)
+        let icon = UIImageView(image: UIImage(systemName: "person"))
+        icon.tintColor = ColorSet.mainColor
+        textField.leftView = textFieldIcon(subView: icon)
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
         return textField
     }()
     
     private lazy var passwordTextField: UITextField = {
         let textField = logPassTextField(placeholder: "Password", secure: true)
+        let icon = UIImageView(image: UIImage(systemName: "lock"))
+        icon.tintColor = ColorSet.mainColor
+        textField.leftView = textFieldIcon(subView: icon)
         textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
         return textField
     }()
@@ -112,7 +119,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         self.delegate = inspector
 
-        
         setupContentViews()
         hideKeyboardWhenTappedAround()
         
@@ -265,15 +271,26 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     func hackPassword() {
         let hack = BrutForce()
         var pass: String = ""
+        
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        passwordTextField.leftView = textFieldIcon(subView: activityIndicator)
+        passwordTextField.placeholder = "Hacking the password..."
+        activityIndicator.startAnimating()
         DispatchQueue.global().async {
-            pass = hack.bruteForce(passwordToUnlock: "1111")
-            DispatchQueue.main.async {
+            pass = hack.bruteForce(passwordToUnlock: "1234")
+            
+            DispatchQueue.main.sync {
                 self.passwordTextField.text = pass
                 self.passwordTextField.isSecureTextEntry = false
+                self.passwordTextField.placeholder = "Password"
+                activityIndicator.stopAnimating()
+                self.passwordTextField.leftView = self.textFieldIcon(
+                    subView: UIImageView(
+                        image: UIImage(
+                            systemName: "lock")))
                 self.logInButtonAlpha()
             }
         }
-        
     }
      
     
@@ -303,5 +320,25 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldIcon (subView: UIView) -> UIView {
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+        leftView.addSubview(subView)
+        subView.center = leftView.center
+        return leftView
+    }
+}
+
+extension UITextField {
+    func setLeftPaddingPoints(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
     }
 }
