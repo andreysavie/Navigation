@@ -14,12 +14,6 @@ class PhotosTableViewCell: UITableViewCell {
 
     static let identifire = "PhotosTableViewCell"
         
-    private lazy var photosPreview: PhotosPreview = {
-            let photosPreview = PhotosPreview()
-        photosPreview.setupContent()
-        return photosPreview
-    }()
-    
     private lazy var photo: UIImageView = {
         let photo = UIImageView()
         photo.layer.cornerRadius = 10
