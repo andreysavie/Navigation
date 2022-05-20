@@ -15,7 +15,7 @@ let filtersSet: [ColorFilter] = [.colorInvert, .noir, .chrome, .fade, .posterize
                                          .process, .transfer, .bloom(intensity: 10),
                                          .sepia(intensity: 80)]
 
-private let photosArray = (1...20).compactMap {"pic_\($0)"}
+let photosArray = (1...20).compactMap {"pic_\($0)"}
 let threadPhotosArray = (1...20).compactMap {UIImage(named: "pic_\($0)") }
 
 private let imageProcessor = ImageProcessor()
