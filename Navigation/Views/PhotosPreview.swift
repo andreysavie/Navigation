@@ -59,7 +59,7 @@ extension PhotosPreview: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosPreviewCollectionViewCell.identifire, for: indexPath) as? PhotosPreviewCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(image: filtredPhotosArray[indexPath.item])
+//        cell.configure(image: filtredPhotosArray[indexPath.item])
         return cell
     }
 }
