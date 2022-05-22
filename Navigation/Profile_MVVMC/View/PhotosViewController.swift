@@ -12,16 +12,22 @@ class PhotosViewController: UIViewController {
     
     // MARK: PROPERTIES
     
-    private var viewModel: PhotosViewModel?
+    private let viewModel: PhotosViewModel?
     private let coordinator: PhotosCoordinator?
     
     private let facade = ImagePublisherFacade()
     private var newPhotoArray = [UIImage]()
     
-    // MARK: - Task 8: properties for using in task
     private let imageProcessor = ImageProcessor()
+
+    private var elapsedTimeTimer: Timer?
+    private var refreshDataTimer: Timer?
+    
     private var count: Double = 0
-    private var timer: Timer?
+    private var secBeforeRefresh: Int = 1
+
+    
+    private var isShowAlert = false
     
     private lazy var collectionView: UICollectionView = {
         guard let layout = viewModel?.layout else { return UICollectionView() }
@@ -60,23 +66,7 @@ class PhotosViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
         }
-        // MARK: - Task 8: method of image processing in a thread:
-        activityIndicator.startAnimating()
-        imageProcessor.processImagesOnThread(sourceImages: threadPhotosArray, filter: .colorInvert, qos: QualityOfService.userInteractive) { [unowned self] cgImages in
-            self.newPhotoArray = cgImages.map({UIImage(cgImage: $0!)})
-            DispatchQueue.main.async{
-                self.collectionView.reloadData()
-                self.activityIndicator.stopAnimating()
 
-            }
-        }
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.035, repeats: true, block: { [weak self] _ in
-            self?.count += 0.035
-            self?.checkTimer()
-        })
-        
-        
         //        facade.subscribe(self)
         //        facade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: filtredPhotosArray)
     }
@@ -90,19 +80,78 @@ class PhotosViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
+    // MARK: - Task 10: refreshing cycle timer should run after the view are appear
+    override func viewDidAppear(_ animated: Bool) {
+        refreshData()
+        cycleRefreshing()
     }
     
-    // MARK: - Task 8: timer for image processing
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+        
+        elapsedTimeTimer?.invalidate()
+        elapsedTimeTimer = nil
+        refreshDataTimer?.invalidate()
+        refreshDataTimer = nil
+        secBeforeRefresh = 1
+        count = 0
+    }
+    
     func checkTimer() {
         if !newPhotoArray.isEmpty {
             print("Elapsed time: \(Constants.timeToString(sec: count))")
-            Constants.showElapsedTimeAlert(navCon: self.navigationController!, sec: count)
-            timer!.invalidate()
+            elapsedTimeTimer!.invalidate()
+            elapsedTimeTimer = nil
+            if !isShowAlert {
+                Constants.showElapsedTimeAlert(navCon: self.navigationController!, sec: count)
+                isShowAlert = true
+            }
+            count = 0
         }
     }
+  
+    // MARK: - Task 10: run of cycle for refreshing by setted time
+    func cycleRefreshing() {
+        
+        refreshDataTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+            self.secBeforeRefresh -= 1
+            self.refreshData()
+            
+            if self.secBeforeRefresh > 0 {
+                print ("seconds before refresh: \(self.secBeforeRefresh)")
+            }
+        })
+        
+        refreshDataTimer?.fire()
+        refreshDataTimer?.tolerance = 0.3
+    }
+    
+    // MARK: - Task 10: method for refreshing of data (reloadData)
+//    @objc
+    func refreshData() {
+        guard secBeforeRefresh == 0 else { return }
+        
+        newPhotoArray = [UIImage]()
+        collectionView.reloadData()
+        
+        activityIndicator.startAnimating()
+        imageProcessor.processImagesOnThread(sourceImages: threadPhotosArray, filter: .colorInvert, qos: QualityOfService.userInteractive) { [unowned self] cgImages in
+            self.newPhotoArray = cgImages.map({UIImage(cgImage: $0!)})
+            DispatchQueue.main.async{
+                self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
+                
+                self.secBeforeRefresh = 10
+            }
+        }
+        
+        elapsedTimeTimer = Timer.scheduledTimer(withTimeInterval: 0.035, repeats: true, block: { [weak self] _ in
+            self?.count += 0.035
+            self?.checkTimer()
+        })
+    }
+    
     
 }
 

@@ -27,7 +27,7 @@ class PhotosTableViewCell: UITableViewCell {
         stackView.spacing = 8
         stackView.alignment = .leading
         stackView.distribution = .fillEqually
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         return stackView
     }()
     
