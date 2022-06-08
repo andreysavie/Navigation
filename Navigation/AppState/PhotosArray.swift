@@ -5,8 +5,40 @@
 //  Created by Андрей Рыбалкин on 05.03.2022.
 //
 
+
+//    testPhotosArray = (1...20).compactMap { UIImage(named: "pic_\($0)")}
+
 import UIKit
+import iOSIntPackage
 
-let photosArray = ["pic_1", "pic_2", "pic_3", "pic_4", "pic_5", "pic_6", "pic_7", "pic_8", "pic_9", "pic_10", "pic_11", "pic_12", "pic_13", "pic_14", "pic_15", "pic_16", "pic_17", "pic_18", "pic_19", "pic_20"]
+private let filtersSet: [ColorFilter] = [.colorInvert, .noir, .chrome, .fade, .posterize, .tonal,
+                                         .process, .transfer, .bloom(intensity: 10),
+                                         .sepia(intensity: 80)]
 
+private let photosArray = (1...20).compactMap {"pic_\($0)"}
+private let imageProcessor = ImageProcessor()
 
+public var filtredPhotosArray:[UIImage] = []
+
+public func createPhotosArray() {
+    for i in photosArray {
+        guard let pic = UIImage(named: i) else { return }
+        filtredPhotosArray.append(makeFiltredImage(pic))
+    }
+}
+
+//MARK: For PhotoFilters
+
+func makeFiltredImage(_ image: UIImage) -> UIImage {
+    var newImage = UIImage()
+    imageProcessor.processImage(sourceImage: image, filter: getRandomFilter(set: filtersSet)) { filteredImage in
+        newImage = filteredImage ?? UIImage()
+    }
+    return newImage
+}
+
+// метод для выдачи случайного фотофильтра из представленного массива
+func getRandomFilter (set: [ColorFilter]) -> ColorFilter {
+    let randomFilterNumber = Int.random(in: 0..<set.count)
+    return set[randomFilterNumber]
+}
