@@ -26,7 +26,6 @@ class MainTabBarViewController: UITabBarController {
         viewControllers = [
             feedViewController.navigationController,
             loginViewController.navigationController
-//            profileViewController.navigationController
         ]
     }
 

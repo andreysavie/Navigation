@@ -192,16 +192,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     private func showStatusbuttonPressed() {
         guard statusTextField.text?.isEmpty == false else {return}
-        statusLabel.text = statusTextChanged(statusTextField)
+        statusLabel.text = status
         self.statusTextField.text = ""
     }
 
     
-    @objc func statusTextChanged(_ textField: UITextField) -> String {
+    @objc func statusTextChanged(_ textField: UITextField) {
         if let newStatus = textField.text {
             status = newStatus
         }
-        return status
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

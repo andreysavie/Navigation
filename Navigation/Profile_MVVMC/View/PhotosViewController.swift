@@ -101,7 +101,7 @@ class PhotosViewController: UIViewController {
     func checkTimer() {
         if !newPhotoArray.isEmpty {
             print("Elapsed time: \(Constants.timeToString(sec: count))")
-            elapsedTimeTimer!.invalidate()
+            elapsedTimeTimer?.invalidate()
             elapsedTimeTimer = nil
             if !isShowAlert {
                 Constants.showElapsedTimeAlert(navCon: self.navigationController!, sec: count)
