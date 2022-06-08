@@ -8,5 +8,7 @@
 import UIKit
 
 struct ColorSet {
+    
     static let mainColor = UIColor(named: "main_color")
+    
 }
