@@ -13,11 +13,22 @@ class PhotosTableViewCell: UITableViewCell {
     // MARK: PROPERTIES
 
     static let identifire = "PhotosTableViewCell"
+        
+    private lazy var photo: UIImageView = {
+        let photo = UIImageView()
+        photo.layer.cornerRadius = 10
+        photo.clipsToBounds = true
+        return photo
+    }()
     
-    private lazy var photosPreview: PhotosPreview = {
-            let photosPreview = PhotosPreview()
-        photosPreview.setupContent()
-        return photosPreview
+    private lazy var photosPreviewStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .leading
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
+        return stackView
     }()
     
     private lazy var photosTitle: UILabel = {
@@ -30,7 +41,9 @@ class PhotosTableViewCell: UITableViewCell {
     
     private lazy var arrowImage: UIImageView = {
         let arrowImage = UIImageView()
-        arrowImage.image = UIImage(systemName: "arrow.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        arrowImage.image = UIImage(
+            systemName: "arrow.right",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))?.withTintColor(.black, renderingMode: .alwaysOriginal)
         return arrowImage
     }()
 
@@ -38,16 +51,25 @@ class PhotosTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubviews(photosTitle, arrowImage, photosPreview)
-        setupConstraints()
+        
+        contentView.addSubviews(photosTitle, arrowImage, photosPreviewStackView)
+        
+        for i in 0...3 {
+            photo = UIImageView(image: UIImage(named: photosArray[i]))
+            photo.layer.cornerRadius = 6
+            photo.clipsToBounds = true
+            photosPreviewStackView.addArrangedSubview(photo)
+        }
+        setupLayout()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
         
     // MARK: METHODS
     
-    private func setupConstraints(){
+    private func setupLayout(){
         
         photosTitle.snp.makeConstraints { make in
             make.leading.top.equalTo(contentView).inset(12)
@@ -59,9 +81,9 @@ class PhotosTableViewCell: UITableViewCell {
             make.width.height.equalTo(40)
         }
         
-        photosPreview.snp.makeConstraints { make in
-            make.top.equalTo(photosTitle.snp.bottom).offset(12)
-            make.width.equalTo(contentView)
+        photosPreviewStackView.snp.makeConstraints { make in
+            make.top.equalTo(photosTitle.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(contentView).inset(8)
             make.height.equalTo(80)
             make.bottom.equalTo(contentView).inset(12)
         }
