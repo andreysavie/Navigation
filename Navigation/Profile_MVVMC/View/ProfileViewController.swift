@@ -11,14 +11,14 @@ import SnapKit
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
-    let loginViewController = LogInViewController()
-    let photosViewController = PhotosViewController()
+    private var viewModel: ProfileViewModel?
+    private weak var coordinator: ProfileCoordinator?
+
+    private let loginViewController = LogInViewController()
     
-    var userService: UserService?
-    var fullName: String
-    
-    //MARK: Задача 3. Создадим инициализацию для приёма параметров из контроллера авторизации
-    
+    private var userService: UserService?
+    private var fullName: String
+        
     //MARK: PROPERTIES
     
     static let tableView: UITableView = {
@@ -34,11 +34,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: INITS
 
-    init (userService: UserService, name: String) {
+    init (
+        userService: UserService,
+        name: String,
+        viewModel: ProfileViewModel,
+        coordinator: ProfileCoordinator
+    ) {
         self.userService = userService
         self.fullName = name
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+
         super.init(nibName: nil, bundle: nil)
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,6 +55,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = ProfileViewModel()
         
         self.view.addSubview(ProfileViewController.tableView)
         ProfileViewController.tableView.snp.makeConstraints { make in
@@ -75,16 +86,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
-    
-    //MARK: METHODS
-    
-    func showPhotosVC() {
-        photosViewController.title = "Photo Gallery"
-        photosViewController.view.backgroundColor = .white
-        self.navigationController?.pushViewController(photosViewController, animated: true)
-        tabBarController?.tabBar.isHidden = true
-    }
+
 }
+
+// MARK: UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {
     
@@ -98,7 +103,7 @@ extension ProfileViewController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return posts.count
+            return viewModel?.numberOfRows() ?? 0
         default:
             return 0
         }
@@ -114,11 +119,13 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
             
         case 1:
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: PostTableViewCell.identifire,
-                for: indexPath) as! PostTableViewCell
-            cell.setConfigureOfCell(post: posts[indexPath.row])
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell
+            
+            guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
+            let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
+            tableViewCell.viewModel = cellViewModel
+            
+            return tableViewCell
             
         default:
             return UITableViewCell()
@@ -126,13 +133,15 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
+
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
         
-        // MARK: Задача 3. Проведём валидацию пользователя и присвоим полям нужные значения
+        // MARK: user validation
         
         let currentUser = userService?.userIdentify(name: fullName)
         headerView.nameLabel.text = currentUser?.fullName
@@ -155,8 +164,9 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.section == 0 else {return}
-        showPhotosVC()
+        guard indexPath.section == 0 else { return }
+        let coordinator = PhotosCoordinator()
+        coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
     }
 }
 

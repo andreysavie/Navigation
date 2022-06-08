@@ -41,9 +41,31 @@ class PostTableViewCell: UITableViewCell {
         return postDescription
     }()
     
-    private lazy var postLikesCounter = counter()
-    private lazy var postViewsCounter = counter()
-
+    private lazy var postLikesCounter: UILabel = {
+        let counter = UILabel()
+        counter.font = UIFont.systemFont(ofSize: 16)
+        counter.textColor = .black
+        return counter
+    }()
+    
+    private lazy var postViewsCounter: UILabel = {
+        let counter = UILabel()
+        counter.font = UIFont.systemFont(ofSize: 16)
+        counter.textColor = .black
+        return counter
+    }()
+    
+    weak var viewModel: PostTableViewCellViewModel? {
+        willSet(viewModel) {
+            guard let viewModel = viewModel else { return }
+            postTitle.text = viewModel.title
+            postDescription.text = viewModel.description
+            postImage.image = UIImage(named: viewModel.image)
+            postLikesCounter.text = "Likes: \(viewModel.likes)"
+            postViewsCounter.text = "Views: \(viewModel.views)"
+        }
+    }
+    
     // MARK: INITS
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -62,21 +84,6 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // MARK: METHODS
-
-    private func counter() -> UILabel {
-        let counter = UILabel()
-        counter.font = UIFont.systemFont(ofSize: 16)
-        counter.textColor = .black
-        return counter
-    }
-    
-    public func setConfigureOfCell(post: Post) {
-        self.postTitle.text = post.title
-        self.postDescription.text = post.description
-        self.postImage.image = UIImage(named: post.image)
-        self.postLikesCounter.text = "Likes: \(post.likes)"
-        self.postViewsCounter.text = "Views: \(post.views)"
-    }
     
     private func setupPostLayout(){
         
@@ -104,7 +111,6 @@ class PostTableViewCell: UITableViewCell {
             make.trailing.bottom.equalTo(contentView).inset(Constants.margin)
         }
     }
-    
     
     override func prepareForReuse() {
         super.prepareForReuse()

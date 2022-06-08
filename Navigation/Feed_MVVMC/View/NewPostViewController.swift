@@ -7,10 +7,25 @@
 
 import UIKit
 
-class PostViewController: UIViewController {
+class NewPostViewController: UIViewController {
     
+    // MARK: PROPERTIES
+
+    private var viewModel: NewPostViewModel?
+    private weak var coordinator: NewPostCoordinator?
+
     // MARK: INITS
 
+    init (viewModel: NewPostViewModel, coordinator: NewPostCoordinator) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let infoBarButtonItem = UIBarButtonItem(
@@ -34,9 +49,9 @@ class PostViewController: UIViewController {
     // MARK: METHODS
 
     @objc func showInfo() {
-        let infoViewController = InfoViewController()
-        infoViewController.title = title
-        present(infoViewController, animated: true, completion: nil)
+        let coordinator = InfoCoordinator()
+        coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
     }
+    
 }
 
