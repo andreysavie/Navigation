@@ -11,13 +11,17 @@ import SnapKit
 
 class VidePlayerViewController: UIViewController {
     
-    var videoKey: String
+    // MARK: PROPERTIES ========================================================================================
+
+    private var videoKey: String
         
     private lazy var playerView: YTPlayerView = {
         let player = YTPlayerView()
         return player
     }()
     
+    // MARK: INITS =============================================================================================
+
     init (videoKey: String) {
         self.videoKey = videoKey
         super.init(nibName: nil, bundle: nil)
@@ -35,10 +39,9 @@ class VidePlayerViewController: UIViewController {
         setupLayout()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        playerView.
-    }
     
+    // MARK: METHODS =============================================================================================
+
     private func setupLayout() {
         
         view.addSubview(playerView)
@@ -56,9 +59,4 @@ extension VidePlayerViewController: YTPlayerViewDelegate {
         return UIColor.black
     }
     
-//    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
-//                let customLoadingView = UIView()
-//
-//                return customLoadingView
-//    }
 }
