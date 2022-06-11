@@ -10,7 +10,6 @@ import SnapKit
 
 class VideoViewController: UIViewController {
 
-    
     // MARK: PROPERTIES =============================================================================================
 
     private var viewModel: VideoViewModel?

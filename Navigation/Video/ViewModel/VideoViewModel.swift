@@ -18,7 +18,6 @@ final class VideoViewModel {
         "ONj9cvHCado" : "Rammstein - Angst",
     ]
         
-//    private lazy var streamURL = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_adv_example_hevc/master.m3u8")!
     private lazy var streamURL = URL(string: "https://www.youtube.com/watch?v=KfLxG2AdfXw")!
 
     private lazy var localURL: URL = {
