@@ -10,10 +10,11 @@ import UIKit
 class MainTabBarViewController: UITabBarController {
     
     private let feedViewController = Factory(navigationController: UINavigationController(), state: .feed)
-    
     private let profileViewController = Factory(navigationController: UINavigationController(), state: .profile)
-
     private let loginViewController = Factory(navigationController: UINavigationController(), state: .login)
+    private let musicViewController = Factory(navigationController: UINavigationController(), state: .music)
+    private let videoViewController = Factory(navigationController: UINavigationController(), state: .video)
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,9 @@ class MainTabBarViewController: UITabBarController {
     private func setControllers() {
         viewControllers = [
             feedViewController.navigationController,
-            loginViewController.navigationController
+            loginViewController.navigationController,
+            musicViewController.navigationController,
+            videoViewController.navigationController
         ]
     }
 

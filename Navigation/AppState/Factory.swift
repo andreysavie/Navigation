@@ -13,7 +13,8 @@ final class Factory {
         case feed
         case profile
         case login
-//        case photos
+        case music
+        case video
     }
 
     let navigationController: UINavigationController
@@ -65,15 +66,39 @@ final class Factory {
             let loginViewController = coordinator.showDetail(coordinator: coordinator)
 
             navigationController.setViewControllers([loginViewController], animated: true)
-//            navigationController.navigationBar.barTintColor = UIColor.systemGray5
-//            navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
-//            navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes, for: .normal)
-//            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
             navigationController.tabBarItem = UITabBarItem(
                         title: "Profile",
                         image: UIImage(systemName: "person.circle"),
                         selectedImage: UIImage(systemName:"person.circle.fill")
                     )
+        case .music:
+            let coordinator = MusicCoordinator()
+            let musicViewController = coordinator.showDetail(coordinator: coordinator)
+
+            navigationController.setViewControllers([musicViewController], animated: true)
+            navigationController.navigationBar.barTintColor = UIColor.systemGray5
+            navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
+            navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes,for: .normal)
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+            navigationController.tabBarItem = UITabBarItem(
+                title: "Music",
+                image: UIImage(systemName: "music.note.list"),
+                selectedImage: UIImage(systemName: "music.note.list")
+            )
+        case .video:
+            let coordinator = VideoCoordinator()
+            let videoViewController = coordinator.showDetail(coordinator: coordinator)
+
+            navigationController.setViewControllers([videoViewController], animated: true)
+            navigationController.navigationBar.barTintColor = UIColor.systemGray5
+            navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
+            navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes,for: .normal)
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+            navigationController.tabBarItem = UITabBarItem(
+                title: "video",
+                image: UIImage(systemName: "video"),
+                selectedImage: UIImage(systemName: "video.fill")
+            )
         }
     }
     
