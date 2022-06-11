@@ -17,6 +17,9 @@
 		D50610A628061EBF00BC51AC /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; };
 		D50610A728061EBF00BC51AC /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D52F469E27D4E224002BD753 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52F469D27D4E224002BD753 /* ColorSet.swift */; };
+		D53256F9285533940047582E /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256F8285533940047582E /* MusicTableViewCell.swift */; };
+		D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256FA285534110047582E /* VideoTableViewCell.swift */; };
+		D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256FC28553A320047582E /* VidePlayerViewController.swift */; };
 		D55D2B202835354900D001CC /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D2B1F2835354900D001CC /* BrutForce.swift */; };
 		D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464327C810490022DDFC /* PostTableViewCell.swift */; };
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
@@ -117,6 +120,9 @@
 		D50610A128061EBF00BC51AC /* StorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceTests.swift; sourceTree = "<group>"; };
 		D52F469D27D4E224002BD753 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		D530410D27C39882003DD19F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		D53256F8285533940047582E /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
+		D53256FA285534110047582E /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
+		D53256FC28553A320047582E /* VidePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidePlayerViewController.swift; sourceTree = "<group>"; };
 		D55D2B1F2835354900D001CC /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -230,6 +236,16 @@
 			path = StorageServiceTests;
 			sourceTree = "<group>";
 		};
+		D53256FE28553B2A0047582E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D53256FC28553A320047582E /* VidePlayerViewController.swift */,
+				D5A529EF2854ABFD00A0DB32 /* VideoViewController.swift */,
+				D53256FA285534110047582E /* VideoTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D575870927BEB0A900570D3F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,7 +348,7 @@
 			children = (
 				D5A52A0A2854C70A00A0DB32 /* ViewModel */,
 				D5A52A062854C67200A0DB32 /* Coordinator */,
-				D5A529EF2854ABFD00A0DB32 /* VideoViewController.swift */,
+				D53256FE28553B2A0047582E /* View */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -349,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				D5A529ED2854ABF000A0DB32 /* MusicViewController.swift */,
+				D53256F8285533940047582E /* MusicTableViewCell.swift */,
 				D5A529F92854AECE00A0DB32 /* MusicPlayerView.swift */,
 			);
 			path = View;
@@ -763,6 +780,7 @@
 				D5CC1EF4282DA8D500137A94 /* ProfileViewModel.swift in Sources */,
 				D5A392E2283116460073E034 /* PhotosCollectionViewCellViewModel.swift in Sources */,
 				D5FB3430282467D40007BF59 /* CustomButton.swift in Sources */,
+				D53256F9285533940047582E /* MusicTableViewCell.swift in Sources */,
 				D5ED097A27B68627007F70C6 /* InfoViewController.swift in Sources */,
 				D5A392EB283192C20073E034 /* NewPostViewModel.swift in Sources */,
 				D5CBFD5E27CEC7B600B4FCEC /* PhotosTableViewCell.swift in Sources */,
@@ -780,9 +798,11 @@
 				D55D2B202835354900D001CC /* BrutForce.swift in Sources */,
 				D5A52A0C2854C72A00A0DB32 /* VideoViewModel.swift in Sources */,
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
+				D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */,
 				D5A529F62854AC9500A0DB32 /* MusicCoordinator.swift in Sources */,
 				D5A392DC28310D210073E034 /* PhotosVIewModel.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
+				D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */,
 				D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */,
 				D5A529F82854AD3500A0DB32 /* MusicViewModel.swift in Sources */,
 				D5AB1A4D27D2B6880072E723 /* ContentManager.swift in Sources */,

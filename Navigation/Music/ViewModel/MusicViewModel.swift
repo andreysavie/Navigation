@@ -9,7 +9,7 @@ import UIKit
 
 final class MusicViewModel {
     
-    var tracks: [String: String] = [
+    static var tracks: [String: String] = [
         "Adieu" : "Rammstein",
         "Angst" : "Rammstein",
         "Armee Der Tristen" : "Rammstein",
