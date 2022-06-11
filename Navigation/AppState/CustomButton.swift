@@ -47,6 +47,6 @@ final class CustomButton: UIButton {
     }
     
     @objc private func buttonPressed() {
-        tapAction?()
+            tapAction?()
     }
 }

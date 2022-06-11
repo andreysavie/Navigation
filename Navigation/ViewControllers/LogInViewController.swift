@@ -126,8 +126,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         logInButton.tapAction = { [weak self] in
             guard let self = self else { return }
-            self.logInButtonPressed()
-        }
+                self.logInButtonPressed()
+            }
+        
         
         hackThePasswordButton.tapAction = { [weak self] in
             guard let self = self else { return }
@@ -246,16 +247,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private func logInButtonPressed() {
         
-        //        #if DEBUG
-//        let currentUserService = TestUserService()
-        //        #else
-        //        let currentUserService = CurrentUserService()
-        //        #endif
-
-        // MARK: Временно закомментировал для 7 домашки
-        
-//        let profileVC = ProfileViewController(userService: currentUserService, name: loginTextField.text!)
-//
         let coordinator = ProfileCoordinator()
         let profileViewController = coordinator.showDetail(coordinator: coordinator)
         
