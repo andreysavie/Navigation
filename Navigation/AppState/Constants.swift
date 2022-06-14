@@ -48,9 +48,27 @@ public extension UIView {
     func addSubviews(_ subviews: UIView...) {
           subviews.forEach { addSubview($0) }
       }
+    
+    func getButton (icon name: String, action: Selector ) -> UIButton {
+        let button = UIButton()
+        button.setCustomImage(name: name, size: 32)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
+    }
+
 }
+
+public extension UIButton {
+    
+    func setCustomImage (name: String, size: CGFloat) {
+        setImage((UIImage(systemName: name, withConfiguration: UIImage.SymbolConfiguration(pointSize: size))?.withTintColor(.black, renderingMode: .alwaysOriginal))!, for: .normal)
+    }
+}
+
 
 public extension NSNotification.Name {
     static let codeRed = NSNotification.Name("codeRed")
     static let codeGreen = NSNotification.Name("codeGreen")
 }
+
+

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginVC.delegate = inspector
         
         DispatchQueue.global().async {
-            createPhotosArray()
+            ContentManager.shared.createPhotosArray()
         }
         
         let mainCoordinator = MainCoordinator()
