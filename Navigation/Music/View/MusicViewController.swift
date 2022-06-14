@@ -66,13 +66,14 @@ class MusicViewController: UIViewController {
 extension MusicViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MusicTableViewCell.self), for: indexPath) as? MusicTableViewCell else { return UITableViewCell() }
-        cell.setConfigureOfCell(index: indexPath.row)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MusicTableViewCell.self), for: indexPath) as? MusicTableViewCell,
+        let viewModel = viewModel else { return UITableViewCell() }
+        cell.setConfigureOfCell(model: viewModel, index: indexPath.row)
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MusicViewModel.shared.tracks.count
+        return MusicViewModel.tracks.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,8 +89,7 @@ extension MusicViewController: UITableViewDataSource {
 extension MusicViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        MusicViewModel.shared.playSelectedTrack(forIndex: indexPath.row)
-        NotificationCenter.default.post(name: NSNotification.Name.playPause, object: nil)
+        playerView.playSelectedTrack(forIndex: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

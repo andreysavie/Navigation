@@ -69,8 +69,6 @@ public extension UIButton {
 public extension NSNotification.Name {
     static let codeRed = NSNotification.Name("codeRed")
     static let codeGreen = NSNotification.Name("codeGreen")
-    
-    static let playPause = NSNotification.Name("playPause")
 }
 
 

@@ -49,7 +49,16 @@ class MusicTableViewCell: UITableViewCell {
         }
     }
     
-    func setConfigureOfCell(index: Int) {
-        trackNameLabel.text = MusicViewModel.shared.getTrackName(index: index)
+    func setConfigureOfCell(model: MusicViewModel, index: Int) {
+        
+        var currentTrackName: String {
+            get {
+                let singer = Array(MusicViewModel.tracks.values)[index]
+                let track = Array(MusicViewModel.tracks.keys)[index]
+                return "\(singer) - \(track)"
+            }
+        }
+        
+        trackNameLabel.text = currentTrackName
     }
 }
