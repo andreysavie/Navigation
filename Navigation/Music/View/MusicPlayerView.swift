@@ -6,42 +6,33 @@
 //
 
 import UIKit
-//import AVFoundation
+import AVFoundation
 import SnapKit
-
-protocol PlayerDelegate: AnyObject {
-    
-    func setTrack ()
-    func playPause ()
-    func stop ()
-    func nextTrack ()
-    func previousTrack ()
-    func playSelectedTrack(forIndex index: Int)
-
-}
 
 class MusicPlayerView: UIView {
     
     // MARK: PROPERTIES =============================================================================================
     
-    weak var delegate: PlayerDelegate?
+    private var player = AVAudioPlayer()
+    private var model = MusicViewModel()
+    private var counter = 0
     
-    private var trackName: String {
+    private var currentTrackName: String {
         get {
-            return MusicViewModel.shared.currentTrackName
+            let singer = Array(MusicViewModel.tracks.values)[counter]
+            let track = Array(MusicViewModel.tracks.keys)[counter]
+            return "\(singer) - \(track)"
         }
     }
     
-    private var model = MusicViewModel()
-
     private lazy var playPauseButton = getButton(icon: "play.fill", action: #selector(playPauseButtonAction))
     private lazy var stopButton = getButton(icon: "stop.fill", action: #selector(stopButtonAction))
     private lazy var nextTrackButton = getButton(icon: "forward.fill", action: #selector(nextTrackAction))
-    private lazy var previousTrackButton = getButton(icon: "backward.fill", action: #selector(previousTrackAction))
+    private lazy var previousTrackButton = getButton(icon: "backward.fill", action: #selector(prevTrackAction))
     
     private lazy var trackNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ничего не проигрывается"
+        label.text = ""
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .left
@@ -49,13 +40,7 @@ class MusicPlayerView: UIView {
     }()
     
     private lazy var playerButtonsStackView: UIStackView = {
-        let stackView = UIStackView(
-            arrangedSubviews: [
-                previousTrackButton,
-                playPauseButton,
-                stopButton,
-                nextTrackButton
-            ])
+        let stackView = UIStackView(arrangedSubviews: [previousTrackButton, playPauseButton, stopButton, nextTrackButton])
         stackView.axis = .horizontal
         stackView.spacing = 24
         stackView.alignment = .center
@@ -71,14 +56,7 @@ class MusicPlayerView: UIView {
         super.init(frame: .zero)
         addSubviews(playerButtonsStackView, trackNameLabel)
         setuplayout()
-        delegate?.setTrack()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playPauseButtonAction),
-            name: NSNotification.Name.playPause,
-            object: nil
-        )
+        setTrack()
     }
     
     required init?(coder: NSCoder) {
@@ -87,27 +65,27 @@ class MusicPlayerView: UIView {
     
     // MARK: METHODS =================================================================================================
     
-//    private func setTrack() {
-//        let trackName = Array(MusicViewModel.shared.tracks.keys)[MusicViewModel.shared.counter]
-//        
-//        guard let trackURL = Bundle.main.url(forResource: trackName, withExtension: "mp3") else { return }
-//        
-//        do {
-//            try player = AVAudioPlayer(contentsOf: trackURL)
-//            player.prepareToPlay()
-//            
-//        } catch { print(error.localizedDescription) }
-//        
-//        trackNameLabel.text = currentTrackName
-//    }
+    private func setTrack() {
+        let trackName = Array(MusicViewModel.tracks.keys)[counter]
+        
+        guard let trackURL = Bundle.main.url(forResource: trackName, withExtension: "mp3") else { return }
+        
+        do {
+            try player = AVAudioPlayer(contentsOf: trackURL)
+            player.prepareToPlay()
+            
+        } catch { print(error.localizedDescription) }
+        
+        trackNameLabel.text = currentTrackName
+    }
     
     
-//    public func playSelectedTrack (forIndex index: Int) {
-//        counter = index
-//        setTrack()
-//        player.play()
-//        playPauseButton.setCustomImage(name: "pause.fill", size: 32)
-//    }
+    public func playSelectedTrack (forIndex index: Int) {
+        counter = index
+        setTrack()
+        player.play()
+        playPauseButton.setCustomImage(name: "pause.fill", size: 32)
+    }
     
     private func setuplayout() {
         
@@ -121,40 +99,53 @@ class MusicPlayerView: UIView {
         }
     }
     
-    func setTrackName() {
-//        trackNameLabel.text = MusicViewModel.shared.currentTrackName
-        trackNameLabel.text = trackName
-
-    }
     
     // MARK: OBJC METHODS =================================================================================================
 
     @objc
     private func nextTrackAction () {
-        delegate?.nextTrack()
-        setTrackName()
+        if counter == MusicViewModel.tracks.count - 1 {
+            counter = 0
+        } else {
+            counter += 1
+        }
+        trackNameLabel.text = "\(currentTrackName)"
+        setTrack()
+        player.play()
     }
     
     
     @objc
-    private func previousTrackAction () {
-        delegate?.previousTrack()
-        setTrackName()
+    private func prevTrackAction () {
+        if counter == 0 {
+            counter = MusicViewModel.tracks.count - 1
+        } else {
+            counter -= 1
+        }
+        trackNameLabel.text = "\(currentTrackName)"
+        setTrack()
+        player.play()
     }
     
     @objc
     private func playPauseButtonAction() {
-        let iconName = MusicViewModel.shared.player.isPlaying ? "pause.fill" : "play.fill"
-        playPauseButton.setCustomImage(name: iconName, size: 32)
-        delegate?.playPause()
+        
+        if player.isPlaying {
+            player.pause()
+            playPauseButton.setCustomImage(name: "play.fill", size: 32)
+            
+        } else {
+            player.play()
+            playPauseButton.setCustomImage(name: "pause.fill", size: 32)
+        }
     }
     
     
     @objc
     private func stopButtonAction() {
-        let iconName = MusicViewModel.shared.player.isPlaying ? "play.fill" : "pause.fill"
-        playPauseButton.setCustomImage(name: iconName, size: 32)
-        delegate?.stop()
+        player.stop()
+        player.currentTime = 0
+        playPauseButton.setCustomImage(name: "play.fill", size: 32)
     }
 }
 
