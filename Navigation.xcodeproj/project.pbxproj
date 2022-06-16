@@ -20,6 +20,8 @@
 		D53256F9285533940047582E /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256F8285533940047582E /* MusicTableViewCell.swift */; };
 		D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256FA285534110047582E /* VideoTableViewCell.swift */; };
 		D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53256FC28553A320047582E /* VidePlayerViewController.swift */; };
+		D541A0DC285B416000ADFEB3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DB285B416000ADFEB3 /* NetworkService.swift */; };
+		D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */; };
 		D55D2B202835354900D001CC /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D2B1F2835354900D001CC /* BrutForce.swift */; };
 		D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464327C810490022DDFC /* PostTableViewCell.swift */; };
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
@@ -123,6 +125,8 @@
 		D53256F8285533940047582E /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
 		D53256FA285534110047582E /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		D53256FC28553A320047582E /* VidePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidePlayerViewController.swift; sourceTree = "<group>"; };
+		D541A0DB285B416000ADFEB3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		D55D2B1F2835354900D001CC /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -452,6 +456,8 @@
 				D5AB1A4C27D2B6880072E723 /* ContentManager.swift */,
 				D5FB342F282467D40007BF59 /* CustomButton.swift */,
 				D55D2B1F2835354900D001CC /* BrutForce.swift */,
+				D541A0DB285B416000ADFEB3 /* NetworkService.swift */,
+				D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */,
 			);
 			path = AppState;
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				D5ED097A27B68627007F70C6 /* InfoViewController.swift in Sources */,
 				D5A392EB283192C20073E034 /* NewPostViewModel.swift in Sources */,
 				D5CBFD5E27CEC7B600B4FCEC /* PhotosTableViewCell.swift in Sources */,
+				D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */,
 				D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */,
 				D5A0745F28159082003BF856 /* UserValidation.swift in Sources */,
 				D5A529F02854ABFD00A0DB32 /* VideoViewController.swift in Sources */,
@@ -803,6 +810,7 @@
 				D5A392DC28310D210073E034 /* PhotosVIewModel.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
 				D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */,
+				D541A0DC285B416000ADFEB3 /* NetworkService.swift in Sources */,
 				D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */,
 				D5A529F82854AD3500A0DB32 /* MusicViewModel.swift in Sources */,
 				D5AB1A4D27D2B6880072E723 /* ContentManager.swift in Sources */,
