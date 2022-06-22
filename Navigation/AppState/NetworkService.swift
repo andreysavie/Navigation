@@ -22,13 +22,13 @@ struct NetworkService {
                 
                 if error == nil, let data = data, let response = response as? HTTPURLResponse {
                     
-                    print("💾 data: \(String(decoding: data, as: UTF8.self))")
-                    print("✅ statusCode: \(response.statusCode) ")
-                    print("✅ headerFields: \(response.allHeaderFields) ")
+//                    print("💾 data: \(String(decoding: data, as: UTF8.self))")
+//                    print("✅ statusCode: \(response.statusCode) ")
+//                    print("✅ headerFields: \(response.allHeaderFields) ")
                     
 
                 } else if let error = error {
-                    print("⛔️ error: \(error.localizedDescription) ")
+                  //  print("⛔️ error: \(error.localizedDescription) ")
                     //При выключенном интернете: ⛔️ error: The Internet connection appears to be offline.
                 }
             }
