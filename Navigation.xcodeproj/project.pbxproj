@@ -27,6 +27,9 @@
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
 		D5660866281C7D6B00A3F9C1 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = D5660865281C7D6B00A3F9C1 /* iOSIntPackage */; };
 		D575870B27BEB11000570D3F /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D575870A27BEB11000570D3F /* ProfileHeaderView.swift */; };
+		D5851F162863AED400D65A51 /* InfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F152863AED400D65A51 /* InfoCoordinator.swift */; };
+		D5851F1B2863AF3000D65A51 /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1A2863AF3000D65A51 /* InfoModel.swift */; };
+		D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */; };
 		D5A0745F28159082003BF856 /* UserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A0745E28159082003BF856 /* UserValidation.swift */; };
 		D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */; };
 		D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */; };
@@ -131,6 +134,9 @@
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D575870A27BEB11000570D3F /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		D5851F152863AED400D65A51 /* InfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCoordinator.swift; sourceTree = "<group>"; };
+		D5851F1A2863AF3000D65A51 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
+		D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetworkManager.swift; sourceTree = "<group>"; };
 		D5A0745E28159082003BF856 /* UserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidation.swift; sourceTree = "<group>"; };
 		D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -269,6 +275,58 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		D5851F132863AE9F00D65A51 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				D5851F1C2863B00D00D65A51 /* NetworkManager */,
+				D5851F142863AEC100D65A51 /* Coordinator */,
+				D5851F192863AF1100D65A51 /* Model */,
+				D5851F172863AEE300D65A51 /* View */,
+				D5851F182863AF0C00D65A51 /* ViewModel */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		D5851F142863AEC100D65A51 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D5851F152863AED400D65A51 /* InfoCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		D5851F172863AEE300D65A51 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D5ED097927B68627007F70C6 /* InfoViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D5851F182863AF0C00D65A51 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D5A392EC2831950B0073E034 /* InfoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D5851F192863AF1100D65A51 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D5851F1A2863AF3000D65A51 /* InfoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D5851F1C2863B00D00D65A51 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		D5A392D5282FD66E0073E034 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,7 +379,6 @@
 			children = (
 				D5ED097327B5A5C3007F70C6 /* FeedViewController.swift */,
 				D5ED097727B66965007F70C6 /* NewPostViewController.swift */,
-				D5ED097927B68627007F70C6 /* InfoViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -331,7 +388,6 @@
 			children = (
 				D5BA980B28268499005921CF /* FeedViewModel.swift */,
 				D5A392EA283192C20073E034 /* NewPostViewModel.swift */,
-				D5A392EC2831950B0073E034 /* InfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -492,6 +548,7 @@
 				D5CC1EE6282D950B00137A94 /* MainCoordinator */,
 				D5C0B0FC282D89AC00ABCB88 /* TabBarController */,
 				D575870927BEB0A900570D3F /* Profile */,
+				D5851F132863AE9F00D65A51 /* Info */,
 				D5CC1EF0282DA42000137A94 /* Feed */,
 				D5A529EB2854AB5100A0DB32 /* Music */,
 				D5A529EC2854AB7200A0DB32 /* Video */,
@@ -775,6 +832,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5851F1B2863AF3000D65A51 /* InfoModel.swift in Sources */,
+				D5851F162863AED400D65A51 /* InfoCoordinator.swift in Sources */,
 				D5CC1EED282D980E00137A94 /* FeedCoordinator.swift in Sources */,
 				D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */,
 				D5CC1EEB282D954600137A94 /* MainCoordinator.swift in Sources */,
@@ -807,6 +866,7 @@
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
 				D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */,
 				D5A529F62854AC9500A0DB32 /* MusicCoordinator.swift in Sources */,
+				D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */,
 				D5A392DC28310D210073E034 /* PhotosVIewModel.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
 				D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */,

@@ -11,15 +11,15 @@ import SnapKit
 
 final class InfoViewModel {
     
-    var showInfoButton: CustomButton {
-        let button = CustomButton (
-            title: "Show info",
-            titleColor: .white,
-            backColor: .systemIndigo,
-            backImage: UIImage()
-        )
-        return button
-    }
+//    var showInfoButton: CustomButton {
+//        let button = CustomButton (
+//            title: "Show info",
+//            titleColor: .white,
+//            backColor: .systemIndigo,
+//            backImage: UIImage()
+//        )
+//        return button
+//    }
     
     var infoAlert: UIAlertController {
         let alertController = UIAlertController(title: "⚠️ Attention ⚠️", message: "Do you like that?", preferredStyle: .alert)
@@ -36,11 +36,17 @@ final class InfoViewModel {
     }
     
     
-    func setupInfoLayout(button: UIButton) {
+    func setupInfoLayout(button: UIButton, label: UILabel) {
         button.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalTo(150)
             make.height.equalTo(50)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.top.equalTo(button.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
         }
     }
     

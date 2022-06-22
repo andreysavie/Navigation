@@ -10,6 +10,8 @@ import SnapKit
 
 class InfoViewController: UIViewController {
     
+//    let fetchManager = InfoNetworkManager()
+    
     // MARK: PROPERTIES
 
     private var viewModel: InfoViewModel?
@@ -25,12 +27,24 @@ class InfoViewController: UIViewController {
         return button
     }()
     
+    private lazy var fetchedModelLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.textColor = ColorSet.mainColor
+        label.textAlignment = .center
+        return label
+    }()
+    
     // MARK: INITS
 
     init (viewModel: InfoViewModel, coordinator: InfoCoordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
+        
+        self.fetchedModelLabel.text = InfoNetworkManager.shared.infoModel.title
+
     }
     
     required init?(coder: NSCoder) {
@@ -42,8 +56,9 @@ class InfoViewController: UIViewController {
         
        guard let viewModel = viewModel else { return }
         
-        self.view.addSubview(showInfoButton)
-        viewModel.setupInfoLayout(button: showInfoButton)
+        self.view.addSubviews(showInfoButton, fetchedModelLabel)
+        
+        viewModel.setupInfoLayout(button: showInfoButton, label: fetchedModelLabel)
         
         showInfoButton.tapAction = { [weak self] in
             guard let self = self else { return }

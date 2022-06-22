@@ -28,16 +28,6 @@ final class NewPostCoordinator {
     }
 }
 
-final class InfoCoordinator {
-    func showDetail(navCon: UINavigationController?, coordinator: InfoCoordinator) {
-        let viewModel = InfoViewModel()
-        let viewController = InfoViewController(viewModel: viewModel, coordinator: coordinator)
-        viewController.title = "information"
-        viewController.view.backgroundColor = UIColor(displayP3Red: 0.130, green: 0.130, blue: 0.130, alpha: 1)
-        navCon?.present(viewController, animated: true, completion: nil)
-    }
-}
-
 final class LoginCoordinator {
     func showDetail(coordinator: LoginCoordinator) -> UIViewController {
         let viewController = LogInViewController()

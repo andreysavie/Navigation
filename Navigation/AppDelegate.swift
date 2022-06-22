@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = AppConfiguration.randomURL()
         NetworkService.shared.urlSession(stringURL: url)
         
+        // MARK: - HW IOSDT 1.2 task 1
+        
+        InfoNetworkManager.shared.urlSession()
+        
         let inspector = MyLoginFactory.shared.returnLoginInspector()
         
         window = UIWindow(frame: UIScreen.main.bounds)
