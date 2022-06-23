@@ -14,13 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //MARK: - Задание IOSDT 1.1: Инициализация appConfiguration
         let url = AppConfiguration.randomURL()
         NetworkService.shared.urlSession(stringURL: url)
         
         // MARK: - HW IOSDT 1.2 task 1
         
         InfoNetworkManager.shared.urlSession()
+        PlanetsNetworkManager.shared.urlSession()
         
         let inspector = MyLoginFactory.shared.returnLoginInspector()
         

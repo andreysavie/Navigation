@@ -30,6 +30,8 @@
 		D5851F162863AED400D65A51 /* InfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F152863AED400D65A51 /* InfoCoordinator.swift */; };
 		D5851F1B2863AF3000D65A51 /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1A2863AF3000D65A51 /* InfoModel.swift */; };
 		D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */; };
+		D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */; };
+		D5851F222864E51600D65A51 /* PlanetsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F212864E51600D65A51 /* PlanetsModel.swift */; };
 		D5A0745F28159082003BF856 /* UserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A0745E28159082003BF856 /* UserValidation.swift */; };
 		D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */; };
 		D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */; };
@@ -137,6 +139,8 @@
 		D5851F152863AED400D65A51 /* InfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCoordinator.swift; sourceTree = "<group>"; };
 		D5851F1A2863AF3000D65A51 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 		D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetworkManager.swift; sourceTree = "<group>"; };
+		D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsNetworkManager.swift; sourceTree = "<group>"; };
+		D5851F212864E51600D65A51 /* PlanetsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsModel.swift; sourceTree = "<group>"; };
 		D5A0745E28159082003BF856 /* UserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidation.swift; sourceTree = "<group>"; };
 		D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				D5851F1A2863AF3000D65A51 /* InfoModel.swift */,
+				D5851F212864E51600D65A51 /* PlanetsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */,
+				D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -838,6 +844,7 @@
 				D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */,
 				D5CC1EEB282D954600137A94 /* MainCoordinator.swift in Sources */,
 				D5ED097827B66965007F70C6 /* NewPostViewController.swift in Sources */,
+				D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */,
 				D5C0B0FE282D89DC00ABCB88 /* MainTabBarViewController.swift in Sources */,
 				D5AB1A4927D144370072E723 /* PhotosViewController.swift in Sources */,
 				D5ED096027B5A423007F70C6 /* AppDelegate.swift in Sources */,
@@ -868,6 +875,7 @@
 				D5A529F62854AC9500A0DB32 /* MusicCoordinator.swift in Sources */,
 				D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */,
 				D5A392DC28310D210073E034 /* PhotosVIewModel.swift in Sources */,
+				D5851F222864E51600D65A51 /* PlanetsModel.swift in Sources */,
 				D5ED097427B5A5C3007F70C6 /* FeedViewController.swift in Sources */,
 				D53256FD28553A320047582E /* VidePlayerViewController.swift in Sources */,
 				D541A0DC285B416000ADFEB3 /* NetworkService.swift in Sources */,
