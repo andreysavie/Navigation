@@ -36,6 +36,16 @@ class InfoViewController: UIViewController {
         return label
     }()
     
+    private lazy var planetsModelLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.textColor = ColorSet.mainColor
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
     // MARK: INITS
 
     init (viewModel: InfoViewModel, coordinator: InfoCoordinator) {
@@ -44,6 +54,7 @@ class InfoViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.fetchedModelLabel.text = InfoNetworkManager.shared.infoModel.title
+        self.planetsModelLabel.text = PlanetsNetworkManager.shared.planet?.orbitalPeriod
 
     }
     
@@ -53,12 +64,10 @@ class InfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        self.view.addSubviews(showInfoButton, fetchedModelLabel, planetsModelLabel)
         
-       guard let viewModel = viewModel else { return }
-        
-        self.view.addSubviews(showInfoButton, fetchedModelLabel)
-        
-        viewModel.setupInfoLayout(button: showInfoButton, label: fetchedModelLabel)
+        setupInfoLayout()
         
         showInfoButton.tapAction = { [weak self] in
             guard let self = self else { return }
@@ -68,6 +77,27 @@ class InfoViewController: UIViewController {
     
 
     // MARK: METHODS
+    
+    func setupInfoLayout() {
+        
+        showInfoButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(150)
+            make.height.equalTo(50)
+        }
+        
+        fetchedModelLabel.snp.makeConstraints { make in
+            make.width.equalTo(150)
+            make.top.equalTo(showInfoButton.snp.bottom).offset(32)
+            make.centerX.equalToSuperview()
+        }
+        
+        planetsModelLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.bottom.equalTo(showInfoButton.snp.top).offset(-32)
+            make.centerX.equalToSuperview()
+        }
+    }
     
     private func showInfoButtonPressed() {
         guard let viewModel = viewModel else { return }
