@@ -10,7 +10,6 @@ import SnapKit
 
 class InfoViewController: UIViewController {
     
-//    let fetchManager = InfoNetworkManager()
     
     // MARK: PROPERTIES
 
@@ -45,6 +44,12 @@ class InfoViewController: UIViewController {
         return label
     }()
     
+    private lazy var residentsTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView.backgroundColor = .clear
+        return tableView
+    }()
+    
     
     // MARK: INITS
 
@@ -65,7 +70,12 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        self.view.addSubviews(showInfoButton, fetchedModelLabel, planetsModelLabel)
+        residentsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
+        
+        residentsTableView.dataSource = self
+        residentsTableView.delegate = self
+        
+        self.view.addSubviews(showInfoButton, fetchedModelLabel, planetsModelLabel, residentsTableView)
         
         setupInfoLayout()
         
@@ -80,8 +90,14 @@ class InfoViewController: UIViewController {
     
     func setupInfoLayout() {
         
+        residentsTableView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.snp.centerY)
+        }
+        
         showInfoButton.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(200)
             make.width.equalTo(150)
             make.height.equalTo(50)
         }
@@ -103,4 +119,34 @@ class InfoViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.presentAlert(viewController: self)
     }
+}
+
+extension InfoViewController: UITableViewDataSource {
+
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return PlanetsNetworkManager.shared.residents.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "RESIDENTS:"
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
+        cell.textLabel!.text = PlanetsNetworkManager.shared.residents[indexPath.row].name
+        cell.textLabel!.textColor = .white
+        cell.backgroundColor = ColorSet.mainColor
+        return cell
+    }
+        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+}
+
+extension InfoViewController: UITableViewDelegate {
+    
 }
