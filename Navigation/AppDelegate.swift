@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: - HW IOSDT 1.2 task 1
         
         InfoNetworkManager.shared.urlSession()
-        PlanetsNetworkManager.shared.urlSession()
+//        PlanetsNetworkManager.shared.urlSession()
+        
+        PlanetsNetworkManager.shared.fetchData()
         
         let inspector = MyLoginFactory.shared.returnLoginInspector()
         
