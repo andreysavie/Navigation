@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlanetModel: Codable {
+public struct PlanetModel: Codable {
     var name: String
     var rotationPeriod: String
     var orbitalPeriod: String
@@ -24,23 +24,20 @@ struct PlanetModel: Codable {
     var url: String
     
     enum CodingKeys: String, CodingKey {
-    case name
-    case rotationPeriod = "rotation_period"
-    case orbitalPeriod = "orbital_period"
-    case diameter
-    case climate
-    case gravity
-    case terrain
-    case surfaceWater = "surface_water"
-    case population
-    case residents
-    case films
-    case created
-    case edited
-    case url
+        case name
+        case rotationPeriod = "rotation_period"
+        case orbitalPeriod = "orbital_period"
+        case diameter
+        case climate
+        case gravity
+        case terrain
+        case surfaceWater = "surface_water"
+        case population
+        case residents
+        case films
+        case created
+        case edited
+        case url
     }
 }
 
-struct ResidentModel: Codable {
-    var name: String
-}

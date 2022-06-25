@@ -9,12 +9,16 @@ import Foundation
 
 final class InfoNetworkManager {
     
+//MARK: PROPERTIES =======================================================================
+    
     static let shared = InfoNetworkManager()
     
-    var infoModel = InfoModel(userId: 1, id: 1, title: "sss", completed: true )
+    public var infoModel = InfoModel(userId: 1, id: 1, title: "sss", completed: true )
     
     private let stringURL = "https://jsonplaceholder.typicode.com/todos/5"
     
+//MARK: METHODS =======================================================================
+
     public func urlSession() {
         if let url = URL(string: stringURL) {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
