@@ -11,7 +11,6 @@ import SnapKit
 
 final class InfoViewModel {
     
-    
     var infoAlert: UIAlertController {
         let alertController = UIAlertController(title: "⚠️ Attention ⚠️", message: "Do you like that?", preferredStyle: .alert)
         let acceptAction = UIAlertAction(title: "Yes", style: .default) { _ in

@@ -56,6 +56,8 @@
 		D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A7F0B427C245FA00962E7D /* LogInViewController.swift */; };
 		D5AB1A4927D144370072E723 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB1A4827D144370072E723 /* PhotosViewController.swift */; };
 		D5AB1A4D27D2B6880072E723 /* ContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB1A4C27D2B6880072E723 /* ContentManager.swift */; };
+		D5B669652866584C00C699C1 /* ResidentsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B669642866584C00C699C1 /* ResidentsNetworkManager.swift */; };
+		D5B669672866585D00C699C1 /* ResidentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B669662866585D00C699C1 /* ResidentModel.swift */; };
 		D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA980B28268499005921CF /* FeedViewModel.swift */; };
 		D5C0B0FE282D89DC00ABCB88 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0B0FD282D89DC00ABCB88 /* MainTabBarViewController.swift */; };
 		D5CBFD5E27CEC7B600B4FCEC /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFD5D27CEC7B600B4FCEC /* PhotosTableViewCell.swift */; };
@@ -164,6 +166,8 @@
 		D5A7F0B427C245FA00962E7D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D5AB1A4827D144370072E723 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D5AB1A4C27D2B6880072E723 /* ContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentManager.swift; sourceTree = "<group>"; };
+		D5B669642866584C00C699C1 /* ResidentsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsNetworkManager.swift; sourceTree = "<group>"; };
+		D5B669662866585D00C699C1 /* ResidentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentModel.swift; sourceTree = "<group>"; };
 		D5BA980B28268499005921CF /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		D5C0B0FD282D89DC00ABCB88 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		D5CBFD5D27CEC7B600B4FCEC /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 			children = (
 				D5851F1A2863AF3000D65A51 /* InfoModel.swift */,
 				D5851F212864E51600D65A51 /* PlanetsModel.swift */,
+				D5B669662866585D00C699C1 /* ResidentModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 			children = (
 				D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */,
 				D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */,
+				D5B669642866584C00C699C1 /* ResidentsNetworkManager.swift */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -843,6 +849,7 @@
 				D5CC1EED282D980E00137A94 /* FeedCoordinator.swift in Sources */,
 				D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */,
 				D5CC1EEB282D954600137A94 /* MainCoordinator.swift in Sources */,
+				D5B669652866584C00C699C1 /* ResidentsNetworkManager.swift in Sources */,
 				D5ED097827B66965007F70C6 /* NewPostViewController.swift in Sources */,
 				D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */,
 				D5C0B0FE282D89DC00ABCB88 /* MainTabBarViewController.swift in Sources */,
@@ -884,6 +891,7 @@
 				D5AB1A4D27D2B6880072E723 /* ContentManager.swift in Sources */,
 				D52F469E27D4E224002BD753 /* ColorSet.swift in Sources */,
 				D5A529FA2854AECE00A0DB32 /* MusicPlayerView.swift in Sources */,
+				D5B669672866585D00C699C1 /* ResidentModel.swift in Sources */,
 				D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */,
 				D5A392ED2831950B0073E034 /* InfoViewModel.swift in Sources */,
 			);

@@ -11,11 +11,11 @@ import SnapKit
 class InfoViewController: UIViewController {
     
     
-    // MARK: PROPERTIES
-
+    // MARK: PROPERTIES =======================================================================
+    
     private var viewModel: InfoViewModel?
     private weak var coordinator: InfoCoordinator?
-
+    
     private lazy var showInfoButton: CustomButton = {
         let button = CustomButton (
             title: "Show info",
@@ -51,16 +51,12 @@ class InfoViewController: UIViewController {
     }()
     
     
-    // MARK: INITS
-
+    // MARK: INITS =======================================================================
+    
     init (viewModel: InfoViewModel, coordinator: InfoCoordinator) {
         self.viewModel = viewModel
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
-        
-        self.fetchedModelLabel.text = InfoNetworkManager.shared.infoModel.title
-        self.planetsModelLabel.text = PlanetsNetworkManager.shared.planet?.orbitalPeriod
-
     }
     
     required init?(coder: NSCoder) {
@@ -69,13 +65,21 @@ class InfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         residentsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
         
         residentsTableView.dataSource = self
-        residentsTableView.delegate = self
         
-        self.view.addSubviews(showInfoButton, fetchedModelLabel, planetsModelLabel, residentsTableView)
+        fetchedModelLabel.text = InfoNetworkManager.shared.infoModel.title
+        planetsModelLabel.text = "orbital period is \(PlanetsNetworkManager.shared.planet!.orbitalPeriod)"
+        
+        
+        self.view.addSubviews(
+            showInfoButton,
+            fetchedModelLabel,
+            planetsModelLabel,
+            residentsTableView
+        )
         
         setupInfoLayout()
         
@@ -85,14 +89,14 @@ class InfoViewController: UIViewController {
         }
     }
     
-
-    // MARK: METHODS
     
-    func setupInfoLayout() {
+    // MARK: METHODS =======================================================================
+    
+    private func setupInfoLayout() {
         
         residentsTableView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(view.snp.centerY)
+            make.bottom.equalTo(fetchedModelLabel.snp.top).offset(-16)
         }
         
         showInfoButton.snp.makeConstraints { make in
@@ -119,34 +123,28 @@ class InfoViewController: UIViewController {
         guard let viewModel = viewModel else { return }
         viewModel.presentAlert(viewController: self)
     }
+    
 }
 
-extension InfoViewController: UITableViewDataSource {
+// MARK: EXTENSIONS =======================================================================
 
+extension InfoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PlanetsNetworkManager.shared.residents.count
+        return ResinentsNetworkManager.shared.residents.count
         
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "RESIDENTS:"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
-        cell.textLabel!.text = PlanetsNetworkManager.shared.residents[indexPath.row].name
+        cell.textLabel!.text = ResinentsNetworkManager.shared.residents[indexPath.row].name
         cell.textLabel!.textColor = .white
         cell.backgroundColor = ColorSet.mainColor
         return cell
     }
-        
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
-}
-
-extension InfoViewController: UITableViewDelegate {
     
 }
