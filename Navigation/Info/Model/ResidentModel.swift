@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct ResidentModel: Codable {
-    var name: String
-}
+//public struct ResidentModel: Codable {
+//    var name: String
+//}

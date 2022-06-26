@@ -147,7 +147,7 @@ extension InfoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
-        cell.textLabel!.text = ResinentsNetworkManager.shared.residents[indexPath.row].name
+        cell.textLabel!.text = ResinentsNetworkManager.shared.residents[indexPath.row]
         cell.textLabel!.textColor = .white
         cell.backgroundColor = ColorSet.mainColor
         return cell

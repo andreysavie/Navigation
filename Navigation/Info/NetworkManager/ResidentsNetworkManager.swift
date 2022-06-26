@@ -16,9 +16,8 @@ final class ResinentsNetworkManager: NSObject {
     public var reloadTableViewData: (() -> ())?
     
     private var isFetched = false
-    private var resident = ResidentModel(name: "")
     
-    public var residents = [ResidentModel]()
+    public var residents = [String]()
     
     //MARK: METHODS ==========================================================================
 
@@ -35,10 +34,10 @@ final class ResinentsNetworkManager: NSObject {
                             let serializedDictionary = try JSONSerialization.jsonObject(with: unwrappedData, options: [])
                             
                             if let object = serializedDictionary as? [String: Any] {
-                                self.resident.name = object["name"] as? String ?? ""
+                                let residentName = object["name"] as? String ?? ""
                                 
-                                print("✅\(self.resident.name )")
-                                self.residents.append(self.resident)
+                                print("✅\(residentName )")
+                                self.residents.append(residentName)
                                 self.reloadTableViewData?()
                                 self.isFetched = true
                             }
