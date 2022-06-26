@@ -13,6 +13,7 @@ class InfoViewController: UIViewController {
     
     // MARK: PROPERTIES =======================================================================
     
+    private var networkManager = ResinentsNetworkManager()
     private var viewModel: InfoViewModel?
     private weak var coordinator: InfoCoordinator?
     
@@ -86,6 +87,15 @@ class InfoViewController: UIViewController {
         showInfoButton.tapAction = { [weak self] in
             guard let self = self else { return }
             self.showInfoButtonPressed()
+        }
+        
+        ResinentsNetworkManager.shared.fetchResidentsData()
+        
+        ResinentsNetworkManager.shared.reloadTableViewData = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.residentsTableView.reloadData()
+            }
         }
     }
     

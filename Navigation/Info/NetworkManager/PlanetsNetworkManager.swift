@@ -16,11 +16,15 @@ final class PlanetsNetworkManager {
     private var isFetched = false
     private let stringURL = "https://swapi.dev/api/planets/1"
     
-    public var planet: PlanetModel? {
-        didSet {
-            ResinentsNetworkManager.shared.fetchResidentsData()
-        }
-    }
+    public var planet: PlanetModel?
+    
+
+    
+//    public var planet: PlanetModel? {
+//        didSet {
+//            ResinentsNetworkManager.shared.fetchResidentsData()
+//        }
+//    }
     
     //MARK: METHODS =======================================================================
 
@@ -33,6 +37,7 @@ final class PlanetsNetworkManager {
                 if let unwrappedData = data {
                     do {
                         self.planet = try JSONDecoder().decode(PlanetModel.self, from: unwrappedData)
+                        self.isFetched = true
                     }
                     catch let error {
                         print("⛔️ PLANET ERROR: \(error.localizedDescription)")
@@ -41,7 +46,6 @@ final class PlanetsNetworkManager {
             }
             task.resume()
         }
-        isFetched = true
     }
 
 }
