@@ -18,14 +18,6 @@ final class PlanetsNetworkManager {
     
     public var planet: PlanetModel?
     
-
-    
-//    public var planet: PlanetModel? {
-//        didSet {
-//            ResinentsNetworkManager.shared.fetchResidentsData()
-//        }
-//    }
-    
     //MARK: METHODS =======================================================================
 
     func fetchPlanetsData() {
