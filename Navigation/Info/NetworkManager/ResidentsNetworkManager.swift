@@ -7,11 +7,13 @@
 
 import Foundation
 
-final class ResinentsNetworkManager {
+final class ResinentsNetworkManager: NSObject {
     
     //MARK: PROPERTIES =======================================================================
     
     static let shared = ResinentsNetworkManager()
+    
+    public var reloadTableViewData: (() -> ())?
     
     private var isFetched = false
     private var resident = ResidentModel(name: "")
@@ -37,7 +39,8 @@ final class ResinentsNetworkManager {
                                 
                                 print("✅\(self.resident.name )")
                                 self.residents.append(self.resident)
-                                
+                                self.reloadTableViewData?()
+                                self.isFetched = true
                             }
                         }
                         catch let error {
@@ -49,6 +52,5 @@ final class ResinentsNetworkManager {
                 task.resume()
             }
         }
-        isFetched = true
     }
 }
