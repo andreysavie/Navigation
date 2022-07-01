@@ -6,13 +6,26 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    // убрать вниз!
+    
+//    func showModalLoginVC() {
+//        let loginViewController = Factory(navigationController: UINavigationController(), state: .login)
+//        loginViewController.navigationController.modalPresentationStyle = .fullScreen
+//        self.window?.rootViewController?.present(loginViewController.navigationController, animated: true, completion: nil)
+//    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
+            
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -40,8 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         InfoNetworkManager.shared.urlSession()
         PlanetsNetworkManager.shared.fetchPlanetsData()
         
-        
-
         window?.rootViewController = mainCoordinator.startApplication()
         window?.makeKeyAndVisible()
         

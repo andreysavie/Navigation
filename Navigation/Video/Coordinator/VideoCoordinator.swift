@@ -17,11 +17,11 @@ final class VideoCoordinator {
     }
 }
 
-final class VideoPlayerCoordinator {
-    func showDetail(navCon: UINavigationController?, coordinator: VideoPlayerCoordinator, key: String) {
-        let viewController = VidePlayerViewController(videoKey: key)
-        viewController.view.backgroundColor = .systemGray5
-        viewController.title = VideoViewModel.videos[key]
-        navCon?.pushViewController(viewController, animated: true)
-    }
-}
+//final class VideoPlayerCoordinator {
+//    func showDetail(navCon: UINavigationController?, coordinator: VideoPlayerCoordinator, key: String) {
+//        let viewController = VidePlayerViewController(videoKey: key)
+//        viewController.view.backgroundColor = .systemGray5
+//        viewController.title = VideoViewModel.videos[key]
+//        navCon?.pushViewController(viewController, animated: true)
+//    }
+//}

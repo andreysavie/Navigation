@@ -90,12 +90,12 @@ extension VideoViewController:  UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let videoKey = Array(VideoViewModel.videos.keys)[indexPath.row]
-        
-        let playerCoordinator = VideoPlayerCoordinator()
-
-        playerCoordinator.showDetail(navCon: navigationController, coordinator: playerCoordinator, key: videoKey)
-        tableView.deselectRow(at: indexPath, animated: true)
+//        let videoKey = Array(VideoViewModel.videos.keys)[indexPath.row]
+//        
+//        let playerCoordinator = VideoPlayerCoordinator()
+//
+//        playerCoordinator.showDetail(navCon: navigationController, coordinator: playerCoordinator, key: videoKey)
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

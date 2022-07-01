@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
+//import FirebaseCore
 
 protocol LoginViewControllerDelegate {
     func userValidation (log: String, pass: String) -> Bool
@@ -17,7 +19,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     // MARK: PROPERTY
     
     private var isLogin = false
-    
+        
     private let inspector = MyLoginFactory.shared.returnLoginInspector()
 
     
@@ -66,9 +68,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var hackThePasswordButton: CustomButton = {
+    private lazy var registrationButton: CustomButton = {
         let button = CustomButton (
-            title: "Hack the password",
+            title: "Registration",
             titleColor: UIColor.white,
             backColor: UIColor.white,
             backImage: UIImage(named: "blue_pixel") ?? UIImage()
@@ -82,7 +84,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         let icon = UIImageView(image: UIImage(systemName: "person"))
         icon.tintColor = ColorSet.mainColor
         textField.leftView = textFieldIcon(subView: icon)
-        textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
+        textField.addTarget(self, action: #selector(logInAndRegistrationButtonsAlpha), for: .editingChanged)
         return textField
     }()
     
@@ -91,7 +93,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         let icon = UIImageView(image: UIImage(systemName: "lock"))
         icon.tintColor = ColorSet.mainColor
         textField.leftView = textFieldIcon(subView: icon)
-        textField.addTarget(self, action: #selector(logInButtonAlpha), for: .editingChanged)
+        textField.addTarget(self, action: #selector(logInAndRegistrationButtonsAlpha), for: .editingChanged)
         return textField
     }()
     
@@ -122,6 +124,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         setupContentViews()
         hideKeyboardWhenTappedAround()
         
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user != nil {
+                self.pushProfileViewController()
+            }
+        }
+        
         // MARK: Task #6. Вызываем action кнопки Log In через замыкание
         
         logInButton.tapAction = { [weak self] in
@@ -130,9 +138,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             }
         
         
-        hackThePasswordButton.tapAction = { [weak self] in
+        registrationButton.tapAction = { [weak self] in
             guard let self = self else { return }
-            self.hackPassword()
+            self.registrationButtonPressed()
         }
     }
         
@@ -199,7 +207,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .white
         view.addSubview(logInScrollView)
         logInScrollView.addSubview(contentView)
-        contentView.addSubviews(logo, textFieldsStackView, logInButton, hackThePasswordButton)
+        contentView.addSubviews(logo, textFieldsStackView, logInButton, registrationButton)
         textFieldsStackView.addArrangedSubview(loginTextField)
         textFieldsStackView.addArrangedSubview(passwordTextField)
         setupLoginLayout()
@@ -235,9 +243,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(50)
         }
         
-        hackThePasswordButton.snp.makeConstraints { make in
-            make.top.equalTo(logInButton.snp.bottom).offset(Constants.margin)
-            make.leading.trailing.equalTo(contentView).inset(Constants.margin)
+        registrationButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(contentView).inset(Constants.margin)
             make.height.equalTo(50)
         }
     }
@@ -247,39 +254,22 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private func logInButtonPressed() {
         
-        let coordinator = ProfileCoordinator()
-        let profileViewController = coordinator.showDetail(coordinator: coordinator)
-        
         if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
             isLogin = true
-            navigationController?.pushViewController(profileViewController, animated: true)
-            navigationController?.setViewControllers([profileViewController], animated: true)
+            pushProfileViewController()
         } else {
             present(loginAlertController, animated: true, completion: nil)
         }
     }
     
-    func hackPassword() {
-        let hack = BrutForce()
-        var pass: String = ""
-        
-        let activityIndicator = UIActivityIndicatorView(style: .medium)
-        passwordTextField.leftView = textFieldIcon(subView: activityIndicator)
-        passwordTextField.placeholder = "Hacking the password..."
-        activityIndicator.startAnimating()
-        DispatchQueue.global().async {
-            pass = hack.bruteForce(passwordToUnlock: "1234")
-            
-            DispatchQueue.main.sync {
-                self.passwordTextField.text = pass
-                self.passwordTextField.isSecureTextEntry = false
-                self.passwordTextField.placeholder = "Password"
-                activityIndicator.stopAnimating()
-                self.passwordTextField.leftView = self.textFieldIcon(
-                    subView: UIImageView(
-                        image: UIImage(
-                            systemName: "lock")))
-                self.logInButtonAlpha()
+
+    
+    private func registrationButtonPressed() {
+        Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { result, error in
+            if error == nil {
+                if let result = result {
+                    print (result.user.uid)
+                }
             }
         }
     }
@@ -298,14 +288,25 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
-    @objc func logInButtonAlpha() {
+    @objc func logInAndRegistrationButtonsAlpha() {
         if loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false {
             logInButton.alpha = 1.0
             logInButton.isEnabled = true
+            registrationButton.alpha = 1.0
+            registrationButton.isEnabled = true
         } else {
             logInButton.alpha = 0.5
             logInButton.isEnabled = false
+            registrationButton.alpha = 1.0
+            registrationButton.isEnabled = true
         }
+    }
+    
+    private func pushProfileViewController() {
+        let coordinator = ProfileCoordinator()
+        let profileViewController = coordinator.showDetail(coordinator: coordinator)
+        navigationController?.pushViewController(profileViewController, animated: true)
+        navigationController?.setViewControllers([profileViewController], animated: true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -313,7 +314,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldIcon (subView: UIView) -> UIView {
+    private func textFieldIcon (subView: UIView) -> UIView {
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
         leftView.addSubview(subView)
         subView.center = leftView.center
@@ -322,12 +323,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 }
 
 extension UITextField {
-    func setLeftPaddingPoints(_ amount:CGFloat){
+    private func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = paddingView
         self.leftViewMode = .always
     }
-    func setRightPaddingPoints(_ amount:CGFloat) {
+    private func setRightPaddingPoints(_ amount:CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.rightView = paddingView
         self.rightViewMode = .always
