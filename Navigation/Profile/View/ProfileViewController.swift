@@ -8,6 +8,7 @@
 import UIKit
 import StorageService
 import SnapKit
+import FirebaseAuth
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -32,7 +33,19 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         return tableView
     }()
     
-    //MARK: INITS
+    private lazy var signOutBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "Sign out",
+            style: .plain,
+            target: self,
+            action: #selector(signOutButtonPressed)
+        )
+        return button
+    }()
+
+
+    
+    //MARK: INITS ======================================================================================================
 
     init (
         userService: UserService,
@@ -55,6 +68,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem  = signOutBarButtonItem
         
         viewModel = ProfileViewModel()
         
@@ -86,10 +101,23 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
-
+    
+    
+    
+    // MARK: OBJC METHODS =================================================================================================
+    
+    @objc
+    private func signOutButtonPressed() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
 }
 
-// MARK: UITableViewDataSource
+// MARK: UITableViewDataSource  =======================================================================================
 
 extension ProfileViewController: UITableViewDataSource {
     

@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "YTPlayerView 2.h"
 #import "YTPlayerView.h"
 
 FOUNDATION_EXPORT double youtube_ios_player_helperVersionNumber;
