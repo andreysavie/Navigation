@@ -20,7 +20,7 @@ final class CustomButton: UIButton {
     
     
     init (
-        title: String,
+        title: String = "",
         titleColor: UIColor,
         backColor: UIColor,
         backImage: UIImage

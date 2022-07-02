@@ -23,7 +23,6 @@
 		D53C5418286F8A03007A61C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D53C5417286F8A03007A61C2 /* GoogleService-Info.plist */; };
 		D541A0DC285B416000ADFEB3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DB285B416000ADFEB3 /* NetworkService.swift */; };
 		D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */; };
-		D55D2B202835354900D001CC /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D2B1F2835354900D001CC /* BrutForce.swift */; };
 		D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464327C810490022DDFC /* PostTableViewCell.swift */; };
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
 		D5660866281C7D6B00A3F9C1 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = D5660865281C7D6B00A3F9C1 /* iOSIntPackage */; };
@@ -60,6 +59,7 @@
 		D5B669652866584C00C699C1 /* ResidentsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B669642866584C00C699C1 /* ResidentsNetworkManager.swift */; };
 		D5B669672866585D00C699C1 /* ResidentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B669662866585D00C699C1 /* ResidentModel.swift */; };
 		D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA980B28268499005921CF /* FeedViewModel.swift */; };
+		D5BDB01928705D650089D530 /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BDB01828705D650089D530 /* CustomTextfield.swift */; };
 		D5C0B0FE282D89DC00ABCB88 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0B0FD282D89DC00ABCB88 /* MainTabBarViewController.swift */; };
 		D5CBFD5E27CEC7B600B4FCEC /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFD5D27CEC7B600B4FCEC /* PhotosTableViewCell.swift */; };
 		D5CC1EEB282D954600137A94 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC1EEA282D954600137A94 /* MainCoordinator.swift */; };
@@ -136,7 +136,6 @@
 		D53C5417286F8A03007A61C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D541A0DB285B416000ADFEB3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
-		D55D2B1F2835354900D001CC /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D575870A27BEB11000570D3F /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		D5B669642866584C00C699C1 /* ResidentsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsNetworkManager.swift; sourceTree = "<group>"; };
 		D5B669662866585D00C699C1 /* ResidentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentModel.swift; sourceTree = "<group>"; };
 		D5BA980B28268499005921CF /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		D5BDB01828705D650089D530 /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		D5C0B0FD282D89DC00ABCB88 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		D5CBFD5D27CEC7B600B4FCEC /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		D5CC1EEA282D954600137A94 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -481,6 +481,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		D5BDB01728705D470089D530 /* Facades */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB342F282467D40007BF59 /* CustomButton.swift */,
+				D5BDB01828705D650089D530 /* CustomTextfield.swift */,
+			);
+			path = Facades;
+			sourceTree = "<group>";
+		};
 		D5C0B0FC282D89AC00ABCB88 /* TabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,8 +533,7 @@
 				D562464527C826350022DDFC /* Constants.swift */,
 				D52F469D27D4E224002BD753 /* ColorSet.swift */,
 				D5AB1A4C27D2B6880072E723 /* ContentManager.swift */,
-				D5FB342F282467D40007BF59 /* CustomButton.swift */,
-				D55D2B1F2835354900D001CC /* BrutForce.swift */,
+				D5BDB01728705D470089D530 /* Facades */,
 				D541A0DB285B416000ADFEB3 /* NetworkService.swift */,
 				D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */,
 			);
@@ -848,6 +856,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5BDB01928705D650089D530 /* CustomTextfield.swift in Sources */,
 				D5851F1B2863AF3000D65A51 /* InfoModel.swift in Sources */,
 				D5851F162863AED400D65A51 /* InfoCoordinator.swift in Sources */,
 				D5CC1EED282D980E00137A94 /* FeedCoordinator.swift in Sources */,
@@ -879,7 +888,6 @@
 				D5A529EE2854ABF000A0DB32 /* MusicViewController.swift in Sources */,
 				D5ED097627B5A5D0007F70C6 /* ProfileViewController.swift in Sources */,
 				D575870B27BEB11000570D3F /* ProfileHeaderView.swift in Sources */,
-				D55D2B202835354900D001CC /* BrutForce.swift in Sources */,
 				D5A52A0C2854C72A00A0DB32 /* VideoViewModel.swift in Sources */,
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
 				D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */,

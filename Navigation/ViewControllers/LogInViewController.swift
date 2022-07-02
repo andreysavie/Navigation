@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
-//import FirebaseCore
 
 protocol LoginViewControllerDelegate {
     func userValidation (log: String, pass: String) -> Bool
@@ -16,24 +15,23 @@ protocol LoginViewControllerDelegate {
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
-    // MARK: PROPERTY
-    
-    private var isLogin = false
+    // MARK: PROPERTIES ======================================================================
         
-    private let inspector = MyLoginFactory.shared.returnLoginInspector()
+    private var isUserExists: Bool? {
+        willSet {
+            if newValue! {
+                enterButton.setTitle("Log in", for: .normal)
+                variableButton.setTitle("Don't have an account? Register", for: .normal)
 
+            } else {
+                enterButton.setTitle("Register", for: .normal)
+                variableButton.setTitle("Already registred? Log in", for: .normal)
+            }
+        }
+    }
     
-    var delegate: LoginViewControllerDelegate!
-    
-    private lazy var logInScrollView: UIScrollView = {
-        let logInScrollView = UIScrollView()
-        return logInScrollView
-    }()
-    
-    private lazy var contentView: UIView = {
-        let logInHeaderView = UIView()
-        return logInHeaderView
-    }()
+    private lazy var logInScrollView = UIScrollView()
+    private lazy var contentView = UIView()
     
     private lazy var logo: UIImageView = {
         let logo = UIImageView()
@@ -54,9 +52,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return stackView
     }()
     
-    private lazy var logInButton: CustomButton = {
+    private lazy var enterButton: CustomButton = {
         let button = CustomButton (
-            title: "Log in",
             titleColor: UIColor.white,
             backColor: UIColor.white,
             backImage: UIImage(named: "blue_pixel") ?? UIImage()
@@ -68,81 +65,63 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var registrationButton: CustomButton = {
-        let button = CustomButton (
-            title: "Registration",
-            titleColor: UIColor.white,
-            backColor: UIColor.white,
-            backImage: UIImage(named: "blue_pixel") ?? UIImage()
-        )
-        
+    private lazy var variableButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        button.setTitleColor(ColorSet.mainColor, for: .normal)
+        button.addTarget(self, action: #selector(switchLogin), for: .touchUpInside)
         return button
     }()
     
-    public lazy var loginTextField: UITextField = {
-        let textField = logPassTextField(placeholder: "Email or phone", secure: false)
-        let icon = UIImageView(image: UIImage(systemName: "person"))
-        icon.tintColor = ColorSet.mainColor
-        textField.leftView = textFieldIcon(subView: icon)
-        textField.addTarget(self, action: #selector(logInAndRegistrationButtonsAlpha), for: .editingChanged)
-        return textField
-    }()
+    private lazy var loginTextField = CustomTextfield (
+        customPlaceholder: "Email or phone",
+        secure: false,
+        iconName: "person"
+    )
     
-    private lazy var passwordTextField: UITextField = {
-        let textField = logPassTextField(placeholder: "Password", secure: true)
-        let icon = UIImageView(image: UIImage(systemName: "lock"))
-        icon.tintColor = ColorSet.mainColor
-        textField.leftView = textFieldIcon(subView: icon)
-        textField.addTarget(self, action: #selector(logInAndRegistrationButtonsAlpha), for: .editingChanged)
-        return textField
-    }()
-    
-    private lazy var loginAlertController: UIAlertController = {
-        let alertController = UIAlertController(
-            title: "⚠️ User not found! ⚠️",
-            message: "please check login or password",
-            preferredStyle: .alert)
-        
-        let acceptAction = UIAlertAction(title: "OK", style: .default) { (_) -> Void in
-        }
-        alertController.addAction(acceptAction)
-        return alertController
-    }()
+    private lazy var passwordTextField = CustomTextfield (
+        customPlaceholder: "Password",
+        secure: true,
+        iconName: "lock"
+    )
 
-    // MARK: INITS
+
+    // MARK: INITS ======================================================================
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = true
+                
+        isUserExists = false
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
-        self.delegate = inspector
-
-        setupContentViews()
-        hideKeyboardWhenTappedAround()
         
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
                 self.pushProfileViewController()
             }
         }
-        
-        // MARK: Task #6. Вызываем action кнопки Log In через замыкание
-        
-        logInButton.tapAction = { [weak self] in
+                
+        enterButton.tapAction = { [weak self] in
             guard let self = self else { return }
-                self.logInButtonPressed()
+                self.enterButtonPressed()
+            }
+        
+        loginTextField.textChangedAction = { [weak self] in
+            guard let self = self else { return }
+                self.enterButtonEnabled()
+            }
+        
+        passwordTextField.textChangedAction = { [weak self] in
+            guard let self = self else { return }
+                self.enterButtonEnabled()
             }
         
         
-        registrationButton.tapAction = { [weak self] in
-            guard let self = self else { return }
-            self.registrationButtonPressed()
-        }
+        setupLayout()
+        hideKeyboardWhenTappedAround()
     }
+
         
     override func viewDidAppear(_ animated: Bool) {
         
@@ -179,43 +158,57 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    // MARK: METHODS
-    
-    private func logPassTextField(placeholder: String, secure: Bool) ->  UITextField {
-        let logPassTextField = UITextField()
+    // MARK: METHODS ======================================================================
         
-        logPassTextField.leftViewMode = .always
-        logPassTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: logPassTextField.frame.height))
         
-        logPassTextField.placeholder = placeholder
-        logPassTextField.layer.borderColor = UIColor.lightGray.cgColor
-        logPassTextField.layer.borderWidth = 0.25
-        logPassTextField.textColor = .black
-        logPassTextField.font = UIFont.systemFont(ofSize: 16)
+    private func enterButtonPressed() {
         
-        logPassTextField.autocorrectionType = .no
-        logPassTextField.autocapitalizationType = .none
-        logPassTextField.keyboardType = .emailAddress
-        logPassTextField.returnKeyType = .done
-        logPassTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-        logPassTextField.isSecureTextEntry = secure
+        if isUserExists! {
+            Auth.auth().signIn(withEmail: loginTextField.text!, password: passwordTextField.text!) { user, error in
+                if error != nil {
+                    self.present(self.showAlertController(error!.localizedDescription) , animated: true, completion: nil)
+                    return
+                }
+            }
+        } else {
+            Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { result, error in
+                if error != nil {
+                    self.present(self.showAlertController(error!.localizedDescription) , animated: true, completion: nil)
+                    return
+                } else {
+                    if let result = result {
+                        print (result.user.uid)
+                    }
+                }
+            }
+        }
+    }
+
+    private func showAlertController(_ description: String) -> UIAlertController {
+        let alertController = UIAlertController(
+            title: "⚠️ Error! ⚠️",
+            message: description,
+            preferredStyle: .alert)
         
-        return logPassTextField
+        let acceptAction = UIAlertAction(title: "OK", style: .default) { _ in }
+        
+        alertController.addAction(acceptAction)
+        return alertController
     }
     
-    private func setupContentViews() {
+ 
+    // MARK: LAYOUT ======================================================================
+
+    private func setupLayout() {
+        
+        self.navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
         view.addSubview(logInScrollView)
         logInScrollView.addSubview(contentView)
-        contentView.addSubviews(logo, textFieldsStackView, logInButton, registrationButton)
+        contentView.addSubviews(logo, textFieldsStackView, enterButton, variableButton)
         textFieldsStackView.addArrangedSubview(loginTextField)
         textFieldsStackView.addArrangedSubview(passwordTextField)
-        setupLoginLayout()
-    }
-    
-    // MARK: CONSTRAINTS
-    
-    private func setupLoginLayout() {
         
         logInScrollView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -237,68 +230,47 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(100)
         }
         
-        logInButton.snp.makeConstraints { make in
+        enterButton.snp.makeConstraints { make in
             make.top.equalTo(textFieldsStackView.snp.bottom).offset(Constants.margin)
             make.leading.trailing.equalTo(contentView).inset(Constants.margin)
             make.height.equalTo(50)
         }
         
-        registrationButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(contentView).inset(Constants.margin)
-            make.height.equalTo(50)
+        variableButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(contentView).inset(Constants.margin)
+            make.top.equalTo(enterButton.snp.bottom).offset(Constants.margin / 2)
+            make.height.equalTo(20)
         }
     }
-    
-    //MARK: METHODS
-    
-    
-    private func logInButtonPressed() {
-        
-        if delegate?.userValidation(log: loginTextField.text!, pass: passwordTextField.text!) == true {
-            isLogin = true
-            pushProfileViewController()
-        } else {
-            present(loginAlertController, animated: true, completion: nil)
-        }
-    }
-    
-
-    
-    private func registrationButtonPressed() {
-        Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { result, error in
-            if error == nil {
-                if let result = result {
-                    print (result.user.uid)
-                }
-            }
-        }
-    }
-     
     
     //MARK: SUBMETHODS
     
-    @objc func keyboardShow(_ notification: Notification){
+    @objc
+    private func switchLogin() {
+        isUserExists!.toggle()
+    }
+    
+    @objc
+    private func keyboardShow(_ notification: Notification){
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
-            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - logInButton.frame.maxY) + 16
+            logInScrollView.contentOffset.y = keyboardRectangle.height - (logInScrollView.frame.height - enterButton.frame.maxY) + 16
         }
     }
     
-    @objc func keyboardHide(_ notification: Notification){
+    @objc
+    private func keyboardHide(_ notification: Notification){
         logInScrollView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
-    @objc func logInAndRegistrationButtonsAlpha() {
-        if loginTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == false {
-            logInButton.alpha = 1.0
-            logInButton.isEnabled = true
-            registrationButton.alpha = 1.0
-            registrationButton.isEnabled = true
+    @objc
+    private func enterButtonEnabled() {
+        if loginTextField.text?.isEmpty == false && passwordTextField.text!.count >= 6 {
+            enterButton.alpha = 1.0
+            enterButton.isEnabled = true
         } else {
-            logInButton.alpha = 0.5
-            logInButton.isEnabled = false
-            registrationButton.alpha = 1.0
-            registrationButton.isEnabled = true
+            enterButton.alpha = 0.5
+            enterButton.isEnabled = false
         }
     }
     
@@ -309,20 +281,13 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         navigationController?.setViewControllers([profileViewController], animated: true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    private func textFieldIcon (subView: UIView) -> UIView {
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
-        leftView.addSubview(subView)
-        subView.center = leftView.center
-        return leftView
-    }
 }
 
-extension UITextField {
+fileprivate extension UITextField {
     private func setLeftPaddingPoints(_ amount:CGFloat){
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.leftView = paddingView
