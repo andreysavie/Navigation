@@ -14,25 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    // убрать вниз!
-    
-//    func showModalLoginVC() {
-//        let loginViewController = Factory(navigationController: UINavigationController(), state: .login)
-//        loginViewController.navigationController.modalPresentationStyle = .fullScreen
-//        self.window?.rootViewController?.present(loginViewController.navigationController, animated: true, completion: nil)
-//    }
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // MARK: - HW IOSDT 1.3
         FirebaseApp.configure()
-            
-        
+                
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let url = AppConfiguration.randomURL()
         
         let mainCoordinator = MainCoordinator()
-        let inspector = MyLoginFactory.shared.returnLoginInspector()
         
         let loginVC = LogInViewController()
         let loginNC = UINavigationController(rootViewController: loginVC)
@@ -42,14 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: UIImage(systemName:"person.circle.fill")
         )
         
-        loginVC.delegate = inspector
-
         DispatchQueue.global().async {
             ContentManager.shared.createPhotosArray()
         }
+        
         NetworkService.urlSession(stringURL: url)
         
-        // MARK: - HW IOSDT 1.2 task 1
         InfoNetworkManager.shared.urlSession()
         PlanetsNetworkManager.shared.fetchPlanetsData()
         

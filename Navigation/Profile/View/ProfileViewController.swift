@@ -20,10 +20,9 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     private var userService: UserService?
     private var fullName: String
         
-    //MARK: PROPERTIES
+    //MARK: PROPERTIES ===================================================================================
     
     static let tableView: UITableView = {
-        
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.isScrollEnabled = true
         tableView.separatorInset = .zero
@@ -33,6 +32,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         return tableView
     }()
     
+    // MARK: - HW IOSDT 1.3
     private lazy var signOutBarButtonItem: UIBarButtonItem = {
         let button = UIBarButtonItem(
             title: "Sign out",
@@ -41,6 +41,28 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             action: #selector(signOutButtonPressed)
         )
         return button
+    }()
+    
+    private lazy var alertController: UIAlertController = {
+        let alertController = UIAlertController(
+            title: "Signing out",
+            message: "Do you really want to sign out?",
+            preferredStyle: .alert)
+        
+        let acceptAction = UIAlertAction(title: "OK", style: .default) { _ in
+            do {
+                try Auth.auth().signOut()
+                self.pushLoginViewController()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        alertController.addAction(acceptAction)
+        
+        let declineAction = UIAlertAction(title: "Cancel", style: .destructive)
+        alertController.addAction(declineAction)
+
+        return alertController
     }()
 
 
@@ -102,22 +124,26 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    
+    // MARK: METHODS =================================================================================================
+
+    // MARK: - HW IOSDT 1.3
+    private func pushLoginViewController() {
+        let coordinator = LoginCoordinator()
+        let loginViewController = coordinator.showDetail(coordinator: coordinator)
+        navigationController?.pushViewController(loginViewController, animated: true)
+        navigationController?.setViewControllers([loginViewController], animated: true)
+    }
     
     // MARK: OBJC METHODS =================================================================================================
     
+    // MARK: - HW IOSDT 1.3
     @objc
     private func signOutButtonPressed() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print(error.localizedDescription)
-        }
+        present(alertController, animated: true)
     }
-    
 }
 
-// MARK: UITableViewDataSource  =======================================================================================
+// MARK: EXTENSIONS  =======================================================================================
 
 extension ProfileViewController: UITableViewDataSource {
     
@@ -161,16 +187,12 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
-// MARK: UITableViewDelegate
-
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifire) as! ProfileHeaderView
-        
-        // MARK: user validation
-        
+                
         let currentUser = userService?.userIdentify(name: fullName)
         headerView.nameLabel.text = currentUser?.fullName
         headerView.avatar.image = currentUser?.avatar

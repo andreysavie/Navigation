@@ -15,7 +15,6 @@ class MainTabBarViewController: UITabBarController {
     private let musicViewController = Factory(navigationController: UINavigationController(), state: .music)
     private let videoViewController = Factory(navigationController: UINavigationController(), state: .video)
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.backgroundColor = UIColor.systemGray5
