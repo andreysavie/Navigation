@@ -9,7 +9,6 @@ import Foundation
 
 protocol LoginViewControllerDelegate: AnyObject {
     
-    func signIn (log: String, pass: String)
-    func register (log: String, pass: String)
+    func signing (signType: SignType, log: String, pass: String)
     
 }
