@@ -171,18 +171,18 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     private func enterButtonPressed() {
         
-        guard let delegate = delegate else { return }
-        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
+        guard
+            let delegate = delegate,
+            let login = loginTextField.text,
+            let password = passwordTextField.text
+        else { return }
         
         
         DispatchQueue.main.async {
-            if self.isUserExists! {
-                delegate.signIn(log: login, pass: password)
-            } else {
-                delegate.register(log: login, pass: password)
-            }
+            delegate.signing(signType: self.isUserExists! ? .signIn : .signUp, log: login, pass: password)
         }
     }
+    
 
     private func showAlertController(_ description: String) -> UIAlertController {
         let alertController = UIAlertController(

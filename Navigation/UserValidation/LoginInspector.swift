@@ -10,12 +10,8 @@ import FirebaseAuth
 
 class LoginInspector: LoginViewControllerDelegate {
     
-    func signIn(log: String, pass: String) {
-        UserValidation.shared.checkUser(log: log, pass: pass)
-    }
-    
-    func register(log: String, pass: String) {
-        UserValidation.shared.registerUser(log: log, pass: pass)
-        
+    func signing (signType: SignType, log: String, pass: String) {
+        UserValidation.shared.checkUser( signType: signType, log: log, pass: pass)
     }
 }
+
