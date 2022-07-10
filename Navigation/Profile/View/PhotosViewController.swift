@@ -66,15 +66,8 @@ class PhotosViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
         }
-
-        //        facade.subscribe(self)
-        //        facade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: filtredPhotosArray)
     }
-    
-    //    deinit {
-    //        facade.rechargeImageLibrary()
-    //        facade.removeSubscription(for: self)
-    //    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true

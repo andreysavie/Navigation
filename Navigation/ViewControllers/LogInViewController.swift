@@ -9,14 +9,16 @@ import UIKit
 import SnapKit
 import FirebaseAuth
 
-protocol LoginViewControllerDelegate {
-    func userValidation (log: String, pass: String) -> Bool
-}
+
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTIES ======================================================================
+    
+    var delegate: LoginViewControllerDelegate?
         
+    var userService = TestUserService()
+
     private var isUserExists: Bool? {
         willSet {
             if newValue! {
@@ -117,6 +119,13 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 self.enterButtonEnabled()
             }
         
+        UserValidation.shared.completion = { [weak self] message in
+            guard let self = self else { return }
+            self.present(self.showAlertController(message) , animated: true, completion: nil)
+        }
+
+        
+        
         
         setupLayout()
         hideKeyboardWhenTappedAround()
@@ -160,26 +169,17 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: METHODS ======================================================================
         
-        
     private func enterButtonPressed() {
         
-        if isUserExists! {
-            Auth.auth().signIn(withEmail: loginTextField.text!, password: passwordTextField.text!) { user, error in
-                if error != nil {
-                    self.present(self.showAlertController(error!.localizedDescription) , animated: true, completion: nil)
-                    return
-                }
-            }
-        } else {
-            Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { result, error in
-                if error != nil {
-                    self.present(self.showAlertController(error!.localizedDescription) , animated: true, completion: nil)
-                    return
-                } else {
-                    if let result = result {
-                        print (result.user.uid)
-                    }
-                }
+        guard let delegate = delegate else { return }
+        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
+        
+        
+        DispatchQueue.main.async {
+            if self.isUserExists! {
+                delegate.signIn(log: login, pass: password)
+            } else {
+                delegate.register(log: login, pass: password)
             }
         }
     }
