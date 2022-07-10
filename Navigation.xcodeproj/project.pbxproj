@@ -23,6 +23,10 @@
 		D53C5418286F8A03007A61C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D53C5417286F8A03007A61C2 /* GoogleService-Info.plist */; };
 		D541A0DC285B416000ADFEB3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DB285B416000ADFEB3 /* NetworkService.swift */; };
 		D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */; };
+		D54536F8287AE08500B5A64D /* LoginFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54536F7287AE08500B5A64D /* LoginFactoryProtocol.swift */; };
+		D54536FA287AE0A800B5A64D /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54536F9287AE0A800B5A64D /* LoginFactory.swift */; };
+		D54536FC287AE0C900B5A64D /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54536FB287AE0C900B5A64D /* LoginInspector.swift */; };
+		D54536FF287AE21F00B5A64D /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54536FE287AE21F00B5A64D /* LoginViewControllerDelegate.swift */; };
 		D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464327C810490022DDFC /* PostTableViewCell.swift */; };
 		D562464627C826350022DDFC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D562464527C826350022DDFC /* Constants.swift */; };
 		D5660866281C7D6B00A3F9C1 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = D5660865281C7D6B00A3F9C1 /* iOSIntPackage */; };
@@ -136,6 +140,10 @@
 		D53C5417286F8A03007A61C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D541A0DB285B416000ADFEB3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D541A0DD285B60B000ADFEB3 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		D54536F7287AE08500B5A64D /* LoginFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactoryProtocol.swift; sourceTree = "<group>"; };
+		D54536F9287AE0A800B5A64D /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
+		D54536FB287AE0C900B5A64D /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
+		D54536FE287AE21F00B5A64D /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		D562464327C810490022DDFC /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		D562464527C826350022DDFC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D575870A27BEB11000570D3F /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -264,6 +272,18 @@
 				D53256FA285534110047582E /* VideoTableViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D54536FD287AE0ED00B5A64D /* UserValidation */ = {
+			isa = PBXGroup;
+			children = (
+				D54536FE287AE21F00B5A64D /* LoginViewControllerDelegate.swift */,
+				D54536FB287AE0C900B5A64D /* LoginInspector.swift */,
+				D54536F7287AE08500B5A64D /* LoginFactoryProtocol.swift */,
+				D54536F9287AE0A800B5A64D /* LoginFactory.swift */,
+				D5A0745E28159082003BF856 /* UserValidation.swift */,
+			);
+			path = UserValidation;
 			sourceTree = "<group>";
 		};
 		D575870927BEB0A900570D3F /* Profile */ = {
@@ -527,7 +547,7 @@
 		D5E9222B2816A84200748286 /* AppState */ = {
 			isa = PBXGroup;
 			children = (
-				D5A0745E28159082003BF856 /* UserValidation.swift */,
+				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
 				D5E922292816A81F00748286 /* Factory.swift */,
 				D5DF549828577F6800FECC98 /* User.swift */,
 				D562464527C826350022DDFC /* Constants.swift */,
@@ -565,7 +585,7 @@
 		D5ED095E27B5A423007F70C6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D5ED095F27B5A423007F70C6 /* AppDelegate.swift */,
+				D54536FD287AE0ED00B5A64D /* UserValidation */,
 				D5E9222B2816A84200748286 /* AppState */,
 				D5CC1EE6282D950B00137A94 /* MainCoordinator */,
 				D5C0B0FC282D89AC00ABCB88 /* TabBarController */,
@@ -861,7 +881,9 @@
 				D5851F162863AED400D65A51 /* InfoCoordinator.swift in Sources */,
 				D5CC1EED282D980E00137A94 /* FeedCoordinator.swift in Sources */,
 				D5BA980C28268499005921CF /* FeedViewModel.swift in Sources */,
+				D54536F8287AE08500B5A64D /* LoginFactoryProtocol.swift in Sources */,
 				D5CC1EEB282D954600137A94 /* MainCoordinator.swift in Sources */,
+				D54536FC287AE0C900B5A64D /* LoginInspector.swift in Sources */,
 				D5B669652866584C00C699C1 /* ResidentsNetworkManager.swift in Sources */,
 				D5ED097827B66965007F70C6 /* NewPostViewController.swift in Sources */,
 				D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */,
@@ -881,6 +903,7 @@
 				D5A0745F28159082003BF856 /* UserValidation.swift in Sources */,
 				D5A529F02854ABFD00A0DB32 /* VideoViewController.swift in Sources */,
 				D5A52A092854C6E900A0DB32 /* VideoCoordinator.swift in Sources */,
+				D54536FA287AE0A800B5A64D /* LoginFactory.swift in Sources */,
 				D5DF549928577F6800FECC98 /* User.swift in Sources */,
 				D562464627C826350022DDFC /* Constants.swift in Sources */,
 				D5E9222A2816A81F00748286 /* Factory.swift in Sources */,
@@ -904,6 +927,7 @@
 				D52F469E27D4E224002BD753 /* ColorSet.swift in Sources */,
 				D5A529FA2854AECE00A0DB32 /* MusicPlayerView.swift in Sources */,
 				D5B669672866585D00C699C1 /* ResidentModel.swift in Sources */,
+				D54536FF287AE21F00B5A64D /* LoginViewControllerDelegate.swift in Sources */,
 				D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */,
 				D5A392ED2831950B0073E034 /* InfoViewModel.swift in Sources */,
 			);

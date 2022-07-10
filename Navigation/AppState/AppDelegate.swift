@@ -32,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: UIImage(systemName: "person.circle"),
             selectedImage: UIImage(systemName:"person.circle.fill")
         )
+
+        let loginFactory = MyLoginFactory()
+        loginVC.delegate = loginFactory.returnLoginInspector()
         
         DispatchQueue.global().async {
             ContentManager.shared.createPhotosArray()
