@@ -31,6 +31,8 @@ final class NewPostCoordinator {
 final class LoginCoordinator {
     func showDetail(coordinator: LoginCoordinator) -> UIViewController {
         let viewController = LogInViewController()
+        let loginFactory = MyLoginFactory()
+        viewController.delegate = loginFactory.returnLoginInspector()
         return viewController
     }
 }
