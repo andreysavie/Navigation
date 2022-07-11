@@ -15,8 +15,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: PROPERTIES ======================================================================
     
-    var delegate: LoginViewControllerDelegate?
-        
+   public var delegate: LoginViewControllerDelegate?
+//    var delegate = LoginInspector()
+
     var userService = TestUserService()
 
     private var isUserExists: Bool? {
@@ -99,7 +100,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         
         Auth.auth().addStateDidChangeListener { auth, user in
-            if user != nil {
+//            if user != nil {
+            if self.isUserExists! {
                 self.pushProfileViewController()
             }
         }
@@ -172,7 +174,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     private func enterButtonPressed() {
         
         guard
-            let delegate = delegate,
+            let delegate = self.delegate,
             let login = loginTextField.text,
             let password = passwordTextField.text
         else { return }
