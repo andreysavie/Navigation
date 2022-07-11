@@ -4,7 +4,6 @@ target 'Navigation' do
   use_frameworks!
 
     pod 'SnapKit', '~> 5.6.0'
-    pod "youtube-ios-player-helper", "~> 1.0.4"
     pod 'FirebaseAuth'
     pod 'FirebaseCore'
     pod 'FirebaseDatabase'

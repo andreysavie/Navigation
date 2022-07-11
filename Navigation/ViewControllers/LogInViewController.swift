@@ -16,7 +16,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     // MARK: PROPERTIES ======================================================================
     
    public var delegate: LoginViewControllerDelegate?
-//    var delegate = LoginInspector()
 
     var userService = TestUserService()
 
