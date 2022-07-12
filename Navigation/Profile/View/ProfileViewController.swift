@@ -53,6 +53,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             do {
                 try Auth.auth().signOut()
                 self.pushLoginViewController()
+                UserDefaults.standard.setValue(true, forKey: "isManuallySignOut")
+
             } catch {
                 print(error.localizedDescription)
             }

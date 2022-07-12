@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
-
-
+import RealmSwift
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,7 +17,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
    public var delegate: LoginViewControllerDelegate?
 
     var userService = TestUserService()
-
+    
+    var items: Results<AuthModel>?
+        
     private var isUserExists: Bool? {
         willSet {
             if newValue! {
@@ -93,18 +94,17 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        isUserExists = false
+        isUserExists = true
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
-        
+                
         Auth.auth().addStateDidChangeListener { auth, user in
-//            if user != nil {
-            if self.isUserExists! {
+            if user != nil {
                 self.pushProfileViewController()
             }
         }
-                
+                        
         enterButton.tapAction = { [weak self] in
             guard let self = self else { return }
                 self.enterButtonPressed()
@@ -124,14 +124,29 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             guard let self = self else { return }
             self.present(self.showAlertController(message) , animated: true, completion: nil)
         }
-
-        
-        
         
         setupLayout()
         hideKeyboardWhenTappedAround()
+        
     }
 
+    // MARK: TO REALM
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard !UserDefaults.standard.bool(forKey: "isManuallySignOut") else { return }
+
+        do {
+            try Auth.auth().signOut()
+            let realm = try Realm()
+            self.items = realm.objects(AuthModel.self)
+
+        } catch { print ("⛔️ REALM AUTH ERROR: \(error.localizedDescription)") }
+        
+        if let item = self.items?[0] {
+            toAuthentication(item.login, item.password)
+        }
+    }
+    
         
     override func viewDidAppear(_ animated: Bool) {
         
@@ -168,22 +183,40 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    // MARK: METHODS ======================================================================
+    // MARK: METHODS
         
     private func enterButtonPressed() {
         
+        UserDefaults.standard.setValue(false, forKey: "isManuallySignOut")
+        
         guard
-            let delegate = self.delegate,
             let login = loginTextField.text,
             let password = passwordTextField.text
         else { return }
         
-        
-        DispatchQueue.main.async {
-            delegate.signing(signType: self.isUserExists! ? .signIn : .signUp, log: login, pass: password)
+        let authData = AuthModel(value: [login, password])
+        do {
+            let realm = try Realm()
+            try realm.write { realm.add(authData) }
+        } catch let error {
+            print ("⛔️ REALM ERROR: \(error.localizedDescription)")
         }
+        
+        toAuthentication(login, password)
     }
     
+    private func toAuthentication (_ login: String, _ password: String) {
+        guard let delegate = self.delegate else { return }
+
+        DispatchQueue.main.async {
+            delegate.signing(
+                signType: self.isUserExists! ? .signIn : .signUp,
+                log: login,
+                pass: password
+            )
+        }
+    }
+
 
     private func showAlertController(_ description: String) -> UIAlertController {
         let alertController = UIAlertController(
@@ -198,7 +231,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
  
-    // MARK: LAYOUT ======================================================================
+    // MARK: LAYOUT
 
     private func setupLayout() {
         
