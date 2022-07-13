@@ -14,6 +14,7 @@ class MainTabBarViewController: UITabBarController {
     private let loginViewController = Factory(navigationController: UINavigationController(), state: .login)
     private let musicViewController = Factory(navigationController: UINavigationController(), state: .music)
     private let videoViewController = Factory(navigationController: UINavigationController(), state: .video)
+    private let favoriteViewController = Factory(navigationController: UINavigationController(), state: .favorite)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,8 @@ class MainTabBarViewController: UITabBarController {
             loginViewController.navigationController,
             feedViewController.navigationController,
             musicViewController.navigationController,
-            videoViewController.navigationController
+            videoViewController.navigationController,
+            favoriteViewController.navigationController
         ]
     }
 

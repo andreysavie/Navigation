@@ -15,6 +15,7 @@ final class Factory {
         case login
         case music
         case video
+        case favorite
     }
 
     let navigationController: UINavigationController
@@ -98,6 +99,20 @@ final class Factory {
                 title: "video",
                 image: UIImage(systemName: "video"),
                 selectedImage: UIImage(systemName: "video.fill")
+            )
+        case .favorite:
+            let coordinator = FavoriteCoordinator()
+            let favoriteViewController = coordinator.showDetail(coordinator: coordinator)
+
+            navigationController.setViewControllers([favoriteViewController], animated: true)
+            navigationController.navigationBar.barTintColor = UIColor.systemGray5
+            navigationController.navigationBar.standardAppearance = Constants.navigationBarAppearance
+            navigationController.tabBarItem.setTitleTextAttributes(Constants.attributes,for: .normal)
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+            navigationController.tabBarItem = UITabBarItem(
+                title: "favorite",
+                image: UIImage(systemName: "bookmark"),
+                selectedImage: UIImage(systemName: "bookmark.fill")
             )
         }
     }

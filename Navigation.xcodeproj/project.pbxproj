@@ -10,6 +10,9 @@
 		17E8E737D57624A644D7E661 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CE3DB9E8E3EE99B10A060BB /* Pods_Navigation.framework */; };
 		3F2FFA4DFC0999D13E62914D /* Pods_StorageService_StorageServiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7114DE5BA20B419D2C4418A6 /* Pods_StorageService_StorageServiceTests.framework */; };
 		81C36F26812F7EC10A77213B /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D78117F6C5E1191394DB4E13 /* Pods_StorageService.framework */; };
+		D500D731287F594F00ED1FBA /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D730287F594F00ED1FBA /* FavoriteViewController.swift */; };
+		D500D734287F598E00ED1FBA /* FavoriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D733287F598E00ED1FBA /* FavoriteCoordinator.swift */; };
+		D500D736287F59D200ED1FBA /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */; };
 		D506109528061EBF00BC51AC /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = D506109428061EBF00BC51AC /* StorageService.docc */; };
 		D506109B28061EBF00BC51AC /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; };
 		D50610A228061EBF00BC51AC /* StorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50610A128061EBF00BC51AC /* StorageServiceTests.swift */; };
@@ -128,6 +131,9 @@
 		7114DE5BA20B419D2C4418A6 /* Pods_StorageService_StorageServiceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StorageService_StorageServiceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73027EBE80F37114B7CA1E23 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		8CE3DB9E8E3EE99B10A060BB /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D500D730287F594F00ED1FBA /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		D500D733287F598E00ED1FBA /* FavoriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoordinator.swift; sourceTree = "<group>"; };
+		D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		D506109128061EBF00BC51AC /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D506109328061EBF00BC51AC /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		D506109428061EBF00BC51AC /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
@@ -246,6 +252,40 @@
 				F67E007A27EBE9E04B692E67 /* Pods-StorageService-StorageServiceTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D500D732287F596300ED1FBA /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				D500D738287F5CFA00ED1FBA /* Coordinator */,
+				D500D739287F5D0400ED1FBA /* View */,
+				D500D737287F5CF400ED1FBA /* ViewModel */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		D500D737287F5CF400ED1FBA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D500D738287F5CFA00ED1FBA /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D500D733287F598E00ED1FBA /* FavoriteCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		D500D739287F5D0400ED1FBA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D500D730287F594F00ED1FBA /* FavoriteViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D506109228061EBF00BC51AC /* StorageService */ = {
@@ -597,6 +637,7 @@
 				D5CC1EF0282DA42000137A94 /* Feed */,
 				D5A529EB2854AB5100A0DB32 /* Music */,
 				D5A529EC2854AB7200A0DB32 /* Video */,
+				D500D732287F596300ED1FBA /* Favorite */,
 				D5DBC7CF27B9A71A00F4BD09 /* ViewControllers */,
 				D57B4D2E27D7B59F00F1403C /* Views */,
 				D5ED096827B5A428007F70C6 /* Assets.xcassets */,
@@ -905,6 +946,7 @@
 				D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */,
 				D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */,
 				D5A0745F28159082003BF856 /* UserValidation.swift in Sources */,
+				D500D736287F59D200ED1FBA /* FavoriteViewModel.swift in Sources */,
 				D5A529F02854ABFD00A0DB32 /* VideoViewController.swift in Sources */,
 				D5A52A092854C6E900A0DB32 /* VideoCoordinator.swift in Sources */,
 				D54536FA287AE0A800B5A64D /* LoginFactory.swift in Sources */,
@@ -917,6 +959,7 @@
 				D575870B27BEB11000570D3F /* ProfileHeaderView.swift in Sources */,
 				D5A52A0C2854C72A00A0DB32 /* VideoViewModel.swift in Sources */,
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
+				D500D731287F594F00ED1FBA /* FavoriteViewController.swift in Sources */,
 				D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */,
 				D5A529F62854AC9500A0DB32 /* MusicCoordinator.swift in Sources */,
 				D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */,
@@ -934,6 +977,7 @@
 				D54536FF287AE21F00B5A64D /* LoginViewControllerDelegate.swift in Sources */,
 				D562464427C810490022DDFC /* PostTableViewCell.swift in Sources */,
 				D5A392ED2831950B0073E034 /* InfoViewModel.swift in Sources */,
+				D500D734287F598E00ED1FBA /* FavoriteCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
