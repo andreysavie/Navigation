@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
-import RealmSwift
+//import RealmSwift
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -17,9 +17,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
    public var delegate: LoginViewControllerDelegate?
 
     var userService = TestUserService()
-    
-    var items: Results<AuthModel>?
-        
+            
     private var isUserExists: Bool? {
         willSet {
             if newValue! {
@@ -98,6 +96,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
+        
+        do { try Auth.auth().signOut() } catch { print (error.localizedDescription) }
+
                 
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
@@ -129,24 +130,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         hideKeyboardWhenTappedAround()
         
     }
-
-    // MARK: TO REALM
-    
-    override func viewWillAppear(_ animated: Bool) {
-        guard !UserDefaults.standard.bool(forKey: "isManuallySignOut") else { return }
-
-        do {
-            try Auth.auth().signOut()
-            let realm = try Realm()
-            self.items = realm.objects(AuthModel.self)
-
-        } catch { print ("⛔️ REALM AUTH ERROR: \(error.localizedDescription)") }
-        
-        if let item = self.items?[0] {
-            toAuthentication(item.login, item.password)
-        }
-    }
-    
         
     override func viewDidAppear(_ animated: Bool) {
         
@@ -187,21 +170,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     private func enterButtonPressed() {
         
-        UserDefaults.standard.setValue(false, forKey: "isManuallySignOut")
-        
-        guard
-            let login = loginTextField.text,
-            let password = passwordTextField.text
-        else { return }
-        
-        let authData = AuthModel(value: [login, password])
-        do {
-            let realm = try Realm()
-            try realm.write { realm.add(authData) }
-        } catch let error {
-            print ("⛔️ REALM ERROR: \(error.localizedDescription)")
-        }
-        
+        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
+    
         toAuthentication(login, password)
     }
     

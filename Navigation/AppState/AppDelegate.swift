@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCoreInternal
 import FirebaseCore
 import FirebaseAuth
 
@@ -13,32 +14,19 @@ import FirebaseAuth
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let inspector = MyLoginFactory.shared.returnLoginInspector()
-    
+    	
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // MARK: - HW IOSDT 1.3
+//         MARK: - HW IOSDT 1.3
         FirebaseApp.configure()
                 
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let url = AppConfiguration.randomURL()
         
-        let mainCoordinator = MainCoordinator()
-//
-//        let loginVC = LogInViewController()
-//        let loginFactory = MyLoginFactory()
-//        loginVC.delegate = loginFactory.returnLoginInspector()
-//
-//        let loginNC = UINavigationController(rootViewController: loginVC)
-//        loginNC.tabBarItem = UITabBarItem(
-//            title: "Profile",
-//            image: UIImage(systemName: "person.circle"),
-//            selectedImage: UIImage(systemName:"person.circle.fill")
-//        )
-
-        
+        let mainCoordinator = MainCoordinator()        
         DispatchQueue.global().async {
             ContentManager.shared.createPhotosArray()
         }
