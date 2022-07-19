@@ -1,19 +1,20 @@
 //
-//  PostTableViewCell.swift
+//  FavoritePostTableViewCell.swift
 //  Navigation
 //
-//  Created by Андрей Рыбалкин on 24.02.2022.
+//  Created by Андрей Рыбалкин on 19.07.2022.
 //
 
+import Foundation
 import UIKit
 import StorageService
 import SnapKit
 
-class PostTableViewCell: UITableViewCell {
+class FavoritePostTableViewCell: UITableViewCell {
     
     // MARK: PROPERTIES
     
-    static let identifire = "PostTableViewCell"
+    static let identifire = "FavoritePostTableViewCell"
     
     private lazy var postTitle: UILabel = {
         
@@ -54,18 +55,19 @@ class PostTableViewCell: UITableViewCell {
         counter.textColor = .black
         return counter
     }()
+
     
-    weak var viewModel: PostTableViewCellViewModel? {
-        willSet(viewModel) {
-            guard let viewModel = viewModel else { return }
-            postTitle.text = viewModel.title
-            postDescription.text = viewModel.description
-            postImage.image = UIImage(named: viewModel.image)
-            postLikesCounter.text = "Likes: \(viewModel.likes)"
-            postViewsCounter.text = "Views: \(viewModel.views)"
-        }
-    }
-    
+//    weak var favoriteViewModel: FavoritePostTableViewCellViewModel? {
+//        willSet(favoriteViewModel) {
+//            guard let viewModel = favoriteViewModel else { return }
+//            postTitle.text = viewModel.title
+//            postDescription.text = viewModel.description
+//            postImage.image = UIImage(data: viewModel.image)
+//            postLikesCounter.text = "Likes: \(viewModel.likes)"
+//            postViewsCounter.text = "Views: \(viewModel.views)"
+//            print ("🐰\(viewModel.title)")
+//        }
+//    }
     
     // MARK: INITS
     
@@ -85,6 +87,14 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // MARK: METHODS
+    
+    func configureOfCell (_ post: FavoritePostEntity) {
+        self.postTitle.text = post.title ?? ""
+        self.postImage.image = UIImage(data: post.image!) ?? UIImage()
+        self.postDescription.text = post.text ?? ""
+        self.postLikesCounter.text = "Likes: \(Int(post.likes))"
+        self.postViewsCounter.text = "Views: \(Int(post.views))"
+    }
     
     private func setupPostLayout(){
         
@@ -117,3 +127,4 @@ class PostTableViewCell: UITableViewCell {
         super.prepareForReuse()
     }
 }
+

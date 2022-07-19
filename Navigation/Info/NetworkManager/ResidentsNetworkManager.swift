@@ -36,7 +36,7 @@ final class ResinentsNetworkManager: NSObject {
                             if let object = serializedDictionary as? [String: Any] {
                                 let residentName = object["name"] as? String ?? ""
                                 
-                                print("✅\(residentName )")
+//                                print("✅\(residentName )")
                                 self.residents.append(residentName)
                                 self.reloadTableViewData?()
                                 self.isFetched = true

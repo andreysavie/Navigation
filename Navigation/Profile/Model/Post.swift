@@ -9,7 +9,6 @@ import Foundation
 
 struct Post {
     
-    var author: String
     var title: String
     var description: String
     var image: String

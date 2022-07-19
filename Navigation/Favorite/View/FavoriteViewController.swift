@@ -8,24 +8,22 @@
 import UIKit
 import SnapKit
 
-
 class FavoriteViewController: UIViewController {
     
     private var viewModel: FavoriteViewModel?
     private weak var coordinator: FavoriteCoordinator?
+    private var post: FavoritePostEntity?
     
     private lazy var favoriteTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.isScrollEnabled = true
         tableView.separatorInset = .zero
         tableView.sectionHeaderHeight = UITableView.automaticDimension
-        tableView.estimatedSectionHeaderHeight = 220
         tableView.backgroundColor = .systemGray6
         return tableView
     }()
     
-
-    init (model: FavoriteViewModel , coordinator: FavoriteCoordinator) {
+    
+    init (model: FavoriteViewModel, coordinator: FavoriteCoordinator) {
         self.viewModel = model
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -35,11 +33,11 @@ class FavoriteViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = FavoriteViewModel()
+        //        viewModel = FavoriteViewModel()
         
         self.view.addSubview(favoriteTableView)
         favoriteTableView.snp.makeConstraints { make in
@@ -47,34 +45,40 @@ class FavoriteViewController: UIViewController {
         }
         
         favoriteTableView.register(
-            PostTableViewCell.self,
-            forCellReuseIdentifier: PostTableViewCell.identifire
+            FavoritePostTableViewCell.self,
+            forCellReuseIdentifier: FavoritePostTableViewCell.identifire
         )
         
         favoriteTableView.dataSource = self
         favoriteTableView.delegate = self
         
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        favoriteTableView.reloadData()
+//    }
 }
 
 extension FavoriteViewController: UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfRows() ?? 0
+        print ("🦁\(FavoriteViewModel.shared.favoritePosts.count)")
+        return FavoriteViewModel.shared.favoritePosts.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell
-            
-            guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
-            let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
-            tableViewCell.viewModel = cellViewModel
-            
-            return tableViewCell
-            
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell
+        else { return UITableViewCell() }
+        let post = FavoriteViewModel.shared.favoritePosts[indexPath.row]
+        cell.configureOfCell(post)
+        return cell
+        
+        //            guard let cell = cell, let viewModel = viewModel else { return UITableViewCell() }
+        //            let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
+        //            cell.favoriteViewModel = cellViewModel
+        //            return cell
     }
 }
 
@@ -84,4 +88,4 @@ extension FavoriteViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-        
+

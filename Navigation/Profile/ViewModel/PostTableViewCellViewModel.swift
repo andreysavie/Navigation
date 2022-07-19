@@ -12,9 +12,6 @@ class PostTableViewCellViewModel {
     
     var post: Post
     
-        var author: String {
-            return post.author
-        }
     
         var title: String {
             return post.title

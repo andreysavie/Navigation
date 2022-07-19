@@ -216,9 +216,14 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.section == 0 else { return }
+        if indexPath.section == 0 {
         let coordinator = PhotosCoordinator()
         coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
+        } else {
+            guard let post = viewModel?.posts[indexPath.row] else { return }
+            FavoriteViewModel.shared.save(post: post)
+        }
+
     }
 }
 

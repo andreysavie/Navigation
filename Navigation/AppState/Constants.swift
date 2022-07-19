@@ -32,6 +32,7 @@ extension Constants {
         let secondsFraction = seconds - Double(Int(seconds))
         return String(format:"%02i:%02i.%02d",minutes,Int(seconds),Int(secondsFraction * 100.0))
     }
+
     
     static func showElapsedTimeAlert(navCon: UINavigationController, sec: Double)  {
         let alertController = UIAlertController(

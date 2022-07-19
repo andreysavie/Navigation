@@ -33,7 +33,7 @@ final class InfoNetworkManager {
                             self.infoModel.title = object["title"] as? String ?? "unknown"
                             self.infoModel.completed = object["completed"] as? Bool ?? false
                             
-                            print("✅\(self.infoModel.userId )")
+//                            print("✅\(self.infoModel.userId )")
 
                         }
                     }

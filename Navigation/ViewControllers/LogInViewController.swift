@@ -97,7 +97,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         loginTextField.delegate = self
         passwordTextField.delegate = self
         
-        do { try Auth.auth().signOut() } catch { print (error.localizedDescription) }
+//        do { try Auth.auth().signOut() } catch { print (error.localizedDescription) }
 
                 
         Auth.auth().addStateDidChangeListener { auth, user in
