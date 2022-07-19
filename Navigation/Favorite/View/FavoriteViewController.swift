@@ -36,9 +36,7 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //        viewModel = FavoriteViewModel()
-        
+                
         self.view.addSubview(favoriteTableView)
         favoriteTableView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
@@ -54,9 +52,10 @@ class FavoriteViewController: UIViewController {
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        favoriteTableView.reloadData()
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        FavoriteViewModel.shared.retrieveValues()
+        favoriteTableView.reloadData()
+    }
 }
 
 extension FavoriteViewController: UITableViewDataSource {

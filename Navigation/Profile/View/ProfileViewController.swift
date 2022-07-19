@@ -221,7 +221,19 @@ extension ProfileViewController: UITableViewDelegate {
         coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
         } else {
             guard let post = viewModel?.posts[indexPath.row] else { return }
-            FavoriteViewModel.shared.save(post: post)
+            
+            var isContains = false
+            
+            for i in FavoriteViewModel.shared.favoritePosts {
+                if i.id == post.personalID {
+                    isContains = true
+                }
+            }
+            if !isContains {
+                FavoriteViewModel.shared.save(post: post)
+            } else {
+                print ("Element is already exists!")
+            }
         }
 
     }

@@ -63,6 +63,8 @@ final class FavoriteViewModel {
             newValue.setValue(post.description, forKey: "text")
             newValue.setValue(post.likes, forKey: "likes")
             newValue.setValue(post.views, forKey: "views")
+            newValue.setValue(post.personalID, forKey: "id")
+
             
             do {
                 try context.save()
@@ -73,7 +75,25 @@ final class FavoriteViewModel {
         }
     }
     
+    func removeCoreData() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavoritePostEntity")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            
+            do {
+                try context.execute(deleteRequest)
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
     func retrieveValues() {
+        favoritePosts.removeAll()
+        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
             
