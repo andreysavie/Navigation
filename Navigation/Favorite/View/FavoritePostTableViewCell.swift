@@ -55,19 +55,6 @@ class FavoritePostTableViewCell: UITableViewCell {
         counter.textColor = .black
         return counter
     }()
-
-    
-//    weak var favoriteViewModel: FavoritePostTableViewCellViewModel? {
-//        willSet(favoriteViewModel) {
-//            guard let viewModel = favoriteViewModel else { return }
-//            postTitle.text = viewModel.title
-//            postDescription.text = viewModel.description
-//            postImage.image = UIImage(data: viewModel.image)
-//            postLikesCounter.text = "Likes: \(viewModel.likes)"
-//            postViewsCounter.text = "Views: \(viewModel.views)"
-//            print ("🐰\(viewModel.title)")
-//        }
-//    }
     
     // MARK: INITS
     
@@ -81,14 +68,15 @@ class FavoritePostTableViewCell: UITableViewCell {
             postViewsCounter
         )
         setupPostLayout()
+        
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: METHODS
-    
-    func configureOfCell (_ post: FavoritePostEntity) {
+        
+    public func configureOfCell (_ post: FavoritePostEntity) {
         self.postTitle.text = post.title ?? ""
         self.postImage.image = UIImage(data: post.image!) ?? UIImage()
         self.postDescription.text = post.text ?? ""

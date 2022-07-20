@@ -71,6 +71,8 @@ public extension NSNotification.Name {
     static let codeRed = NSNotification.Name("codeRed")
     static let codeGreen = NSNotification.Name("codeGreen")
     static let residentsFetchingEnded = NSNotification.Name("residentsFetchingEnded")
+    static let postDoubleTap = NSNotification.Name("postDoubleTap")
+
 
 }
 

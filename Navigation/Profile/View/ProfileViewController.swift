@@ -19,6 +19,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     private var userService: UserService?
     private var fullName: String
+    
+    private var cellIndexPathRow = 0
         
     //MARK: PROPERTIES ===================================================================================
     
@@ -143,6 +145,28 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     private func signOutButtonPressed() {
         present(alertController, animated: true)
     }
+
+    // MARK: - HW IOSDT 2.4
+
+    @objc
+    private func doubleTap() {
+        guard let post = viewModel?.posts[self.cellIndexPathRow] else { return }
+        
+        var isContains = false
+        
+        for favPost in CoreDataManager.shared.favoritePosts {
+            if favPost.id == post.personalID {
+                isContains = true
+            }
+        }
+        
+        if !isContains {
+            CoreDataManager.shared.saveToCoreData(post: post)
+        } else {
+            print ("Element is already exists!")
+        }
+        
+    }
 }
 
 // MARK: EXTENSIONS  =======================================================================================
@@ -176,11 +200,14 @@ extension ProfileViewController: UITableViewDataSource {
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell
-            
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
+            recognizer.numberOfTapsRequired = 2
+
+            // MARK: - HW IOSDT 2.4
             guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
             let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
             tableViewCell.viewModel = cellViewModel
-            
+            tableViewCell.addGestureRecognizer(recognizer)
             return tableViewCell
             
         default:
@@ -220,22 +247,8 @@ extension ProfileViewController: UITableViewDelegate {
         let coordinator = PhotosCoordinator()
         coordinator.showDetail(navCon: navigationController, coordinator: coordinator)
         } else {
-            guard let post = viewModel?.posts[indexPath.row] else { return }
-            
-            var isContains = false
-            
-            for i in FavoriteViewModel.shared.favoritePosts {
-                if i.id == post.personalID {
-                    isContains = true
-                }
-            }
-            if !isContains {
-                FavoriteViewModel.shared.save(post: post)
-            } else {
-                print ("Element is already exists!")
-            }
+            self.cellIndexPathRow = indexPath.row
         }
-
     }
 }
 

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		D500D731287F594F00ED1FBA /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D730287F594F00ED1FBA /* FavoriteViewController.swift */; };
 		D500D734287F598E00ED1FBA /* FavoriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D733287F598E00ED1FBA /* FavoriteCoordinator.swift */; };
-		D500D736287F59D200ED1FBA /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */; };
+		D500D736287F59D200ED1FBA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D500D735287F59D200ED1FBA /* CoreDataManager.swift */; };
 		D506109528061EBF00BC51AC /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = D506109428061EBF00BC51AC /* StorageService.docc */; };
 		D506109B28061EBF00BC51AC /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D506109128061EBF00BC51AC /* StorageService.framework */; };
 		D50610A228061EBF00BC51AC /* StorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50610A128061EBF00BC51AC /* StorageServiceTests.swift */; };
@@ -73,7 +73,6 @@
 		D5CC1EED282D980E00137A94 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC1EEC282D980E00137A94 /* FeedCoordinator.swift */; };
 		D5CC1EEF282D982500137A94 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC1EEE282D982500137A94 /* ProfileCoordinator.swift */; };
 		D5CC1EF4282DA8D500137A94 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC1EF3282DA8D500137A94 /* ProfileViewModel.swift */; };
-		D5D9C0882886EF940026830F /* FavoritePostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D9C0872886EF940026830F /* FavoritePostTableViewCellViewModel.swift */; };
 		D5D9C08A288721810026830F /* FavoritePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D9C089288721810026830F /* FavoritePostTableViewCell.swift */; };
 		D5DF549928577F6800FECC98 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DF549828577F6800FECC98 /* User.swift */; };
 		D5E9222A2816A81F00748286 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E922292816A81F00748286 /* Factory.swift */; };
@@ -129,7 +128,7 @@
 /* Begin PBXFileReference section */
 		D500D730287F594F00ED1FBA /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		D500D733287F598E00ED1FBA /* FavoriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoordinator.swift; sourceTree = "<group>"; };
-		D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		D500D735287F59D200ED1FBA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D506109128061EBF00BC51AC /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D506109328061EBF00BC51AC /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		D506109428061EBF00BC51AC /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
@@ -189,7 +188,6 @@
 		D5CC1EEC282D980E00137A94 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
 		D5CC1EEE282D982500137A94 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		D5CC1EF3282DA8D500137A94 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		D5D9C0872886EF940026830F /* FavoritePostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		D5D9C089288721810026830F /* FavoritePostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePostTableViewCell.swift; sourceTree = "<group>"; };
 		D5DF549828577F6800FECC98 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D5E922292816A81F00748286 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -241,19 +239,17 @@
 			children = (
 				D500D738287F5CFA00ED1FBA /* Coordinator */,
 				D500D739287F5D0400ED1FBA /* View */,
-				D500D737287F5CF400ED1FBA /* ViewModel */,
 			);
 			path = Favorite;
 			sourceTree = "<group>";
 		};
-		D500D737287F5CF400ED1FBA /* ViewModel */ = {
+		D500D737287F5CF400ED1FBA /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				D500D735287F59D200ED1FBA /* FavoriteViewModel.swift */,
-				D5D9C0872886EF940026830F /* FavoritePostTableViewCellViewModel.swift */,
+				D500D735287F59D200ED1FBA /* CoreDataManager.swift */,
 				D541A1B82886DFF9005D2DAF /* FavoritePostModel.xcdatamodeld */,
 			);
-			path = ViewModel;
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		D500D738287F5CFA00ED1FBA /* Coordinator */ = {
@@ -610,6 +606,7 @@
 		D5ED095E27B5A423007F70C6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				D500D737287F5CF400ED1FBA /* CoreData */,
 				D54536FD287AE0ED00B5A64D /* UserValidation */,
 				D5E9222B2816A84200748286 /* AppState */,
 				D5CC1EE6282D950B00137A94 /* MainCoordinator */,
@@ -833,7 +830,7 @@
 				D541A0DE285B60B000ADFEB3 /* AppConfiguration.swift in Sources */,
 				D5A7F0B527C245FA00962E7D /* LogInViewController.swift in Sources */,
 				D5A0745F28159082003BF856 /* UserValidation.swift in Sources */,
-				D500D736287F59D200ED1FBA /* FavoriteViewModel.swift in Sources */,
+				D500D736287F59D200ED1FBA /* CoreDataManager.swift in Sources */,
 				D5A529F02854ABFD00A0DB32 /* VideoViewController.swift in Sources */,
 				D5A52A092854C6E900A0DB32 /* VideoCoordinator.swift in Sources */,
 				D54536FA287AE0A800B5A64D /* LoginFactory.swift in Sources */,
@@ -848,7 +845,6 @@
 				D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */,
 				D5D9C08A288721810026830F /* FavoritePostTableViewCell.swift in Sources */,
 				D500D731287F594F00ED1FBA /* FavoriteViewController.swift in Sources */,
-				D5D9C0882886EF940026830F /* FavoritePostTableViewCellViewModel.swift in Sources */,
 				D53256FB285534110047582E /* VideoTableViewCell.swift in Sources */,
 				D5A529F62854AC9500A0DB32 /* MusicCoordinator.swift in Sources */,
 				D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */,

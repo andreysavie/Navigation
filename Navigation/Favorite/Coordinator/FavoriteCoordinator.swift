@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoriteCoordinator {
     func showDetail(coordinator: FavoriteCoordinator) -> UIViewController {
-        let viewModel = FavoriteViewModel()
+        let viewModel = CoreDataManager()
         let viewController = FavoriteViewController(model: viewModel, coordinator: coordinator)
         viewController.view.backgroundColor = .secondarySystemGroupedBackground
         viewController.title = "Favorite posts"

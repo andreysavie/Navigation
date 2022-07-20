@@ -14,18 +14,15 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    
-    
+
     let inspector = MyLoginFactory.shared.returnLoginInspector()
     	
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FavoriteViewModel.shared.retrieveValues()
+//        FavoriteViewModel.shared.removeFromCoreData()
 
-        
 //         MARK: - HW IOSDT 1.3
         FirebaseApp.configure()
                 
@@ -49,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // MARK: - Core Data persistent container
+
     lazy var persistentContainer: NSPersistentContainer = {
         
             let container = NSPersistentContainer(name: "FavoritePostModel")

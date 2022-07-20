@@ -10,7 +10,7 @@ import SnapKit
 
 class FavoriteViewController: UIViewController {
     
-    private var viewModel: FavoriteViewModel?
+    private var viewModel: CoreDataManager?
     private weak var coordinator: FavoriteCoordinator?
     private var post: FavoritePostEntity?
     
@@ -23,7 +23,7 @@ class FavoriteViewController: UIViewController {
     }()
     
     
-    init (model: FavoriteViewModel, coordinator: FavoriteCoordinator) {
+    init (model: CoreDataManager, coordinator: FavoriteCoordinator) {
         self.viewModel = model
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -52,8 +52,8 @@ class FavoriteViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        FavoriteViewModel.shared.retrieveValues()
+    override func viewWillAppear(_ animated: Bool) {
+        CoreDataManager.shared.retrieveFromCoreData()
         favoriteTableView.reloadData()
     }
 }
@@ -61,8 +61,7 @@ class FavoriteViewController: UIViewController {
 extension FavoriteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print ("🦁\(FavoriteViewModel.shared.favoritePosts.count)")
-        return FavoriteViewModel.shared.favoritePosts.count
+        return CoreDataManager.shared.favoritePosts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,14 +69,9 @@ extension FavoriteViewController: UITableViewDataSource {
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell
         else { return UITableViewCell() }
-        let post = FavoriteViewModel.shared.favoritePosts[indexPath.row]
+        let post = CoreDataManager.shared.favoritePosts[indexPath.row]
         cell.configureOfCell(post)
         return cell
-        
-        //            guard let cell = cell, let viewModel = viewModel else { return UITableViewCell() }
-        //            let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
-        //            cell.favoriteViewModel = cellViewModel
-        //            return cell
     }
 }
 
