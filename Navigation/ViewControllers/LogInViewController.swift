@@ -7,8 +7,6 @@
 
 import UIKit
 import SnapKit
-import FirebaseAuth
-//import RealmSwift
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -96,15 +94,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         loginTextField.delegate = self
         passwordTextField.delegate = self
-        
-//        do { try Auth.auth().signOut() } catch { print (error.localizedDescription) }
-
-                
-        Auth.auth().addStateDidChangeListener { auth, user in
-            if user != nil {
-                self.pushProfileViewController()
-            }
-        }
                         
         enterButton.tapAction = { [weak self] in
             guard let self = self else { return }
@@ -120,11 +109,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             guard let self = self else { return }
                 self.enterButtonEnabled()
             }
-        
-        UserValidation.shared.completion = { [weak self] message in
-            guard let self = self else { return }
-            self.present(self.showAlertController(message) , animated: true, completion: nil)
-        }
         
         setupLayout()
         hideKeyboardWhenTappedAround()
@@ -168,23 +152,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: METHODS
         
-    private func enterButtonPressed() {
-        
-        guard let login = loginTextField.text, let password = passwordTextField.text else { return }
-    
-        toAuthentication(login, password)
+    private func enterButtonPressed() { // Закоротил авторицацию
+        pushProfileViewController()
     }
     
     private func toAuthentication (_ login: String, _ password: String) {
-        guard let delegate = self.delegate else { return }
-
-        DispatchQueue.main.async {
-            delegate.signing(
-                signType: self.isUserExists! ? .signIn : .signUp,
-                log: login,
-                pass: password
-            )
-        }
     }
 
 

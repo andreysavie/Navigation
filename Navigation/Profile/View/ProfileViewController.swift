@@ -8,7 +8,6 @@
 import UIKit
 import StorageService
 import SnapKit
-import FirebaseAuth
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -34,7 +33,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         return tableView
     }()
     
-    // MARK: - HW IOSDT 1.3
     private lazy var signOutBarButtonItem: UIBarButtonItem = {
         let button = UIBarButtonItem(
             title: "Sign out",
@@ -53,7 +51,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         let acceptAction = UIAlertAction(title: "OK", style: .default) { _ in
             do {
-                try Auth.auth().signOut()
+//                try Auth.auth().signOut()
                 self.pushLoginViewController()
                 UserDefaults.standard.setValue(true, forKey: "isManuallySignOut")
 
@@ -71,7 +69,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
 
 
     
-    //MARK: INITS ======================================================================================================
+    //MARK: INITS
 
     init (
         userService: UserService,
@@ -128,9 +126,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    // MARK: METHODS =================================================================================================
+    // MARK: METHODS
 
-    // MARK: - HW IOSDT 1.3
     private func pushLoginViewController() {
         let coordinator = LoginCoordinator()
         let loginViewController = coordinator.showDetail(coordinator: coordinator)
@@ -138,15 +135,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         navigationController?.setViewControllers([loginViewController], animated: true)
     }
     
-    // MARK: OBJC METHODS =================================================================================================
+    // MARK: OBJC METHODS
     
-    // MARK: - HW IOSDT 1.3
     @objc
     private func signOutButtonPressed() {
         present(alertController, animated: true)
     }
-
-    // MARK: - HW IOSDT 2.4
 
     @objc
     private func doubleTap() {
@@ -169,7 +163,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-// MARK: EXTENSIONS  =======================================================================================
+// MARK: EXTENSIONS
 
 extension ProfileViewController: UITableViewDataSource {
     
@@ -203,7 +197,6 @@ extension ProfileViewController: UITableViewDataSource {
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
             recognizer.numberOfTapsRequired = 2
 
-            // MARK: - HW IOSDT 2.4
             guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
             let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
             tableViewCell.viewModel = cellViewModel

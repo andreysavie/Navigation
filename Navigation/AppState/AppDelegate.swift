@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import FirebaseCoreInternal
-import FirebaseCore
-import FirebaseAuth
 import CoreData
 
 
@@ -21,10 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        FavoriteViewModel.shared.removeFromCoreData()
-
-//         MARK: - HW IOSDT 1.3
-        FirebaseApp.configure()
+//         CoreDataManager.shared.removeFromCoreData()
                 
         window = UIWindow(frame: UIScreen.main.bounds)
         
