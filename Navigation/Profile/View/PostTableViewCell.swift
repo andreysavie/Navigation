@@ -60,7 +60,7 @@ class PostTableViewCell: UITableViewCell {
             guard let viewModel = viewModel else { return }
             postTitle.text = viewModel.title
             postDescription.text = viewModel.description
-            postImage.image = UIImage(named: viewModel.image)
+            postImage.image = viewModel.image
             postLikesCounter.text = "Likes: \(viewModel.likes)"
             postViewsCounter.text = "Views: \(viewModel.views)"
         }

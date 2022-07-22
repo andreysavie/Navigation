@@ -144,21 +144,24 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
 
     @objc
     private func doubleTap() {
-        guard let post = viewModel?.posts[self.cellIndexPathRow] else { return }
+                guard let post = viewModel?.posts[self.cellIndexPathRow] else { return }
         
-        var isContains = false
-        
-        for favPost in CoreDataManager.shared.favoritePosts {
-            if favPost.id == post.personalID {
-                isContains = true
-            }
-        }
-        
-        if !isContains {
-            CoreDataManager.shared.saveToCoreData(post: post)
-        } else {
-            print ("Element is already exists!")
-        }
+        CoreDataManager.shared.updateFavourite(post: post)
+//        guard let post = viewModel?.posts[self.cellIndexPathRow] else { return }
+//
+//        var isContains = false
+//
+//        for favPost in CoreDataManager.shared.favoritePosts {
+//            if favPost.id == post.personalID {
+//                isContains = true
+//            }
+//        }
+//
+//        if !isContains {
+//            CoreDataManager.shared.saveToCoreData(post: post)
+//        } else {
+//            print ("Element is already exists!")
+//        }
         
     }
 }

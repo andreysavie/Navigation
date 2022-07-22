@@ -76,13 +76,22 @@ class FavoritePostTableViewCell: UITableViewCell {
     
     // MARK: METHODS
         
-    public func configureOfCell (_ post: FavoritePostEntity) {
-        self.postTitle.text = post.title ?? ""
-        self.postImage.image = UIImage(data: post.image!) ?? UIImage()
-        self.postDescription.text = post.text ?? ""
-        self.postLikesCounter.text = "Likes: \(Int(post.likes))"
-        self.postViewsCounter.text = "Views: \(Int(post.views))"
+//    public func configureOfCell (_ post: FavoritePostEntity) {
+//        self.postTitle.text = post.title ?? ""
+//        self.postImage.image = UIImage(data: post.image!) ?? UIImage()
+//        self.postDescription.text = post.text ?? ""
+//        self.postLikesCounter.text = "Likes: \(Int(post.likes))"
+//        self.postViewsCounter.text = "Views: \(Int(post.views))"
+//    }
+    
+    public func configureOfCell (_ post: Post) {
+        self.postTitle.text = post.title
+        self.postImage.image = post.image
+        self.postDescription.text = post.description
+        self.postLikesCounter.text = "Likes: \(post.likes)"
+        self.postViewsCounter.text = "Views: \(post.views)"
     }
+
     
     private func setupPostLayout(){
         

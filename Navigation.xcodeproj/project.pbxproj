@@ -401,9 +401,9 @@
 		D5A392D7282FD6840073E034 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D5CC1EF3282DA8D500137A94 /* ProfileViewModel.swift */,
 				D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */,
 				D5A392E1283116460073E034 /* PhotosCollectionViewCellViewModel.swift */,
-				D5CC1EF3282DA8D500137A94 /* ProfileViewModel.swift */,
 				D5A392DB28310D210073E034 /* PhotosVIewModel.swift */,
 			);
 			path = ViewModel;

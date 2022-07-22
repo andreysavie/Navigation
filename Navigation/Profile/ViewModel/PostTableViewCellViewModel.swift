@@ -21,7 +21,7 @@ class PostTableViewCellViewModel {
             return post.description
         }
     
-        var image: String {
+        var image: UIImage {
             return post.image
         }
     

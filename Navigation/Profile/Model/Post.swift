@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 struct Post {
     
     var title: String
     var description: String
-    var image: String
+    var image: UIImage
     var likes: Int
     var views: Int
     var personalID: String

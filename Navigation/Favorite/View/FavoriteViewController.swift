@@ -10,9 +10,10 @@ import SnapKit
 
 class FavoriteViewController: UIViewController {
     
-    private var viewModel: CoreDataManager?
     private weak var coordinator: FavoriteCoordinator?
     private var post: FavoritePostEntity?
+    private var favoritePosts = [Post]()
+    
     
     private lazy var favoriteTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -23,8 +24,7 @@ class FavoriteViewController: UIViewController {
     }()
     
     
-    init (model: CoreDataManager, coordinator: FavoriteCoordinator) {
-        self.viewModel = model
+    init (coordinator: FavoriteCoordinator) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,7 +36,7 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         self.view.addSubview(favoriteTableView)
         favoriteTableView.snp.makeConstraints { make in
             make.leading.top.trailing.bottom.equalTo(self.view)
@@ -53,32 +53,35 @@ class FavoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        CoreDataManager.shared.retrieveFromCoreData()
+        self.favoritePosts = CoreDataManager.shared.fetchFavourites()
         favoriteTableView.reloadData()
     }
+    
 }
-
-extension FavoriteViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CoreDataManager.shared.favoritePosts.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    extension FavoriteViewController: UITableViewDataSource {
         
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell
-        else { return UITableViewCell() }
-        let post = CoreDataManager.shared.favoritePosts[indexPath.row]
-        cell.configureOfCell(post)
-        return cell
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//            return CoreDataManager.shared.favoritePosts.count
+                    return favoritePosts.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell        else { return UITableViewCell() }
+//            let post = CoreDataManager.shared.favoritePosts[indexPath.row]
+            let post = favoritePosts[indexPath.row]
+            cell.configureOfCell(post)
+            return cell
+        }
     }
-}
-
-extension FavoriteViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    extension FavoriteViewController: UITableViewDelegate {
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
-}
-
+    
