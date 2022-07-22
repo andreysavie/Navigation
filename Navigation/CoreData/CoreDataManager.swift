@@ -13,6 +13,7 @@ final class CoreDataManager {
     static let shared = CoreDataManager()
     
     private let persistentContainer: NSPersistentContainer
+    
     private lazy var context = persistentContainer.viewContext
 
     private init() {
@@ -33,7 +34,6 @@ final class CoreDataManager {
         do {
             favoritePosts = try context.fetch(fetchRequest)
             for favorite in favoritePosts {
-                // convert to the Post format from the DataModel
                 
                 let image = UIImage(data: favorite.image ?? Data()) ?? UIImage()
                 
@@ -59,7 +59,6 @@ final class CoreDataManager {
             print("The post is already in the favourites list")
             return
         } else {
-            // create new one
             let newFavourite = FavoritePostEntity(context: context)
             newFavourite.title = post.title
             newFavourite.text = post.description
