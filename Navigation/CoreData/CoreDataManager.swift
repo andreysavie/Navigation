@@ -15,6 +15,13 @@ final class CoreDataManager {
     private let persistentContainer: NSPersistentContainer
     
     private lazy var context = persistentContainer.viewContext
+    
+    private lazy var saveContext: NSManagedObjectContext = {
+        let saveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        saveContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+        saveContext.mergePolicy = NSOverwriteMergePolicy
+        return saveContext
+    }()
 
     private init() {
         let container = NSPersistentContainer(name: "FavoritePostModel")
@@ -24,13 +31,20 @@ final class CoreDataManager {
             }
         }
         self.persistentContainer = container
+        self.saveContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+
     }
+        
+    private let mainQueue = DispatchQueue.main
     
     
     func fetchFavourites() -> [Post] {
         let fetchRequest = FavoritePostEntity.fetchRequest()
         var fetchedPosts = [Post]()
         var favoritePosts = [FavoritePostEntity]()
+        
+      
+        
         do {
             favoritePosts = try context.fetch(fetchRequest)
             for favorite in favoritePosts {
@@ -53,31 +67,47 @@ final class CoreDataManager {
     }
     
     
+    func printThread() {
+        if Thread.isMainThread {
+            print ("✅ on main thread")
+        } else {
+            print ("⛔️ off main thread")
+        }
+    }
+    
     func updateFavourite (post: Post) {
         let favoritePosts = fetchFavourites()
         if favoritePosts.contains(where: { $0.personalID == post.personalID }) {
             print("The post is already in the favourites list")
             return
         } else {
-            let newFavourite = FavoritePostEntity(context: context)
-            newFavourite.title = post.title
-            newFavourite.text = post.description
-            newFavourite.likes = Int64(post.likes)
-            newFavourite.views = Int64(post.views)
-            newFavourite.image =  post.image.pngData()
-            newFavourite.id = post.personalID
             
-            do {
-                try self.context.save()
-                print("Saved: \(post.title)")
-            } catch let error {
-                print(error)
+            saveContext.perform {
+                let newFavourite = FavoritePostEntity(context: self.saveContext)
+                newFavourite.title = post.title
+                newFavourite.text = post.description
+                newFavourite.likes = Int64(post.likes)
+                newFavourite.views = Int64(post.views)
+                newFavourite.image =  post.image.pngData()
+                newFavourite.id = post.personalID
+                
+                self.printThread() /// Чтобы понимать, на каком потоке находится функция в момент сохоранения
+                
+                do {
+                    try self.saveContext.save()
+                    print("Saved: \(post.title)")
+                } catch let error {
+                    print(error.localizedDescription)
+                }
             }
         }
+        
+        self.printThread() /// Проверка, данная функция должна вызваться раньше, чем произойдёт сохранение ✅
+
     }
     
     
-    //MARK: Метрод удаления всех данных из CoreData
+    //MARK: Метод удаления всех данных из CoreData
     
     public func removeFromCoreData() {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {

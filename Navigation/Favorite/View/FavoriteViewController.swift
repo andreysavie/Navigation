@@ -83,5 +83,17 @@ class FavoriteViewController: UIViewController {
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
         }
+        
+        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let delete = UIContextualAction(style: .destructive, title: "DELETE") { (action, view, completionHandler) in
+                print ("cell of delete: \(indexPath.row)")
+                completionHandler(true)
+            }
+            
+            let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
+            swipeActionsConfig.performsFirstActionWithFullSwipe = false
+            
+            return swipeActionsConfig
+        }
     }
     
