@@ -53,47 +53,62 @@ class FavoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        reloadCoreDataFilesByFetch()
+    }
+    
+    func reloadCoreDataFilesByFetch() {
         self.favoritePosts = CoreDataManager.shared.fetchFavourites()
         favoriteTableView.reloadData()
     }
-    
 }
+
+extension FavoriteViewController: UITableViewDataSource {
     
-    
-    extension FavoriteViewController: UITableViewDataSource {
-        
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//            return CoreDataManager.shared.favoritePosts.count
-                    return favoritePosts.count
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
-            guard
-                let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell        else { return UITableViewCell() }
-//            let post = CoreDataManager.shared.favoritePosts[indexPath.row]
-            let post = favoritePosts[indexPath.row]
-            cell.configureOfCell(post)
-            return cell
-        }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return favoritePosts.count
     }
     
-    extension FavoriteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell        else { return UITableViewCell() }
+        let post = favoritePosts[indexPath.row]
+        cell.configureOfCell(post)
+        return cell
+    }
+}
+
+extension FavoriteViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let delete = UIContextualAction(style: .destructive, title: "DELETE") { (action, view, completionHandler) in
-                print ("cell of delete: \(indexPath.row)")
-                completionHandler(true)
+        let post = favoritePosts[indexPath.row]
+
+        let delete = UIContextualAction(style: .destructive, title: "DELETE") { (action, view, completionHandler) in
+
+            CoreDataManager.shared.deleteFavourite(post: post)
+            
+            self.favoritePosts.removeAll { element in
+                element.personalID == post.personalID
             }
             
-            let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
-            swipeActionsConfig.performsFirstActionWithFullSwipe = false
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
-            return swipeActionsConfig
+//            self.reloadCoreDataFilesByFetch()
+            
+            self.favoritePosts.forEach({ print("♻️\($0.title)") }) // CHECKING!
+
+            completionHandler(true)
         }
+        
+        let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
+        swipeActionsConfig.performsFirstActionWithFullSwipe = false
+        
+        return swipeActionsConfig
     }
-    
+}
+

@@ -18,10 +18,32 @@ final class CoreDataManager {
     
     private lazy var saveContext: NSManagedObjectContext = {
         let saveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-//        saveContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+        saveContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
         saveContext.mergePolicy = NSOverwriteMergePolicy
         return saveContext
     }()
+    
+//    lazy var saveContext: NSManagedObjectContext = {
+//        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+////        masterContext.parent = self.mainContext
+//        masterContext.mergePolicy = NSOverwriteMergePolicy
+//        return masterContext
+//    }()
+    
+    private lazy var mainContext: NSManagedObjectContext = {
+        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        mainContext.parent = self.masterContext
+        mainContext.mergePolicy = NSOverwriteMergePolicy
+        return mainContext
+    }()
+    
+     lazy var masterContext: NSManagedObjectContext = {
+        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        masterContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+        masterContext.mergePolicy = NSOverwriteMergePolicy
+        return masterContext
+    }()
+    
 
     private init() {
         let container = NSPersistentContainer(name: "FavoritePostModel")
@@ -31,7 +53,6 @@ final class CoreDataManager {
             }
         }
         self.persistentContainer = container
-        self.saveContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
 
     }
         
@@ -42,8 +63,6 @@ final class CoreDataManager {
         let fetchRequest = FavoritePostEntity.fetchRequest()
         var fetchedPosts = [Post]()
         var favoritePosts = [FavoritePostEntity]()
-        
-      
         
         do {
             favoritePosts = try context.fetch(fetchRequest)
@@ -75,7 +94,10 @@ final class CoreDataManager {
         }
     }
     
-    func updateFavourite (post: Post) {
+    
+    
+    func saveFavourite (post: Post) {
+
         let favoritePosts = fetchFavourites()
         if favoritePosts.contains(where: { $0.personalID == post.personalID }) {
             print("The post is already in the favourites list")
@@ -101,18 +123,59 @@ final class CoreDataManager {
                 }
             }
         }
-        
         self.printThread() /// Проверка, данная функция должна вызваться раньше, чем произойдёт сохранение ✅
+    }
+    
+    func deleteFavourite (post: Post) {
+        let fetchRequest = FavoritePostEntity.fetchRequest()
+        //        var fetchedPosts = [Post]()
+        var favoritePosts = [FavoritePostEntity]()
+        
+        do {
+            favoritePosts = try saveContext.fetch(fetchRequest)
+                    
+            saveContext.perform {
+                        for favorite in favoritePosts {
+                            if post.personalID == favorite.id {
+                                
+                                self.printThread() /// Чтобы понимать, на каком потоке находится функция в момент сохоранения
+
+                        self.saveContext.delete(favorite)
+
+                                
+                        do {
+                            try self.saveContext.save()
+                            print("Deleted: \(post.title)")
+                        } catch let error {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        self.printThread() /// Чтобы понимать, на каком потоке находится функция в момент сохоранения
 
     }
+    
+    //                    context.delete(favorite)
+    //                    do {
+    //                        try self.saveContext.save()
+    //                        print("Deleted: \(post.title)")
+    //                    } catch let error {
+    //                        print(error.localizedDescription)
+    //                    }
+    //                }
     
     
     //MARK: Метод удаления всех данных из CoreData
     
     public func removeFromCoreData() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
-            let context = appDelegate.persistentContainer.viewContext
+//            let context = appDelegate.persistentContainer.viewContext
             let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavoritePostEntity")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
@@ -121,6 +184,6 @@ final class CoreDataManager {
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-        }
+//        }
     }
 }

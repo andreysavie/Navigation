@@ -145,7 +145,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     @objc
     private func doubleTap() {
         guard let post = viewModel?.posts[self.cellIndexPathRow] else { return }
-        CoreDataManager.shared.updateFavourite(post: post)
+        CoreDataManager.shared.saveFavourite(post: post)
+
         
     }
 }
