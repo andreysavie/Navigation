@@ -28,6 +28,14 @@ class FavoriteViewController: UIViewController {
         backImage: (UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))?.withTintColor(.black, renderingMode: .alwaysOriginal))!
     )
     
+    private lazy var filterPredicateLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        return label
+    }()
+    
     
     private lazy var favoriteTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -36,7 +44,6 @@ class FavoriteViewController: UIViewController {
         tableView.backgroundColor = .systemGray6
         return tableView
     }()
-    
     
     init (coordinator: FavoriteCoordinator) {
         self.coordinator = coordinator
@@ -50,11 +57,8 @@ class FavoriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.addSubview(favoriteTableView)
-        favoriteTableView.snp.makeConstraints { make in
-            make.leading.top.trailing.bottom.equalTo(self.view)
-        }
+                
+        setupLayout()
         
         favoriteTableView.register(
             FavoritePostTableViewCell.self,
@@ -66,17 +70,22 @@ class FavoriteViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: setFilterButton)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: deleteFilterButton)
-
+        
         setFilterButton.tapAction = { [weak self] in
-            print ("SET FILTER!")
-//            guard let self = self else { return }
-//            self.showInfoButtonPressed()
+            guard let self = self else { return }
+            self.filterFavouritePosts()
         }
         
         deleteFilterButton.tapAction = { [weak self] in
-//            guard let self = self else { return }
-//            self.showInfoButtonPressed()
+            guard let self = self else { return }
+            self.reloadCoreDataFilesByFetch()
+            self.filterPredicateLabel.text = nil
+            self.deleteFilterButton.layer.opacity = 0
+            self.deleteFilterButton.isEnabled = false
         }
+        
+        deleteFilterButton.layer.opacity = 0
+        self.deleteFilterButton.isEnabled = false
         
     }
     
@@ -84,9 +93,50 @@ class FavoriteViewController: UIViewController {
         reloadCoreDataFilesByFetch()
     }
     
+    func setupLayout() {
+        
+        self.view.addSubviews(filterPredicateLabel, favoriteTableView)
+
+        filterPredicateLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self.view)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        favoriteTableView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self.view)
+            make.top.equalTo(filterPredicateLabel.snp.bottom)
+        }
+    }
+    
+    
     func reloadCoreDataFilesByFetch() {
         self.favoritePosts = CoreDataManager.shared.fetchFavourites()
         favoriteTableView.reloadData()
+    }
+    
+    func filterFavouritePosts() {
+        let alertController = UIAlertController(
+            title: "Filter the favorite posts",
+            message: "enter the author's name",
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "Filter", style: .default) { action in
+            let textField = alertController.textFields?[0]
+            
+            guard let text = textField?.text, text != "" else { return }
+            self.favoritePosts = CoreDataManager.shared.fetchFiltredFavourites(text)
+            self.filterPredicateLabel.text = "Filtred by: \(text)"
+            self.favoriteTableView.reloadData()
+            self.deleteFilterButton.layer.opacity = 1
+            self.deleteFilterButton.isEnabled = true
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        
+        alertController.addTextField { textField in }
+        alertController.addAction(action)
+        alertController.addAction(cancel)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -99,7 +149,9 @@ extension FavoriteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell        else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePostTableViewCell.identifire, for: indexPath) as? FavoritePostTableViewCell
+        else { return UITableViewCell() }
+        
         let post = favoritePosts[indexPath.row]
         cell.configureOfCell(post)
         return cell
@@ -115,9 +167,7 @@ extension FavoriteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let post = favoritePosts[indexPath.row]
-
-        let delete = UIContextualAction(style: .destructive, title: "DELETE") { (action, view, completionHandler) in
-
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             CoreDataManager.shared.deleteFavourite(post: post)
             
             self.favoritePosts.removeAll { element in
@@ -125,14 +175,9 @@ extension FavoriteViewController: UITableViewDelegate {
             }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
-//            self.reloadCoreDataFilesByFetch()
-            
-            self.favoritePosts.forEach({ print("♻️\($0.title)") }) // CHECKING!
-
             completionHandler(true)
         }
-        
+                
         let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
         swipeActionsConfig.performsFirstActionWithFullSwipe = false
         

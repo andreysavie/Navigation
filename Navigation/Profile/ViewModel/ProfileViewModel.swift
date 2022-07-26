@@ -13,7 +13,7 @@ final class ProfileViewModel {
     public var posts = [
         
         Post(
-            author: "Jorge Mickael",
+            author: "George Mickael",
             title: "В работе Telegram произошёл сбой",
             description: "По состоянию на 17.57 мск было зафиксировано 233 жалобы: 54% пользователей жалуется на проблемы с подключением к серверу, 24% - на неполадки в работе приложения, еще 21% - на проблемы с отправкой сообщений.",
             image: UIImage(named: "post_1")!,

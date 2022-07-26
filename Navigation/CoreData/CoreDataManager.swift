@@ -13,7 +13,8 @@ final class CoreDataManager {
     static let shared = CoreDataManager()
     
     private let persistentContainer: NSPersistentContainer
-    
+    private let fetchRequest: NSFetchRequest<FavoritePostEntity>
+
     private lazy var context = persistentContainer.viewContext
     
     private lazy var saveContext: NSManagedObjectContext = {
@@ -30,19 +31,19 @@ final class CoreDataManager {
 //        return masterContext
 //    }()
     
-    private lazy var mainContext: NSManagedObjectContext = {
-        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        mainContext.parent = self.masterContext
-        mainContext.mergePolicy = NSOverwriteMergePolicy
-        return mainContext
-    }()
-    
-     lazy var masterContext: NSManagedObjectContext = {
-        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        masterContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
-        masterContext.mergePolicy = NSOverwriteMergePolicy
-        return masterContext
-    }()
+//    private lazy var mainContext: NSManagedObjectContext = {
+//        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+//        mainContext.parent = self.masterContext
+//        mainContext.mergePolicy = NSOverwriteMergePolicy
+//        return mainContext
+//    }()
+//
+//     lazy var masterContext: NSManagedObjectContext = {
+//        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        masterContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+//        masterContext.mergePolicy = NSOverwriteMergePolicy
+//        return masterContext
+//    }()
     
 
     private init() {
@@ -53,14 +54,12 @@ final class CoreDataManager {
             }
         }
         self.persistentContainer = container
+        self.fetchRequest = FavoritePostEntity.fetchRequest()
 
     }
-        
-    private let mainQueue = DispatchQueue.main
-    
     
     func fetchFavourites() -> [Post] {
-        let fetchRequest = FavoritePostEntity.fetchRequest()
+//        let fetchRequest = FavoritePostEntity.fetchRequest()
         var fetchedPosts = [Post]()
         var favoritePosts = [FavoritePostEntity]()
         
@@ -83,19 +82,15 @@ final class CoreDataManager {
         } catch let error {
             print(error)
         }
+        fetchRequest.predicate = nil
         return fetchedPosts
     }
     
-    
-    func printThread() {
-        if Thread.isMainThread {
-            print ("✅ on main thread")
-        } else {
-            print ("⛔️ off main thread")
-        }
+    func fetchFiltredFavourites(_ author: String) -> [Post] {
+            let predicate = NSPredicate(format: "author = %@", author)
+        fetchRequest.predicate = predicate
+        return fetchFavourites()
     }
-    
-    
     
     func saveFavourite (post: Post) {
 
@@ -130,7 +125,6 @@ final class CoreDataManager {
     
     func deleteFavourite (post: Post) {
         let fetchRequest = FavoritePostEntity.fetchRequest()
-        //        var fetchedPosts = [Post]()
         var favoritePosts = [FavoritePostEntity]()
         
         do {
@@ -163,12 +157,9 @@ final class CoreDataManager {
     }
     
     
-    //MARK: Метод удаления всех данных из CoreData
+    //MARK: CoreData: Remove all data
     
     public func removeFromCoreData() {
-//        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            
-//            let context = appDelegate.persistentContainer.viewContext
             let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "FavoritePostEntity")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
@@ -177,6 +168,17 @@ final class CoreDataManager {
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-//        }
+    }
+}
+// MARK: SUBMETHODS
+
+extension CoreDataManager {
+    
+    func printThread() {
+        if Thread.isMainThread {
+            print ("✅ on main thread")
+        } else {
+            print ("⛔️ off main thread")
+        }
     }
 }
