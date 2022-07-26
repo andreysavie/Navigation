@@ -14,6 +14,20 @@ class FavoriteViewController: UIViewController {
     private var post: FavoritePostEntity?
     private var favoritePosts = [Post]()
     
+    private lazy var setFilterButton = CustomButton(
+        title: "",
+        titleColor: .white,
+        backColor: .clear,
+        backImage: (UIImage(systemName: "line.3.horizontal.decrease.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))?.withTintColor(.black, renderingMode: .alwaysOriginal))!
+    )
+    
+    private lazy var deleteFilterButton = CustomButton(
+        title: "",
+        titleColor: .white,
+        backColor: .clear,
+        backImage: (UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24))?.withTintColor(.black, renderingMode: .alwaysOriginal))!
+    )
+    
     
     private lazy var favoriteTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -49,6 +63,20 @@ class FavoriteViewController: UIViewController {
         
         favoriteTableView.dataSource = self
         favoriteTableView.delegate = self
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: setFilterButton)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: deleteFilterButton)
+
+        setFilterButton.tapAction = { [weak self] in
+            print ("SET FILTER!")
+//            guard let self = self else { return }
+//            self.showInfoButtonPressed()
+        }
+        
+        deleteFilterButton.tapAction = { [weak self] in
+//            guard let self = self else { return }
+//            self.showInfoButtonPressed()
+        }
         
     }
     

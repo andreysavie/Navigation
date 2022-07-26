@@ -160,15 +160,6 @@ final class CoreDataManager {
 
     }
     
-    //                    context.delete(favorite)
-    //                    do {
-    //                        try self.saveContext.save()
-    //                        print("Deleted: \(post.title)")
-    //                    } catch let error {
-    //                        print(error.localizedDescription)
-    //                    }
-    //                }
-    
     
     //MARK: Метод удаления всех данных из CoreData
     
