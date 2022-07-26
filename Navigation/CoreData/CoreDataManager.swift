@@ -71,6 +71,7 @@ final class CoreDataManager {
                 let image = UIImage(data: favorite.image ?? Data()) ?? UIImage()
                 
                 let post = Post(
+                    author: favorite.author ?? "",
                     title: favorite.title ?? "",
                     description: favorite.text ?? "",
                     image: image,
@@ -107,6 +108,7 @@ final class CoreDataManager {
             saveContext.perform {
                 let newFavourite = FavoritePostEntity(context: self.saveContext)
                 newFavourite.title = post.title
+                newFavourite.author = post.author
                 newFavourite.text = post.description
                 newFavourite.likes = Int64(post.likes)
                 newFavourite.views = Int64(post.views)
@@ -117,7 +119,7 @@ final class CoreDataManager {
                 
                 do {
                     try self.saveContext.save()
-                    print("Saved: \(post.title)")
+                    print("💾 Saved: \(post.title)\nAuthor: \(post.author)")
                 } catch let error {
                     print(error.localizedDescription)
                 }

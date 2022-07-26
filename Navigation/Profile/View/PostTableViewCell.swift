@@ -23,8 +23,15 @@ class PostTableViewCell: UITableViewCell {
         return postTitle
     }()
     
+    private lazy var postAuthor: UILabel = {
+        let postAuthor = UILabel()
+        postAuthor.numberOfLines = 2
+        postAuthor.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        postAuthor.textColor = .gray
+        return postAuthor
+    }()
+    
     private lazy var postImage: UIImageView = {
-        
         let postImage = UIImageView()
         postImage.backgroundColor = .black
         postImage.contentMode = .scaleAspectFit
@@ -58,6 +65,7 @@ class PostTableViewCell: UITableViewCell {
     weak var viewModel: PostTableViewCellViewModel? {
         willSet(viewModel) {
             guard let viewModel = viewModel else { return }
+            postAuthor.text = viewModel.author
             postTitle.text = viewModel.title
             postDescription.text = viewModel.description
             postImage.image = viewModel.image
@@ -73,6 +81,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubviews(
             postTitle,
+            postAuthor,
             postImage,
             postDescription,
             postLikesCounter,
@@ -93,9 +102,15 @@ class PostTableViewCell: UITableViewCell {
             make.leading.top.trailing.equalTo(contentView).inset(Constants.margin)
         }
         
+        postAuthor.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(contentView).inset(Constants.margin)
+            make.top.equalTo(postTitle.snp.bottom).offset(Constants.margin / 2)
+
+        }
+        
         postImage.snp.makeConstraints { make in
             make.width.height.equalTo(contentView.snp.width)
-            make.top.equalTo(postTitle.snp.bottom).offset(Constants.margin)
+            make.top.equalTo(postAuthor.snp.bottom).offset(Constants.margin / 2)
         }
         
         postDescription.snp.makeConstraints { make in

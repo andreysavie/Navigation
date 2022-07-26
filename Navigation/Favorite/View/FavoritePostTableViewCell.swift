@@ -24,6 +24,14 @@ class FavoritePostTableViewCell: UITableViewCell {
         return postTitle
     }()
     
+    private lazy var postAuthor: UILabel = {
+        let postAuthor = UILabel()
+        postAuthor.numberOfLines = 2
+        postAuthor.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        postAuthor.textColor = .gray
+        return postAuthor
+    }()
+    
     private lazy var postImage: UIImageView = {
         
         let postImage = UIImageView()
@@ -62,6 +70,7 @@ class FavoritePostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubviews(
             postTitle,
+            postAuthor,
             postImage,
             postDescription,
             postLikesCounter,
@@ -86,6 +95,7 @@ class FavoritePostTableViewCell: UITableViewCell {
     
     public func configureOfCell (_ post: Post) {
         self.postTitle.text = post.title
+        self.postAuthor.text = post.author
         self.postImage.image = post.image
         self.postDescription.text = post.description
         self.postLikesCounter.text = "Likes: \(post.likes)"
@@ -99,9 +109,14 @@ class FavoritePostTableViewCell: UITableViewCell {
             make.leading.top.trailing.equalTo(contentView).inset(Constants.margin)
         }
         
+        postAuthor.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(contentView).inset(Constants.margin)
+            make.top.equalTo(postTitle.snp.bottom).offset(Constants.margin / 2)
+        }
+        
         postImage.snp.makeConstraints { make in
             make.width.height.equalTo(contentView.snp.width)
-            make.top.equalTo(postTitle.snp.bottom).offset(Constants.margin)
+            make.top.equalTo(postAuthor.snp.bottom).offset(Constants.margin / 2)
         }
         
         postDescription.snp.makeConstraints { make in
