@@ -72,8 +72,13 @@ public extension NSNotification.Name {
     static let codeGreen = NSNotification.Name("codeGreen")
     static let residentsFetchingEnded = NSNotification.Name("residentsFetchingEnded")
     static let postDoubleTap = NSNotification.Name("postDoubleTap")
+}
 
-
+public extension UIViewController {
+    
+    func getIcon (_ name: String, _ size: CGFloat) -> UIImage {
+        UIImage(systemName: name, withConfiguration: UIImage.SymbolConfiguration(pointSize: size))?.withTintColor(.white, renderingMode: .alwaysOriginal) ?? UIImage()
+    }
 }
 
 

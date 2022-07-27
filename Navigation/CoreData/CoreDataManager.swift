@@ -10,6 +10,8 @@ import CoreData
 
 final class CoreDataManager {
         
+    // MARK: PROPERTIES
+
     static let shared = CoreDataManager()
     
     private let persistentContainer: NSPersistentContainer
@@ -24,27 +26,7 @@ final class CoreDataManager {
         return saveContext
     }()
     
-//    lazy var saveContext: NSManagedObjectContext = {
-//        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-////        masterContext.parent = self.mainContext
-//        masterContext.mergePolicy = NSOverwriteMergePolicy
-//        return masterContext
-//    }()
-    
-//    private lazy var mainContext: NSManagedObjectContext = {
-//        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-//        mainContext.parent = self.masterContext
-//        mainContext.mergePolicy = NSOverwriteMergePolicy
-//        return mainContext
-//    }()
-//
-//     lazy var masterContext: NSManagedObjectContext = {
-//        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-//        masterContext.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
-//        masterContext.mergePolicy = NSOverwriteMergePolicy
-//        return masterContext
-//    }()
-    
+    // MARK: INITS
 
     private init() {
         let container = NSPersistentContainer(name: "FavoritePostModel")
@@ -58,8 +40,10 @@ final class CoreDataManager {
 
     }
     
+    // MARK: METHODS
+
     func fetchFavourites() -> [Post] {
-//        let fetchRequest = FavoritePostEntity.fetchRequest()
+        
         var fetchedPosts = [Post]()
         var favoritePosts = [FavoritePostEntity]()
         
@@ -124,7 +108,6 @@ final class CoreDataManager {
     }
     
     func deleteFavourite (post: Post) {
-        let fetchRequest = FavoritePostEntity.fetchRequest()
         var favoritePosts = [FavoritePostEntity]()
         
         do {
