@@ -25,7 +25,8 @@ class MainTabBarViewController: UITabBarController {
     
     private func setControllers() {
         viewControllers = [
-            loginViewController.navigationController,
+            profileViewController.navigationController,
+//            loginViewController.navigationController,
             feedViewController.navigationController,
             musicViewController.navigationController,
             videoViewController.navigationController,
