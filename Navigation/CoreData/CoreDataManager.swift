@@ -27,29 +27,22 @@ final class CoreDataManager {
     }()
     
     var fetchedResultsController: NSFetchedResultsController<FavoritePostEntity> {
-        if _fetchedResultsController != nil {
-            return _fetchedResultsController!
-        }
         
         let fetchRequest: NSFetchRequest<FavoritePostEntity> = FavoritePostEntity.fetchRequest()
                 
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: "Master")
-//        aFetchedResultsController.delegate = FavoriteViewController.self
-        _fetchedResultsController = aFetchedResultsController
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: "Master")
         
         do {
-            try _fetchedResultsController!.performFetch()
+            try fetchedResultsController.performFetch()
+
         } catch let error{
             print(error.localizedDescription)
         }
-        return _fetchedResultsController!
-        
-        
+        return fetchedResultsController
     }
-    var _fetchedResultsController: NSFetchedResultsController<FavoritePostEntity>? = nil
     
     // MARK: INITS
 

@@ -151,9 +151,10 @@ class FavoriteViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func filterFavoritePosts (_ predicate: String) {
-        self.favoritePosts = CoreDataManager.shared.fetchFiltredFavourites(predicate)
-        self.filterPredicateLabel.text = "Filtred by: \"\(predicate)\""
+    func filterFavoritePosts (_ author: String) {
+        
+//        self.favoritePosts = CoreDataManager.shared.fetchFiltredFavourites(predicate)
+        self.filterPredicateLabel.text = "Filtred by: \"\(author)\""
         self.favoriteTableView.reloadData()
         self.deleteFilterButton.layer.opacity = 1
         self.deleteFilterButton.isEnabled = true
