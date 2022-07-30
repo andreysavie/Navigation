@@ -36,6 +36,7 @@
 		D5851F1E2863B01F00D65A51 /* InfoNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */; };
 		D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */; };
 		D5851F222864E51600D65A51 /* PlanetsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5851F212864E51600D65A51 /* PlanetsModel.swift */; };
+		D59DA3DE289544F4000009EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DA3DD289544F4000009EF /* ViewController.swift */; };
 		D5A0745F28159082003BF856 /* UserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A0745E28159082003BF856 /* UserValidation.swift */; };
 		D5A356BF27D2BBBE007316DD /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */; };
 		D5A392CF282FD2760073E034 /* PostTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */; };
@@ -150,6 +151,7 @@
 		D5851F1D2863B01F00D65A51 /* InfoNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetworkManager.swift; sourceTree = "<group>"; };
 		D5851F1F2864E50600D65A51 /* PlanetsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsNetworkManager.swift; sourceTree = "<group>"; };
 		D5851F212864E51600D65A51 /* PlanetsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsModel.swift; sourceTree = "<group>"; };
+		D59DA3DD289544F4000009EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D5A0745E28159082003BF856 /* UserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserValidation.swift; sourceTree = "<group>"; };
 		D5A356BE27D2BBBE007316DD /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D5A392CE282FD2760073E034 /* PostTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				D500D730287F594F00ED1FBA /* FavoriteViewController.swift */,
+				D59DA3DD289544F4000009EF /* ViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				D5B669652866584C00C699C1 /* ResidentsNetworkManager.swift in Sources */,
 				D5ED097827B66965007F70C6 /* NewPostViewController.swift in Sources */,
 				D5851F202864E50600D65A51 /* PlanetsNetworkManager.swift in Sources */,
+				D59DA3DE289544F4000009EF /* ViewController.swift in Sources */,
 				D541A1BA2886DFF9005D2DAF /* FavoritePostModel.xcdatamodeld in Sources */,
 				D5C0B0FE282D89DC00ABCB88 /* MainTabBarViewController.swift in Sources */,
 				D5AB1A4927D144370072E723 /* PhotosViewController.swift in Sources */,

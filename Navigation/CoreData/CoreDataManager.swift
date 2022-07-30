@@ -26,6 +26,31 @@ final class CoreDataManager {
         return saveContext
     }()
     
+    var fetchedResultsController: NSFetchedResultsController<FavoritePostEntity> {
+        if _fetchedResultsController != nil {
+            return _fetchedResultsController!
+        }
+        
+        let fetchRequest: NSFetchRequest<FavoritePostEntity> = FavoritePostEntity.fetchRequest()
+                
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: "Master")
+//        aFetchedResultsController.delegate = FavoriteViewController.self
+        _fetchedResultsController = aFetchedResultsController
+        
+        do {
+            try _fetchedResultsController!.performFetch()
+        } catch let error{
+            print(error.localizedDescription)
+        }
+        return _fetchedResultsController!
+        
+        
+    }
+    var _fetchedResultsController: NSFetchedResultsController<FavoritePostEntity>? = nil
+    
     // MARK: INITS
 
     private init() {
@@ -78,14 +103,16 @@ final class CoreDataManager {
     
     func saveFavourite (post: Post) {
 
-        let favoritePosts = fetchFavourites()
-        if favoritePosts.contains(where: { $0.personalID == post.personalID }) {
+        guard let favoritePosts = fetchedResultsController.fetchedObjects else { return }
+        
+        if favoritePosts.contains(where: { $0.id == post.personalID }) {
             print("The post is already in the favourites list")
             return
         } else {
             
-            saveContext.perform {
-                let newFavourite = FavoritePostEntity(context: self.saveContext)
+            let context = self.fetchedResultsController.managedObjectContext
+//            saveContext.perform {
+                let newFavourite = FavoritePostEntity(context: context)
                 newFavourite.title = post.title
                 newFavourite.author = post.author
                 newFavourite.text = post.description
@@ -97,12 +124,12 @@ final class CoreDataManager {
                 self.printThread() /// Чтобы понимать, на каком потоке находится функция в момент сохоранения
                 
                 do {
-                    try self.saveContext.save()
+                    try self.context.save()
                     print("💾 Saved: \(post.title)\nAuthor: \(post.author)")
                 } catch let error {
                     print(error.localizedDescription)
                 }
-            }
+//            }
         }
         self.printThread() /// Проверка, данная функция должна вызваться раньше, чем произойдёт сохранение ✅
     }

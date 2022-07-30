@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class FavoriteViewController: UIViewController {
     
@@ -15,6 +16,9 @@ class FavoriteViewController: UIViewController {
     private weak var coordinator: FavoriteCoordinator?
     private var post: FavoritePostEntity?
     private var favoritePosts = [Post]()
+    
+    private var fetchedResultsController = CoreDataManager.shared.fetchedResultsController
+
     
     private lazy var setFilterButton: CustomButton = {
         let button = CustomButton(
@@ -76,7 +80,10 @@ class FavoriteViewController: UIViewController {
         )
         
         favoriteTableView.dataSource = self
-        favoriteTableView.delegate = self
+//        favoriteTableView.delegate = self
+//        CoreDataManager.shared.fetchedResultsController.delegate = self
+        fetchedResultsController.delegate = self
+
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: setFilterButton)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: deleteFilterButton)
@@ -96,7 +103,8 @@ class FavoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        reloadCoreDataFilesByFetch()
+        super.viewWillAppear(animated)
+        favoriteTableView.reloadData()
     }
     
     // MARK: LAYOUT
@@ -154,52 +162,149 @@ class FavoriteViewController: UIViewController {
 }
 
 extension FavoriteViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+//        return CoreDataManager.shared.fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
+
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoritePosts.count
+//        let sectionInfo = CoreDataManager.shared.fetchedResultsController.sections![section]
+        let sectionInfo = fetchedResultsController.sections![section]
+
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
+        
+//        let post = CoreDataManager.shared.fetchedResultsController.object(at: indexPath)
+        let post = fetchedResultsController.object(at: indexPath)
 
-        let post = favoritePosts[indexPath.row]
         cell.configureOfCell(post)
         return cell
     }
-}
-
-extension FavoriteViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    /// не совсем понятно, зачем это делать через `UISwipeActionsConfiguration`, если можно использовать `editingStyleForRowAt`, ну да ладно.
-    
-    /// Конфигурирование удаления ячейки по свайпу
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let post = favoritePosts[indexPath.row]
-        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, completionHandler) in
-            CoreDataManager.shared.deleteFavourite(post: post)
-            
-            self.favoritePosts.removeAll { element in
-                element.personalID == post.personalID
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+//            let context = CoreDataManager.shared.fetchedResultsController.managedObjectContext
+//            context.delete(CoreDataManager.shared.fetchedResultsController.object(at: indexPath))
+            let context = fetchedResultsController.managedObjectContext
+            context.delete(fetchedResultsController.object(at: indexPath))
+
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
-            
-            tableView.deleteRows(at: [indexPath], with: .fade)
-                    
-            completionHandler(true)
         }
-        
-        delete.image = getIcon("trash", 32)
-        
-        
-        let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
-        swipeActionsConfig.performsFirstActionWithFullSwipe = true
-        
-        return swipeActionsConfig
     }
 }
 
+
+extension FavoriteViewController: NSFetchedResultsControllerDelegate {
+    
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        favoriteTableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            favoriteTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            favoriteTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            favoriteTableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            favoriteTableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            guard  let indexPath = indexPath, let cell = favoriteTableView.cellForRow(at: indexPath) as? PostTableViewCell else { return }
+            cell.configureOfCell(anObject as! FavoritePostEntity)
+//            configureCell(favoriteTableView.cellForRow(at: indexPath!)!, withPerson: anObject as! Person)
+        case .move:
+            
+            guard
+                let indexPath = indexPath,
+                let newIndexPath = newIndexPath,
+                let cell = favoriteTableView.cellForRow(at: indexPath) as? PostTableViewCell
+            else { return }
+            
+            cell.configureOfCell(anObject as! FavoritePostEntity)
+            favoriteTableView.moveRow(at: indexPath, to: newIndexPath)
+
+//            configureCell(favoriteTableView.cellForRow(at: indexPath!)!, withPerson: anObject as! Person)
+        @unknown default:
+            fatalError()
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        favoriteTableView.endUpdates()
+    }
+    
+}
+
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return favoritePosts.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifire, for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
+//
+//        let post = favoritePosts[indexPath.row]
+//        cell.configureOfCell(post)
+//        return cell
+//    }
+//}
+//
+//extension FavoriteViewController: UITableViewDelegate {
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
+//
+//    /// не совсем понятно, зачем это делать через `UISwipeActionsConfiguration`, если можно использовать `editingStyleForRowAt`, ну да ладно.
+//
+//    /// Конфигурирование удаления ячейки по свайпу
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//
+//        let post = favoritePosts[indexPath.row]
+//        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, completionHandler) in
+//            CoreDataManager.shared.deleteFavourite(post: post)
+//
+//            self.favoritePosts.removeAll { element in
+//                element.personalID == post.personalID
+//            }
+//
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//            completionHandler(true)
+//        }
+//
+//        delete.image = getIcon("trash", 32)
+//
+//
+//        let swipeActionsConfig = UISwipeActionsConfiguration(actions: [delete])
+//        swipeActionsConfig.performsFirstActionWithFullSwipe = true
+//
+//        return swipeActionsConfig
+//    }
+//}
+//

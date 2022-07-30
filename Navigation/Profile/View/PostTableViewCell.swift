@@ -83,6 +83,15 @@ class PostTableViewCell: UITableViewCell {
         self.postViewsCounter.text = "Views: \(post.views)"
     }
     
+    public func configureOfCell (_ post: FavoritePostEntity) {
+        self.postTitle.text = post.title
+        self.postAuthor.text = post.author
+        self.postImage.image = UIImage(data: post.image ?? Data()) ?? UIImage()
+        self.postDescription.text = post.text
+        self.postLikesCounter.text = "Likes: \(post.likes)"
+        self.postViewsCounter.text = "Views: \(post.views)"
+    }
+    
     
     // MARK: INITS
     
